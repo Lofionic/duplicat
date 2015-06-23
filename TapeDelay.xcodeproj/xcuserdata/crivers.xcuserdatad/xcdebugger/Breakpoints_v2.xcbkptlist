@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TapeDelayFramework/TapeDelayViewController.swift"
+            timestampString = "456790362.149363"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
+            landmarkName = "connectViewWithAU()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TapeDelayFramework.TapeDelayViewController.connectViewWithAU (TapeDelayFramework.TapeDelayViewController)() -&gt; ()"
+                  moduleName = "TapeDelayFramework"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/crivers/Projects/Xcode/TapeDelay/TapeDelayFramework/TapeDelayViewController.swift"
+                  timestampString = "456790371.983983"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "67"
+                  endingLineNumber = "67"
+                  offsetFromSymbolStart = "2001">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "TapeDelayFramework.TapeDelayViewController.(connectViewWithAU (TapeDelayFramework.TapeDelayViewController) -&gt; () -&gt; ()).(closure #1)"
+                  moduleName = "TapeDelayFramework"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/crivers/Projects/Xcode/TapeDelay/TapeDelayFramework/TapeDelayViewController.swift"
+                  timestampString = "456790371.984196"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "68"
+                  endingLineNumber = "68"
+                  offsetFromSymbolStart = "52">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TapeDelayFramework/DSPKernel.mm"
+            timestampString = "456791124.933256"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "DSPKernel::handleOneEvent(AURenderEvent const *event)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TapeDelayFramework/DSPKernel.mm"
+            timestampString = "456791601.932737"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "11"
+            endingLineNumber = "11"
+            landmarkName = "DSPKernel::handleOneEvent(AURenderEvent const *event)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

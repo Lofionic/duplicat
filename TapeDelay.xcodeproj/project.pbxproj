@@ -1,0 +1,660 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6C5769221B37670A00FDE2F7 /* BufferedAudioBus.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6C5769211B37670A00FDE2F7 /* BufferedAudioBus.hpp */; };
+		6C6027521B374F49003D6BEB /* TapeDelayAppEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6027511B374F49003D6BEB /* TapeDelayAppEx.swift */; };
+		6C6027551B374F49003D6BEB /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C6027531B374F49003D6BEB /* MainInterface.storyboard */; };
+		6C6027591B374F49003D6BEB /* TapeDelayAppExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6C60274F1B374F49003D6BEB /* TapeDelayAppExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6C6027661B375456003D6BEB /* TapeDelay.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CE5B31F1B2F9A1200471728 /* TapeDelay.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6C6027701B375618003D6BEB /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C60276F1B375618003D6BEB /* CoreAudioKit.framework */; };
+		6C6027751B376292003D6BEB /* TapeDelayFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CC1CE5E1B2F93D100D95621 /* TapeDelayFramework.framework */; };
+		6C6027771B3763EF003D6BEB /* TapeDelayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6027761B3763EF003D6BEB /* TapeDelayViewController.swift */; };
+		6C9245531B35C347006D7DE9 /* DSPKernel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6C9245511B35C347006D7DE9 /* DSPKernel.mm */; };
+		6CC1CE441B2F922E00D95621 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC1CE431B2F922E00D95621 /* main.m */; };
+		6CC1CE471B2F922E00D95621 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC1CE461B2F922E00D95621 /* AppDelegate.m */; };
+		6CC1CE4A1B2F922E00D95621 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC1CE491B2F922E00D95621 /* ViewController.m */; };
+		6CC1CE4D1B2F922E00D95621 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CC1CE4B1B2F922E00D95621 /* Main.storyboard */; };
+		6CC1CE4F1B2F922E00D95621 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CC1CE4E1B2F922E00D95621 /* Assets.xcassets */; };
+		6CC1CE521B2F922E00D95621 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CC1CE501B2F922E00D95621 /* LaunchScreen.storyboard */; };
+		6CC1CE611B2F93D100D95621 /* TapeDelayFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CC1CE601B2F93D100D95621 /* TapeDelayFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6CC1CE731B2F93D100D95621 /* TapeDelayFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CC1CE5E1B2F93D100D95621 /* TapeDelayFramework.framework */; };
+		6CC1CE741B2F93D100D95621 /* TapeDelayFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6CC1CE5E1B2F93D100D95621 /* TapeDelayFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6CE5B3221B2F9A1200471728 /* TapeDelay.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6CE5B3201B2F9A1200471728 /* TapeDelay.mm */; };
+		6CE5B3241B2F9A2C00471728 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CE5B3231B2F9A2C00471728 /* AudioToolbox.framework */; };
+		6CE5B3261B2F9A3A00471728 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CE5B3251B2F9A3A00471728 /* AVFoundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6C6027571B374F49003D6BEB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6CC1CE371B2F922E00D95621 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6C60274E1B374F49003D6BEB;
+			remoteInfo = TapeDelayAppExtension;
+		};
+		6C6027721B375922003D6BEB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6CC1CE371B2F922E00D95621 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6CC1CE5D1B2F93D100D95621;
+			remoteInfo = TapeDelayFramework;
+		};
+		6CC1CE711B2F93D100D95621 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6CC1CE371B2F922E00D95621 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6CC1CE5D1B2F93D100D95621;
+			remoteInfo = TapeDelayFramework;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6C9245711B360DF6006D7DE9 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				6C6027591B374F49003D6BEB /* TapeDelayAppExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6CC1CE781B2F93D100D95621 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6CC1CE741B2F93D100D95621 /* TapeDelayFramework.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		6C5769211B37670A00FDE2F7 /* BufferedAudioBus.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BufferedAudioBus.hpp; sourceTree = "<group>"; };
+		6C60274F1B374F49003D6BEB /* TapeDelayAppExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TapeDelayAppExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		6C6027511B374F49003D6BEB /* TapeDelayAppEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapeDelayAppEx.swift; sourceTree = "<group>"; };
+		6C6027541B374F49003D6BEB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		6C6027561B374F49003D6BEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6C60276F1B375618003D6BEB /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
+		6C6027761B3763EF003D6BEB /* TapeDelayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapeDelayViewController.swift; sourceTree = "<group>"; };
+		6C92454D1B35C08B006D7DE9 /* TapeDelayDSPKernel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TapeDelayDSPKernel.hpp; sourceTree = "<group>"; };
+		6C9245501B35C347006D7DE9 /* DSPKernel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DSPKernel.hpp; sourceTree = "<group>"; };
+		6C9245511B35C347006D7DE9 /* DSPKernel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DSPKernel.mm; sourceTree = "<group>"; };
+		6C9245541B3601DE006D7DE9 /* ParameterRamper.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ParameterRamper.hpp; sourceTree = "<group>"; };
+		6CC1CE3F1B2F922E00D95621 /* TapeDelay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TapeDelay.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6CC1CE431B2F922E00D95621 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		6CC1CE451B2F922E00D95621 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		6CC1CE461B2F922E00D95621 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		6CC1CE481B2F922E00D95621 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		6CC1CE491B2F922E00D95621 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		6CC1CE4C1B2F922E00D95621 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		6CC1CE4E1B2F922E00D95621 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6CC1CE511B2F922E00D95621 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		6CC1CE531B2F922E00D95621 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6CC1CE5E1B2F93D100D95621 /* TapeDelayFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TapeDelayFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6CC1CE601B2F93D100D95621 /* TapeDelayFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TapeDelayFramework.h; sourceTree = "<group>"; };
+		6CC1CE621B2F93D100D95621 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6CE5B31F1B2F9A1200471728 /* TapeDelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapeDelay.h; sourceTree = "<group>"; };
+		6CE5B3201B2F9A1200471728 /* TapeDelay.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TapeDelay.mm; sourceTree = "<group>"; };
+		6CE5B3231B2F9A2C00471728 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		6CE5B3251B2F9A3A00471728 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6C60274C1B374F49003D6BEB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C6027751B376292003D6BEB /* TapeDelayFramework.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6CC1CE3C1B2F922E00D95621 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6CC1CE731B2F93D100D95621 /* TapeDelayFramework.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6CC1CE5A1B2F93D100D95621 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C6027701B375618003D6BEB /* CoreAudioKit.framework in Frameworks */,
+				6CE5B3261B2F9A3A00471728 /* AVFoundation.framework in Frameworks */,
+				6CE5B3241B2F9A2C00471728 /* AudioToolbox.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6C6027501B374F49003D6BEB /* TapeDelayAppExtension */ = {
+			isa = PBXGroup;
+			children = (
+				6C6027511B374F49003D6BEB /* TapeDelayAppEx.swift */,
+				6C6027531B374F49003D6BEB /* MainInterface.storyboard */,
+				6C6027561B374F49003D6BEB /* Info.plist */,
+			);
+			path = TapeDelayAppExtension;
+			sourceTree = "<group>";
+		};
+		6CC1CE361B2F922E00D95621 = {
+			isa = PBXGroup;
+			children = (
+				6C60276F1B375618003D6BEB /* CoreAudioKit.framework */,
+				6CE5B3251B2F9A3A00471728 /* AVFoundation.framework */,
+				6CE5B3231B2F9A2C00471728 /* AudioToolbox.framework */,
+				6CC1CE411B2F922E00D95621 /* TapeDelay */,
+				6CC1CE5F1B2F93D100D95621 /* TapeDelayFramework */,
+				6C6027501B374F49003D6BEB /* TapeDelayAppExtension */,
+				6CC1CE401B2F922E00D95621 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6CC1CE401B2F922E00D95621 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6CC1CE3F1B2F922E00D95621 /* TapeDelay.app */,
+				6CC1CE5E1B2F93D100D95621 /* TapeDelayFramework.framework */,
+				6C60274F1B374F49003D6BEB /* TapeDelayAppExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6CC1CE411B2F922E00D95621 /* TapeDelay */ = {
+			isa = PBXGroup;
+			children = (
+				6C5769211B37670A00FDE2F7 /* BufferedAudioBus.hpp */,
+				6CC1CE451B2F922E00D95621 /* AppDelegate.h */,
+				6CC1CE461B2F922E00D95621 /* AppDelegate.m */,
+				6CC1CE481B2F922E00D95621 /* ViewController.h */,
+				6CC1CE491B2F922E00D95621 /* ViewController.m */,
+				6CC1CE4B1B2F922E00D95621 /* Main.storyboard */,
+				6CC1CE4E1B2F922E00D95621 /* Assets.xcassets */,
+				6CC1CE501B2F922E00D95621 /* LaunchScreen.storyboard */,
+				6CC1CE531B2F922E00D95621 /* Info.plist */,
+				6CC1CE421B2F922E00D95621 /* Supporting Files */,
+			);
+			path = TapeDelay;
+			sourceTree = "<group>";
+		};
+		6CC1CE421B2F922E00D95621 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6CC1CE431B2F922E00D95621 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6CC1CE5F1B2F93D100D95621 /* TapeDelayFramework */ = {
+			isa = PBXGroup;
+			children = (
+				6CC1CE601B2F93D100D95621 /* TapeDelayFramework.h */,
+				6CE5B31F1B2F9A1200471728 /* TapeDelay.h */,
+				6CE5B3201B2F9A1200471728 /* TapeDelay.mm */,
+				6C92454D1B35C08B006D7DE9 /* TapeDelayDSPKernel.hpp */,
+				6C9245501B35C347006D7DE9 /* DSPKernel.hpp */,
+				6C9245511B35C347006D7DE9 /* DSPKernel.mm */,
+				6C9245541B3601DE006D7DE9 /* ParameterRamper.hpp */,
+				6CC1CE621B2F93D100D95621 /* Info.plist */,
+				6C6027761B3763EF003D6BEB /* TapeDelayViewController.swift */,
+			);
+			path = TapeDelayFramework;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		6CC1CE5B1B2F93D100D95621 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6CC1CE611B2F93D100D95621 /* TapeDelayFramework.h in Headers */,
+				6C6027661B375456003D6BEB /* TapeDelay.h in Headers */,
+				6C5769221B37670A00FDE2F7 /* BufferedAudioBus.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		6C60274E1B374F49003D6BEB /* TapeDelayAppExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6C60275A1B374F49003D6BEB /* Build configuration list for PBXNativeTarget "TapeDelayAppExtension" */;
+			buildPhases = (
+				6C60274B1B374F49003D6BEB /* Sources */,
+				6C60274C1B374F49003D6BEB /* Frameworks */,
+				6C60274D1B374F49003D6BEB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6C6027731B375922003D6BEB /* PBXTargetDependency */,
+			);
+			name = TapeDelayAppExtension;
+			productName = TapeDelayAppExtension;
+			productReference = 6C60274F1B374F49003D6BEB /* TapeDelayAppExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		6CC1CE3E1B2F922E00D95621 /* TapeDelay */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6CC1CE561B2F922E00D95621 /* Build configuration list for PBXNativeTarget "TapeDelay" */;
+			buildPhases = (
+				6CC1CE3B1B2F922E00D95621 /* Sources */,
+				6CC1CE3C1B2F922E00D95621 /* Frameworks */,
+				6CC1CE3D1B2F922E00D95621 /* Resources */,
+				6CC1CE781B2F93D100D95621 /* Embed Frameworks */,
+				6C9245711B360DF6006D7DE9 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6CC1CE721B2F93D100D95621 /* PBXTargetDependency */,
+				6C6027581B374F49003D6BEB /* PBXTargetDependency */,
+			);
+			name = TapeDelay;
+			productName = TapeDelay;
+			productReference = 6CC1CE3F1B2F922E00D95621 /* TapeDelay.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6CC1CE5D1B2F93D100D95621 /* TapeDelayFramework */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6CC1CE751B2F93D100D95621 /* Build configuration list for PBXNativeTarget "TapeDelayFramework" */;
+			buildPhases = (
+				6CC1CE591B2F93D100D95621 /* Sources */,
+				6CC1CE5A1B2F93D100D95621 /* Frameworks */,
+				6CC1CE5B1B2F93D100D95621 /* Headers */,
+				6CC1CE5C1B2F93D100D95621 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TapeDelayFramework;
+			productName = TapeDelayFramework;
+			productReference = 6CC1CE5E1B2F93D100D95621 /* TapeDelayFramework.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6CC1CE371B2F922E00D95621 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = Lofionic;
+				TargetAttributes = {
+					6C60274E1B374F49003D6BEB = {
+						CreatedOnToolsVersion = 7.0;
+					};
+					6CC1CE3E1B2F922E00D95621 = {
+						CreatedOnToolsVersion = 7.0;
+					};
+					6CC1CE5D1B2F93D100D95621 = {
+						CreatedOnToolsVersion = 7.0;
+					};
+				};
+			};
+			buildConfigurationList = 6CC1CE3A1B2F922E00D95621 /* Build configuration list for PBXProject "TapeDelay" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6CC1CE361B2F922E00D95621;
+			productRefGroup = 6CC1CE401B2F922E00D95621 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6CC1CE3E1B2F922E00D95621 /* TapeDelay */,
+				6CC1CE5D1B2F93D100D95621 /* TapeDelayFramework */,
+				6C60274E1B374F49003D6BEB /* TapeDelayAppExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6C60274D1B374F49003D6BEB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C6027551B374F49003D6BEB /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6CC1CE3D1B2F922E00D95621 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6CC1CE521B2F922E00D95621 /* LaunchScreen.storyboard in Resources */,
+				6CC1CE4F1B2F922E00D95621 /* Assets.xcassets in Resources */,
+				6CC1CE4D1B2F922E00D95621 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6CC1CE5C1B2F93D100D95621 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6C60274B1B374F49003D6BEB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C6027521B374F49003D6BEB /* TapeDelayAppEx.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6CC1CE3B1B2F922E00D95621 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6CC1CE4A1B2F922E00D95621 /* ViewController.m in Sources */,
+				6CC1CE471B2F922E00D95621 /* AppDelegate.m in Sources */,
+				6CC1CE441B2F922E00D95621 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6CC1CE591B2F93D100D95621 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6C6027771B3763EF003D6BEB /* TapeDelayViewController.swift in Sources */,
+				6C9245531B35C347006D7DE9 /* DSPKernel.mm in Sources */,
+				6CE5B3221B2F9A1200471728 /* TapeDelay.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6C6027581B374F49003D6BEB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6C60274E1B374F49003D6BEB /* TapeDelayAppExtension */;
+			targetProxy = 6C6027571B374F49003D6BEB /* PBXContainerItemProxy */;
+		};
+		6C6027731B375922003D6BEB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6CC1CE5D1B2F93D100D95621 /* TapeDelayFramework */;
+			targetProxy = 6C6027721B375922003D6BEB /* PBXContainerItemProxy */;
+		};
+		6CC1CE721B2F93D100D95621 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6CC1CE5D1B2F93D100D95621 /* TapeDelayFramework */;
+			targetProxy = 6CC1CE711B2F93D100D95621 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		6C6027531B374F49003D6BEB /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6C6027541B374F49003D6BEB /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+		6CC1CE4B1B2F922E00D95621 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6CC1CE4C1B2F922E00D95621 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		6CC1CE501B2F922E00D95621 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				6CC1CE511B2F922E00D95621 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6C60275B1B374F49003D6BEB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = TapeDelayAppExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Lofionic.TapeDelay.TapeDelayAppExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		6C60275C1B374F49003D6BEB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = TapeDelayAppExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Lofionic.TapeDelay.TapeDelayAppExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		6CC1CE541B2F922E00D95621 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6CC1CE551B2F922E00D95621 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6CC1CE571B2F922E00D95621 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = TapeDelay/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Lofionic.TapeDelay;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		6CC1CE581B2F922E00D95621 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = TapeDelay/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Lofionic.TapeDelay;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		6CC1CE761B2F93D100D95621 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = TapeDelayFramework/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Lofionic.TapeDelayFramework;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		6CC1CE771B2F93D100D95621 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = TapeDelayFramework/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Lofionic.TapeDelayFramework;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6C60275A1B374F49003D6BEB /* Build configuration list for PBXNativeTarget "TapeDelayAppExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6C60275B1B374F49003D6BEB /* Debug */,
+				6C60275C1B374F49003D6BEB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6CC1CE3A1B2F922E00D95621 /* Build configuration list for PBXProject "TapeDelay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6CC1CE541B2F922E00D95621 /* Debug */,
+				6CC1CE551B2F922E00D95621 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6CC1CE561B2F922E00D95621 /* Build configuration list for PBXNativeTarget "TapeDelay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6CC1CE571B2F922E00D95621 /* Debug */,
+				6CC1CE581B2F922E00D95621 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6CC1CE751B2F93D100D95621 /* Build configuration list for PBXNativeTarget "TapeDelayFramework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6CC1CE761B2F93D100D95621 /* Debug */,
+				6CC1CE771B2F93D100D95621 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6CC1CE371B2F922E00D95621 /* Project object */;
+}
