@@ -11,7 +11,10 @@ import CoreAudioKit
 
 public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
 
-    @IBOutlet weak var delayTimeSlider : UISlider!
+    @IBOutlet weak var delayTimeSlider  : UISlider!
+    @IBOutlet weak var delayMixSlider   : UISlider!
+    @IBOutlet weak var feedbackSlider   : UISlider!
+    @IBOutlet weak var tapeSlider       : UISlider!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +43,7 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
     var delayTimeParameter:         AUParameter?
     var delayLevelParameter:        AUParameter?
     var feedbackParameter:          AUParameter?
+    var tapeParameter:              AUParameter?
     var parameterObserverToken:     AUParameterObserverToken?
     
     public func createAudioUnitWithComponentDescription(desc: AudioComponentDescription) throws -> AUAudioUnit {
@@ -60,6 +64,7 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
         delayTimeParameter = paramTree.valueForKey("delayTime") as? AUParameter
         delayLevelParameter = paramTree.valueForKey("delayLevel") as? AUParameter
         feedbackParameter = paramTree.valueForKey("feedback") as? AUParameter
+        tapeParameter = paramTree.valueForKey("tape") as? AUParameter
         
         self.delayTimeSlider.minimumValue = delayTimeParameter!.minValue
         self.delayTimeSlider.maximumValue = delayTimeParameter!.maxValue
@@ -74,11 +79,26 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
             }
         }
         
-        delayTimeSlider.value = delayTimeParameter!.value
+        delayTimeSlider.value       = delayTimeParameter!.value
+        delayMixSlider.value        = delayLevelParameter!.value
+        feedbackSlider.value        = feedbackParameter!.value
+        tapeSlider.value            = tapeParameter!.value
     }
     
     @IBAction func delayTimeSliderValueChanged(sender: AnyObject) {
-        NSLog("%.2f", self.delayTimeSlider.value)
         delayTimeParameter?.setValue(self.delayTimeSlider.value, originator: parameterObserverToken!)
     }
+    
+    @IBAction func delayMixSliderValueChanged(sender: AnyObject) {
+        delayLevelParameter?.setValue(self.delayMixSlider.value, originator: parameterObserverToken!)
+    }
+    
+    @IBAction func feedbackSliderValueChanged(sender: AnyObject) {
+        feedbackParameter?.setValue(self.feedbackSlider.value, originator: parameterObserverToken!)
+    }
+    
+    @IBAction func tapeSliderValueChanged(sender: AnyObject) {
+        tapeParameter?.setValue(self.tapeSlider.value, originator: parameterObserverToken!)
+    }
+    
 }

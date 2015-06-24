@@ -9,46 +9,30 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TapeDelayFramework/TapeDelayViewController.swift"
-            timestampString = "456790362.149363"
+            filePath = "TapeDelayFramework/TapeDelayDSPKernel.hpp"
+            timestampString = "456854286.426251"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
-            landmarkName = "connectViewWithAU()"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TapeDelayFramework.TapeDelayViewController.connectViewWithAU (TapeDelayFramework.TapeDelayViewController)() -&gt; ()"
-                  moduleName = "TapeDelayFramework"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/crivers/Projects/Xcode/TapeDelay/TapeDelayFramework/TapeDelayViewController.swift"
-                  timestampString = "456790371.983983"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "67"
-                  endingLineNumber = "67"
-                  offsetFromSymbolStart = "2001">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "TapeDelayFramework.TapeDelayViewController.(connectViewWithAU (TapeDelayFramework.TapeDelayViewController) -&gt; () -&gt; ()).(closure #1)"
-                  moduleName = "TapeDelayFramework"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/crivers/Projects/Xcode/TapeDelay/TapeDelayFramework/TapeDelayViewController.swift"
-                  timestampString = "456790371.984196"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "68"
-                  endingLineNumber = "68"
-                  offsetFromSymbolStart = "52">
-               </Location>
-            </Locations>
+            startingLineNumber = "146"
+            endingLineNumber = "146"
+            landmarkName = "class TapeDelayDSPKernel"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TapeDelayFramework/TapeDelayDSPKernel.hpp"
+            timestampString = "456854286.426251"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "149"
+            endingLineNumber = "149"
+            landmarkName = "class TapeDelayDSPKernel"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -58,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TapeDelayFramework/DSPKernel.mm"
-            timestampString = "456791124.933256"
+            timestampString = "456852780.837834"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "16"
-            endingLineNumber = "16"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
             landmarkName = "DSPKernel::handleOneEvent(AURenderEvent const *event)"
             landmarkType = "5">
          </BreakpointContent>
@@ -70,15 +54,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TapeDelayFramework/DSPKernel.mm"
-            timestampString = "456791601.932737"
+            timestampString = "456852786.653775"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "11"
-            endingLineNumber = "11"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
             landmarkName = "DSPKernel::handleOneEvent(AURenderEvent const *event)"
             landmarkType = "5">
          </BreakpointContent>

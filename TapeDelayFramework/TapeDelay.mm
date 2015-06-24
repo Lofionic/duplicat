@@ -51,7 +51,7 @@
                                                                valueStrings:nil
                                                         dependentParameters:nil];
     
-    AUParameter *delayLevel = [AUParameterTree createParameterWithIdentifier:@"delayLaevel" name:@"Delay Level"
+    AUParameter *delayLevel = [AUParameterTree createParameterWithIdentifier:@"delayLevel" name:@"Delay Level"
                                                                      address:DelayParamDelayLevel
                                                                          min:0
                                                                          max:1.0
@@ -71,20 +71,33 @@
                                                                 valueStrings:nil
                                                          dependentParameters:nil];
     
+    AUParameter *tape = [AUParameterTree createParameterWithIdentifier:@"tape" name:@"Tape"
+                                                               address:DelayParamTape
+                                                                   min:0
+                                                                   max:1.0
+                                                                  unit:kAudioUnitParameterUnit_LinearGain
+                                                              unitName:nil
+                                                                 flags:0
+                                                          valueStrings:nil
+                                                   dependentParameters:nil];
+    
     
     // Initialize parameter values
     delayTime.value =   500;
     delayLevel.value =  0.5;
     feedback.value =    0.2;
+    tape.value =        0.5;
     _kernel.setParameter(DelayParamDelayTime, delayTime.value);
     _kernel.setParameter(DelayParamDelayLevel, delayLevel.value);
     _kernel.setParameter(DelayParamFeedback, feedback.value);
+    _kernel.setParameter(DelayParamTape, tape.value);
     
     // Create the parameter tree
     _parameterTree = [AUParameterTree createTreeWithChildren:@[
                                                                delayTime,
                                                                delayLevel,
-                                                               feedback
+                                                               feedback,
+                                                               tape
                                                                ]];
     
     // Create the input and output busses.
@@ -120,6 +133,9 @@
                 return [NSString stringWithFormat:@"%.2f", value];
                 
             case DelayParamFeedback:
+                return [NSString stringWithFormat:@"%.2f", value];
+                
+            case DelayParamTape:
                 return [NSString stringWithFormat:@"%.2f", value];
             default:
                 return @"?";

@@ -16,7 +16,8 @@
 enum {
     DelayParamDelayTime,
     DelayParamDelayLevel,
-    DelayParamFeedback
+    DelayParamFeedback,
+    DelayParamTape
 };
 
 class TapeDelayDSPKernel : public DSPKernel {
@@ -64,6 +65,7 @@ public:
             double delayTime = double(delayTimeRamper.getStep());
             double feedback = double(feedbackRamper.getStep());
             double mix = double(delayLevelRamper.getStep());
+            double tape = double(tapeRamper.getStep());
             
             for (int channel = 0; channel < channelCount; ++channel) {
                 DelayState &state = delayStates[channel];
@@ -87,6 +89,7 @@ public:
                 *out = *in + (delayMix - *in) * mix;
                 
                 float feedbackSignal = *in + (delayMix * feedback);
+                feedback = tanhf((feedbackSignal / 2.0) * ((tape * 10) + 2));
                 if (feedbackSignal > 1.0) {
                     feedbackSignal = 1.0;
                 } else if (feedbackSignal < -1.0) {
@@ -107,13 +110,15 @@ public:
         switch (address) {
             case DelayParamDelayTime:
                 delayTimeRamper.set(clamp(value, 100.0f, 2000.0f));
-                printf("%.2f\n", delayTimeRamper.goal());
                 break;
             case DelayParamDelayLevel:
                 delayLevelRamper.set(clamp(value, 0.0f, 1.0f));
                 break;
             case DelayParamFeedback:
                 feedbackRamper.set(clamp(value, 0.0f, 1.0f));
+                break;
+            case DelayParamTape:
+                tapeRamper.set(clamp(value, 0.0f, 1.0f));
                 break;
         }
     }
@@ -126,6 +131,8 @@ public:
                 return delayLevelRamper.goal();
             case DelayParamFeedback:
                 return feedbackRamper.goal();
+            case DelayParamTape:
+                return tapeRamper.goal();
             default: return 0.0f;
         }
     }
@@ -141,6 +148,8 @@ public:
             case DelayParamFeedback:
                 feedbackRamper.startRamp(clamp(value, 0.0f, 1.0f), duration);
                 break;
+            case DelayParamTape:
+                tapeRamper.startRamp(clamp(value, 0.0f, 1.0f), duration);
         }
     }
     
@@ -166,6 +175,7 @@ public:
     ParameterRamper delayTimeRamper     = 500.0;
     ParameterRamper delayLevelRamper    = 0.0;
     ParameterRamper feedbackRamper      = 0.0;
+    ParameterRamper tapeRamper          = 0.0;
     
 };
 
