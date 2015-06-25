@@ -14,10 +14,10 @@
 #import <vector>
 
 enum {
-    DelayParamDelayTime,
-    DelayParamDelayLevel,
+    DelayParamTapeSpeed,
+    DelayParamMix,
     DelayParamFeedback,
-    DelayParamTape
+    DelayParamTapeEffect
 };
 
 class TapeDelayDSPKernel : public DSPKernel {
@@ -43,7 +43,7 @@ public:
         delayStates.resize(channelCount);
         
         sampleRate = float(inSampleRate);
-        bufferSize = sampleRate * (maxDelayTimeMS / 1000.0); // Max 2 seconds delay
+        bufferSize = sampleRate * (maxDelayTimeMS / 1000.0);
         
         for (DelayState& state : delayStates) {
             state.init(bufferSize);
@@ -62,10 +62,10 @@ public:
         for (int frameIndex = 0; frameIndex < frameCount; ++frameIndex) {
             int frameOffset = int(frameIndex + bufferOffset);
             
-            double delayTime = double(delayTimeRamper.getStep());
+            double tapeSpeed = double(tapeSpeedRamper.getStep());
             double feedback = double(feedbackRamper.getStep());
-            double mix = double(delayLevelRamper.getStep());
-            double tape = double(tapeRamper.getStep());
+            double mix = double(mixRamper.getStep());
+            double tapeEffect = double(tapeEffectRamper.getStep());
             
             for (int channel = 0; channel < channelCount; ++channel) {
                 DelayState &state = delayStates[channel];
@@ -73,83 +73,95 @@ public:
                 float *in   = (float*)inBufferListPtr->mBuffers[channel].mData  + frameOffset;
                 float *out  = (float*)outBufferListPtr->mBuffers[channel].mData + frameOffset;
                 
-                float delayOffset = (delayTime / 1000) * sampleRate;
-                SInt32 delayLocation = state.bufferPosition - floor(delayOffset);
-                while (delayLocation < 0) {
-                    delayLocation += bufferSize;
-                }
-                
-                float delayMix = state.tapeBuffer[delayLocation] + *in;
-                if (delayMix > 1.0) {
-                    delayMix = 1.0;
-                } else if (delayMix < -1.0) {
-                    delayMix = -1.0;
-                }
-                
-                *out = *in + (delayMix - *in) * mix;
-                
-                float feedbackSignal = *in + (delayMix * feedback);
-                feedback = tanhf((feedbackSignal / 2.0) * ((tape * 10) + 2));
-                if (feedbackSignal > 1.0) {
-                    feedbackSignal = 1.0;
-                } else if (feedbackSignal < -1.0) {
-                    feedbackSignal = -1.0;
-                }
-                
-                state.bufferPosition++;
-                while (state.bufferPosition > bufferSize) {
-                    state.bufferPosition -= bufferSize;
-                }
-                state.tapeBuffer[state.bufferPosition] = feedbackSignal;
-            }
-            
+                applyDelay(state, in, out, tapeSpeed, feedback, mix, tapeEffect);
             }
         }
+    }
+    
+    void applyDelay(DelayState &state, float *in, float *out, double tapeSpeed, double feedback, double mix, double tapeEffect) {
+        float delayOffset = (400 / 1000) * sampleRate;
+        SInt32 delayLocation = state.bufferPosition - floor(delayOffset);
+        while (delayLocation < 0) {
+            delayLocation += bufferSize;
+        }
+        
+        float delayMix = state.tapeBuffer[delayLocation] + *in;
+        if (delayMix > 1.0) {
+            delayMix = 1.0;
+        } else if (delayMix < -1.0) {
+            delayMix = -1.0;
+        }
+        
+        *out = *in + ((delayMix - *in) * mix);
+        
+        float feedbackSignal =  *in + (delayMix * feedback);
+        
+        // Apply tape distortion to recorded signal
+        float signalClip = 1 - (tapeEffect * 0.9);
+        
+        //float distortedSignal = tanhf(feedbackSignal * 2.0);
+        //feedbackSignal = feedbackSignal + ((distortedSignal - feedbackSignal) * tapeEffect);
+        
+        if (feedbackSignal > signalClip) {
+            feedbackSignal = signalClip;
+        } else if (feedbackSignal < -signalClip) {
+            feedbackSignal = -signalClip;
+        }
+        
+        UInt32 n = 1 + (10.0 * tapeSpeed);
+        for (int j = 0; j < n; j++) {
+            state.tapeBuffer[state.bufferPosition] = feedbackSignal;
+            state.bufferPosition++;
+            while (state.bufferPosition > bufferSize) {
+                state.bufferPosition -= bufferSize;
+            }
+        }
+    }
 
     void setParameter(AUParameterAddress address, AUValue value) {
         switch (address) {
-            case DelayParamDelayTime:
-                delayTimeRamper.set(clamp(value, 100.0f, 2000.0f));
+            case DelayParamTapeSpeed:
+                tapeSpeedRamper.set(clamp(value, 0.0f, 1.0f));
                 break;
-            case DelayParamDelayLevel:
-                delayLevelRamper.set(clamp(value, 0.0f, 1.0f));
+            case DelayParamMix:
+                mixRamper.set(clamp(value, 0.0f, 1.0f));
                 break;
             case DelayParamFeedback:
                 feedbackRamper.set(clamp(value, 0.0f, 1.0f));
                 break;
-            case DelayParamTape:
-                tapeRamper.set(clamp(value, 0.0f, 1.0f));
+            case DelayParamTapeEffect:
+                tapeEffectRamper.set(clamp(value, 0.0f, 1.0f));
                 break;
         }
     }
     
     AUValue getParameter(AUParameterAddress address) {
         switch (address) {
-            case DelayParamDelayTime:
-                return delayTimeRamper.goal();
-            case DelayParamDelayLevel:
-                return delayLevelRamper.goal();
+            case DelayParamTapeSpeed:
+                return tapeSpeedRamper.goal();
+            case DelayParamMix:
+                return mixRamper.goal();
             case DelayParamFeedback:
                 return feedbackRamper.goal();
-            case DelayParamTape:
-                return tapeRamper.goal();
+            case DelayParamTapeEffect:
+                return tapeEffectRamper.goal();
             default: return 0.0f;
         }
     }
     
     void startRamp(AUParameterAddress address, AUValue value, AUAudioFrameCount duration) override {
         switch (address) {
-            case DelayParamDelayTime:
-                delayTimeRamper.startRamp(clamp(value, 100.0f, 2000.0f), duration);
+            case DelayParamTapeSpeed:
+                tapeSpeedRamper.startRamp(clamp(value, 0.0f, 1.0f), duration);
                 break;
-            case DelayParamDelayLevel:
-                delayLevelRamper.startRamp(clamp(value, 0.0f, 1.0f), duration);
+            case DelayParamMix:
+                mixRamper.startRamp(clamp(value, 0.0f, 1.0f), duration);
                 break;
             case DelayParamFeedback:
                 feedbackRamper.startRamp(clamp(value, 0.0f, 1.0f), duration);
                 break;
-            case DelayParamTape:
-                tapeRamper.startRamp(clamp(value, 0.0f, 1.0f), duration);
+            case DelayParamTapeEffect:
+                tapeEffectRamper.startRamp(clamp(value, 0.0f, 1.0f), duration);
         }
     }
     
@@ -172,10 +184,10 @@ private:
     AudioBufferList* outBufferListPtr = nullptr;
     
 public:
-    ParameterRamper delayTimeRamper     = 500.0;
-    ParameterRamper delayLevelRamper    = 0.0;
+    ParameterRamper tapeSpeedRamper     = 1.0;
+    ParameterRamper mixRamper           = 0.0;
     ParameterRamper feedbackRamper      = 0.0;
-    ParameterRamper tapeRamper          = 0.0;
+    ParameterRamper tapeEffectRamper    = 0.0;
     
 };
 

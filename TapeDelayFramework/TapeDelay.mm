@@ -41,25 +41,25 @@
     _kernel.init(defaultFormat.channelCount, defaultFormat.sampleRate);
     
     // Create parameter objects
-    AUParameter *delayTime = [AUParameterTree createParameterWithIdentifier:@"delayTime" name:@"Delay Time"
-                                                                    address:DelayParamDelayTime
-                                                                        min:100.0
-                                                                        max:2000.0
-                                                                       unit:kAudioUnitParameterUnit_Milliseconds
+    AUParameter *tapeSpeed = [AUParameterTree createParameterWithIdentifier:@"tapeSpeed" name:@"Tape Speed"
+                                                                    address:DelayParamTapeSpeed
+                                                                        min:0.0
+                                                                        max:1.0
+                                                                       unit:kAudioUnitParameterUnit_Generic
                                                                    unitName:nil
                                                                       flags:0
                                                                valueStrings:nil
                                                         dependentParameters:nil];
     
-    AUParameter *delayLevel = [AUParameterTree createParameterWithIdentifier:@"delayLevel" name:@"Delay Level"
-                                                                     address:DelayParamDelayLevel
-                                                                         min:0
-                                                                         max:1.0
-                                                                        unit:kAudioUnitParameterUnit_LinearGain
-                                                                    unitName:nil
-                                                                       flags:0
-                                                                valueStrings:nil
-                                                         dependentParameters:nil];
+    AUParameter *mix = [AUParameterTree createParameterWithIdentifier:@"mix" name:@"Mix"
+                                                              address:DelayParamMix
+                                                                  min:0.0
+                                                                  max:1.0
+                                                                 unit:kAudioUnitParameterUnit_LinearGain
+                                                             unitName:nil
+                                                                flags:0
+                                                         valueStrings:nil
+                                                  dependentParameters:nil];
     
     AUParameter *feedback = [AUParameterTree createParameterWithIdentifier:@"feedback" name:@"Feedback"
                                                                      address:DelayParamFeedback
@@ -71,33 +71,33 @@
                                                                 valueStrings:nil
                                                          dependentParameters:nil];
     
-    AUParameter *tape = [AUParameterTree createParameterWithIdentifier:@"tape" name:@"Tape"
-                                                               address:DelayParamTape
-                                                                   min:0
-                                                                   max:1.0
-                                                                  unit:kAudioUnitParameterUnit_LinearGain
-                                                              unitName:nil
-                                                                 flags:0
-                                                          valueStrings:nil
-                                                   dependentParameters:nil];
+    AUParameter *tapeEffect = [AUParameterTree createParameterWithIdentifier:@"tapeEffect" name:@"Tape Effect"
+                                                                     address:DelayParamTapeEffect
+                                                                         min:0
+                                                                         max:1.0
+                                                                        unit:kAudioUnitParameterUnit_Generic
+                                                                    unitName:nil
+                                                                       flags:0
+                                                                valueStrings:nil
+                                                         dependentParameters:nil];
     
     
     // Initialize parameter values
-    delayTime.value =   500;
-    delayLevel.value =  0.5;
-    feedback.value =    0.2;
-    tape.value =        0.5;
-    _kernel.setParameter(DelayParamDelayTime, delayTime.value);
-    _kernel.setParameter(DelayParamDelayLevel, delayLevel.value);
+    tapeSpeed.value     = 0.5;
+    mix.value           = 0.5;
+    feedback.value      = 0.2;
+    tapeEffect.value    = 0.5;
+    _kernel.setParameter(DelayParamTapeSpeed, tapeSpeed.value);
+    _kernel.setParameter(DelayParamMix, mix.value);
     _kernel.setParameter(DelayParamFeedback, feedback.value);
-    _kernel.setParameter(DelayParamTape, tape.value);
+    _kernel.setParameter(DelayParamTapeEffect, tapeEffect.value);
     
     // Create the parameter tree
     _parameterTree = [AUParameterTree createTreeWithChildren:@[
-                                                               delayTime,
-                                                               delayLevel,
+                                                               tapeSpeed,
+                                                               mix,
                                                                feedback,
-                                                               tape
+                                                               tapeEffect
                                                                ]];
     
     // Create the input and output busses.
@@ -126,16 +126,16 @@
         AUValue value = valuePtr == nil ? param.value : *valuePtr;
         
         switch (param.address) {
-            case DelayParamDelayTime:
-                return [NSString stringWithFormat:@"%.0fms", value];
+            case DelayParamTapeSpeed:
+                return [NSString stringWithFormat:@"%.2f", value];
                 
-            case DelayParamDelayLevel:
+            case DelayParamMix:
                 return [NSString stringWithFormat:@"%.2f", value];
                 
             case DelayParamFeedback:
                 return [NSString stringWithFormat:@"%.2f", value];
                 
-            case DelayParamTape:
+            case DelayParamTapeEffect:
                 return [NSString stringWithFormat:@"%.2f", value];
             default:
                 return @"?";

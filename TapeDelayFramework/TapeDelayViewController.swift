@@ -11,10 +11,10 @@ import CoreAudioKit
 
 public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
 
-    @IBOutlet weak var delayTimeSlider  : UISlider!
-    @IBOutlet weak var delayMixSlider   : UISlider!
+    @IBOutlet weak var tapeSpeedSlider  : UISlider!
+    @IBOutlet weak var mixSlider        : UISlider!
     @IBOutlet weak var feedbackSlider   : UISlider!
-    @IBOutlet weak var tapeSlider       : UISlider!
+    @IBOutlet weak var tapeEffectSlider : UISlider!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,10 +40,10 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
         }
     }
     
-    var delayTimeParameter:         AUParameter?
-    var delayLevelParameter:        AUParameter?
+    var tapeSpeedParameter:         AUParameter?
+    var mixParameter:               AUParameter?
     var feedbackParameter:          AUParameter?
-    var tapeParameter:              AUParameter?
+    var tapeEffectParameter:        AUParameter?
     var parameterObserverToken:     AUParameterObserverToken?
     
     public func createAudioUnitWithComponentDescription(desc: AudioComponentDescription) throws -> AUAudioUnit {
@@ -61,44 +61,45 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
         
         guard let paramTree = audioUnit?.parameterTree else { return }
         
-        delayTimeParameter = paramTree.valueForKey("delayTime") as? AUParameter
-        delayLevelParameter = paramTree.valueForKey("delayLevel") as? AUParameter
+        tapeSpeedParameter = paramTree.valueForKey("tapeSpeed") as? AUParameter
+        mixParameter = paramTree.valueForKey("mix") as? AUParameter
         feedbackParameter = paramTree.valueForKey("feedback") as? AUParameter
-        tapeParameter = paramTree.valueForKey("tape") as? AUParameter
-        
-        self.delayTimeSlider.minimumValue = delayTimeParameter!.minValue
-        self.delayTimeSlider.maximumValue = delayTimeParameter!.maxValue
+        tapeEffectParameter = paramTree.valueForKey("tapeEffect") as? AUParameter
         
         parameterObserverToken = paramTree.tokenByAddingParameterObserver { address, value in
             dispatch_async(dispatch_get_main_queue()) {
-                if address == self.delayTimeParameter!.address {
-                }
-                else if address == self.delayLevelParameter!.address {
-
+                if address == self.tapeSpeedParameter!.address {
+                    self.tapeSpeedSlider.value = value
+                } else if address == self.mixParameter!.address {
+                    self.mixSlider.value = value
+                } else if address == self.feedbackParameter!.address {
+                    self.feedbackSlider.value = value
+                } else if address == self.tapeEffectParameter!.address {
+                    self.tapeEffectSlider.value = value
                 }
             }
         }
         
-        delayTimeSlider.value       = delayTimeParameter!.value
-        delayMixSlider.value        = delayLevelParameter!.value
-        feedbackSlider.value        = feedbackParameter!.value
-        tapeSlider.value            = tapeParameter!.value
+        tapeSpeedSlider.value   = tapeSpeedParameter!.value
+        mixSlider.value         = mixParameter!.value
+        feedbackSlider.value    = feedbackParameter!.value
+        tapeEffectSlider.value  = tapeEffectParameter!.value
     }
     
-    @IBAction func delayTimeSliderValueChanged(sender: AnyObject) {
-        delayTimeParameter?.setValue(self.delayTimeSlider.value, originator: parameterObserverToken!)
+    @IBAction func tapeSpeedSliderValueChanged(sender: AnyObject) {
+        tapeSpeedParameter?.setValue(self.tapeSpeedSlider.value, originator: parameterObserverToken!)
     }
     
-    @IBAction func delayMixSliderValueChanged(sender: AnyObject) {
-        delayLevelParameter?.setValue(self.delayMixSlider.value, originator: parameterObserverToken!)
+    @IBAction func mixSliderValueChanged(sender: AnyObject) {
+        mixParameter?.setValue(self.mixSlider.value, originator: parameterObserverToken!)
     }
     
     @IBAction func feedbackSliderValueChanged(sender: AnyObject) {
         feedbackParameter?.setValue(self.feedbackSlider.value, originator: parameterObserverToken!)
     }
     
-    @IBAction func tapeSliderValueChanged(sender: AnyObject) {
-        tapeParameter?.setValue(self.tapeSlider.value, originator: parameterObserverToken!)
+    @IBAction func tapeEffectSliderValueChanged(sender: AnyObject) {
+        tapeEffectParameter?.setValue(self.tapeEffectSlider.value, originator: parameterObserverToken!)
     }
     
 }
