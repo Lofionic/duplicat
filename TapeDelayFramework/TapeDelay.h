@@ -6,8 +6,8 @@
 //  Copyright © 2015 Lofionic. All rights reserved.
 //
 
-#ifndef FilterDemo_h
-#define FilterDemo_h
+#ifndef TapeDelay_h
+#define TapeDelay_h
 
 #import <AudioToolbox/AudioToolbox.h>
 

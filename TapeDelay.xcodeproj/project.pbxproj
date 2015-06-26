@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6C5769221B37670A00FDE2F7 /* BufferedAudioBus.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6C5769211B37670A00FDE2F7 /* BufferedAudioBus.hpp */; };
 		6C6027521B374F49003D6BEB /* TapeDelayAppEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6027511B374F49003D6BEB /* TapeDelayAppEx.swift */; };
 		6C6027551B374F49003D6BEB /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C6027531B374F49003D6BEB /* MainInterface.storyboard */; };
 		6C6027591B374F49003D6BEB /* TapeDelayAppExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6C60274F1B374F49003D6BEB /* TapeDelayAppExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -25,6 +24,7 @@
 		6CC1CE611B2F93D100D95621 /* TapeDelayFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CC1CE601B2F93D100D95621 /* TapeDelayFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6CC1CE731B2F93D100D95621 /* TapeDelayFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CC1CE5E1B2F93D100D95621 /* TapeDelayFramework.framework */; };
 		6CC1CE741B2F93D100D95621 /* TapeDelayFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6CC1CE5E1B2F93D100D95621 /* TapeDelayFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6CD08EF21B3D6E7400C0255E /* TapeDelayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD08EF11B3D6E7400C0255E /* TapeDelayView.swift */; };
 		6CE5B3221B2F9A1200471728 /* TapeDelay.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6CE5B3201B2F9A1200471728 /* TapeDelay.mm */; };
 		6CE5B3241B2F9A2C00471728 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CE5B3231B2F9A2C00471728 /* AudioToolbox.framework */; };
 		6CE5B3261B2F9A3A00471728 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CE5B3251B2F9A3A00471728 /* AVFoundation.framework */; };
@@ -104,6 +104,7 @@
 		6CC1CE5E1B2F93D100D95621 /* TapeDelayFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TapeDelayFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CC1CE601B2F93D100D95621 /* TapeDelayFramework.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TapeDelayFramework.h; sourceTree = "<group>"; };
 		6CC1CE621B2F93D100D95621 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6CD08EF11B3D6E7400C0255E /* TapeDelayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapeDelayView.swift; sourceTree = "<group>"; };
 		6CE5B31F1B2F9A1200471728 /* TapeDelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapeDelay.h; sourceTree = "<group>"; };
 		6CE5B3201B2F9A1200471728 /* TapeDelay.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TapeDelay.mm; sourceTree = "<group>"; };
 		6CE5B3231B2F9A2C00471728 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -210,6 +211,7 @@
 				6C9245541B3601DE006D7DE9 /* ParameterRamper.hpp */,
 				6CC1CE621B2F93D100D95621 /* Info.plist */,
 				6C6027761B3763EF003D6BEB /* TapeDelayViewController.swift */,
+				6CD08EF11B3D6E7400C0255E /* TapeDelayView.swift */,
 			);
 			path = TapeDelayFramework;
 			sourceTree = "<group>";
@@ -223,7 +225,6 @@
 			files = (
 				6CC1CE611B2F93D100D95621 /* TapeDelayFramework.h in Headers */,
 				6C6027661B375456003D6BEB /* TapeDelay.h in Headers */,
-				6C5769221B37670A00FDE2F7 /* BufferedAudioBus.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,6 +382,7 @@
 			files = (
 				6C6027771B3763EF003D6BEB /* TapeDelayViewController.swift in Sources */,
 				6C9245531B35C347006D7DE9 /* DSPKernel.mm in Sources */,
+				6CD08EF21B3D6E7400C0255E /* TapeDelayView.swift in Sources */,
 				6CE5B3221B2F9A1200471728 /* TapeDelay.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -436,6 +438,7 @@
 		6C60275B1B374F49003D6BEB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				INFOPLIST_FILE = TapeDelayAppExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Lofionic.TapeDelay.TapeDelayAppExtension;
@@ -448,6 +451,7 @@
 		6C60275C1B374F49003D6BEB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				INFOPLIST_FILE = TapeDelayAppExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Lofionic.TapeDelay.TapeDelayAppExtension;
@@ -460,6 +464,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -504,6 +509,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -542,6 +548,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = TapeDelay/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -554,6 +561,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = TapeDelay/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -566,6 +574,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -577,8 +586,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
-					"-all_load",
 					"-ObjC",
+					"-all_load",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Lofionic.TapeDelayFramework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -593,6 +602,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -604,8 +614,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
-					"-all_load",
 					"-ObjC",
+					"-all_load",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Lofionic.TapeDelayFramework;
 				PRODUCT_NAME = "$(TARGET_NAME)";

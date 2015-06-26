@@ -16,6 +16,8 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
     @IBOutlet weak var feedbackSlider   : UISlider!
     @IBOutlet weak var tapeEffectSlider : UISlider!
     
+    //var TapeDelayView : TapeDelayView?
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         

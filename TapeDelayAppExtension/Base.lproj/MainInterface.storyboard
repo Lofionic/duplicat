@@ -27,10 +27,17 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="96f-Vd-PnS">
-                                <rect key="frame" x="0.0" y="40" width="600" height="312"/>
+                                <rect key="frame" x="0.0" y="40" width="600" height="440"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ODm-Tt-RHe" customClass="TapeDelayView" customModule="TapeDelayFramework">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="128"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="128" id="xfk-Nf-CLM"/>
+                                        </constraints>
+                                    </view>
                                     <view contentMode="scaleToFill" verticalCompressionResistancePriority="1" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SbA-nz-whW" userLabel="TapeSpeed">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="66"/>
+                                        <rect key="frame" x="0.0" y="128" width="600" height="66"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0M1-Lc-7aV">
                                                 <rect key="frame" x="578" y="51" width="14" height="15"/>
@@ -75,7 +82,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" verticalCompressionResistancePriority="1" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jKJ-5d-CDx" userLabel="Mix">
-                                        <rect key="frame" x="0.0" y="66" width="600" height="82"/>
+                                        <rect key="frame" x="0.0" y="194" width="600" height="82"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A1O-TP-hJo">
                                                 <rect key="frame" x="578" y="67" width="14" height="15"/>
@@ -120,7 +127,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" verticalCompressionResistancePriority="1" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kmE-aq-c7H" userLabel="Feedback">
-                                        <rect key="frame" x="0.0" y="148" width="600" height="82"/>
+                                        <rect key="frame" x="0.0" y="276" width="600" height="82"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XJj-vb-eQS">
                                                 <rect key="frame" x="578" y="67" width="14" height="15"/>
@@ -165,7 +172,7 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" verticalCompressionResistancePriority="1" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="huQ-aC-mGC" userLabel="TapeEffect">
-                                        <rect key="frame" x="0.0" y="230" width="600" height="82"/>
+                                        <rect key="frame" x="0.0" y="358" width="600" height="82"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jXo-vC-A9m">
                                                 <rect key="frame" x="578" y="67" width="14" height="15"/>
