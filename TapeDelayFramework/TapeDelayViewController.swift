@@ -16,7 +16,11 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
     @IBOutlet weak var feedbackSlider   : UISlider!
     @IBOutlet weak var tapeEffectSlider : UISlider!
     
-    //var TapeDelayView : TapeDelayView?
+    @IBOutlet weak var shortDelayButton     : TapeDelayToggleButton!
+    @IBOutlet weak var mediumDelayButton    : TapeDelayToggleButton!
+    @IBOutlet weak var longDelayButton      : TapeDelayToggleButton!
+  
+    @IBOutlet weak var tapeDelayView : TapeDelayView!
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +50,11 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
     var mixParameter:               AUParameter?
     var feedbackParameter:          AUParameter?
     var tapeEffectParameter:        AUParameter?
+    
+    var shortDelayParameter:        AUParameter?
+    var mediumDelayParameter:       AUParameter?
+    var longDelayParameter:         AUParameter?
+    
     var parameterObserverToken:     AUParameterObserverToken?
     
     public func createAudioUnitWithComponentDescription(desc: AudioComponentDescription) throws -> AUAudioUnit {
@@ -67,6 +76,10 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
         mixParameter = paramTree.valueForKey("mix") as? AUParameter
         feedbackParameter = paramTree.valueForKey("feedback") as? AUParameter
         tapeEffectParameter = paramTree.valueForKey("tapeEffect") as? AUParameter
+        
+        shortDelayParameter = paramTree.valueForKey("shortDelay") as? AUParameter
+        mediumDelayParameter = paramTree.valueForKey("mediumDelay") as? AUParameter
+        longDelayParameter = paramTree.valueForKey("longDelay") as? AUParameter
         
         parameterObserverToken = paramTree.tokenByAddingParameterObserver { address, value in
             dispatch_async(dispatch_get_main_queue()) {
@@ -104,4 +117,16 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
         tapeEffectParameter?.setValue(self.tapeEffectSlider.value, originator: parameterObserverToken!)
     }
     
+    @IBAction func delayToggleButtonValueChanged(sender: AnyObject) {
+        let tapeDelayToggleButton = sender as! TapeDelayToggleButton
+        let auValue = (tapeDelayToggleButton.selected ? 1.0 : 0.0) as AUValue
+        
+        if tapeDelayToggleButton == shortDelayButton {
+            shortDelayParameter?.setValue(auValue, originator: parameterObserverToken!)
+        } else if tapeDelayToggleButton == mediumDelayButton {
+            mediumDelayParameter?.setValue(auValue, originator: parameterObserverToken!)
+        } else if tapeDelayToggleButton == longDelayButton {
+            longDelayParameter?.setValue(auValue, originator: parameterObserverToken!)
+        }
+    }
 }

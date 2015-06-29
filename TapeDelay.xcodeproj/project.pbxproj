@@ -14,6 +14,7 @@
 		6C6027701B375618003D6BEB /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C60276F1B375618003D6BEB /* CoreAudioKit.framework */; };
 		6C6027751B376292003D6BEB /* TapeDelayFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CC1CE5E1B2F93D100D95621 /* TapeDelayFramework.framework */; };
 		6C6027771B3763EF003D6BEB /* TapeDelayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6027761B3763EF003D6BEB /* TapeDelayViewController.swift */; };
+		6C7076D71B41E881006008A7 /* TapeDelayToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7076D61B41E881006008A7 /* TapeDelayToggleButton.swift */; };
 		6C9245531B35C347006D7DE9 /* DSPKernel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6C9245511B35C347006D7DE9 /* DSPKernel.mm */; };
 		6CC1CE441B2F922E00D95621 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC1CE431B2F922E00D95621 /* main.m */; };
 		6CC1CE471B2F922E00D95621 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC1CE461B2F922E00D95621 /* AppDelegate.m */; };
@@ -87,6 +88,7 @@
 		6C6027561B374F49003D6BEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6C60276F1B375618003D6BEB /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
 		6C6027761B3763EF003D6BEB /* TapeDelayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapeDelayViewController.swift; sourceTree = "<group>"; };
+		6C7076D61B41E881006008A7 /* TapeDelayToggleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapeDelayToggleButton.swift; sourceTree = "<group>"; };
 		6C92454D1B35C08B006D7DE9 /* TapeDelayDSPKernel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TapeDelayDSPKernel.hpp; sourceTree = "<group>"; };
 		6C9245501B35C347006D7DE9 /* DSPKernel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DSPKernel.hpp; sourceTree = "<group>"; };
 		6C9245511B35C347006D7DE9 /* DSPKernel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DSPKernel.mm; sourceTree = "<group>"; };
@@ -210,8 +212,9 @@
 				6C9245511B35C347006D7DE9 /* DSPKernel.mm */,
 				6C9245541B3601DE006D7DE9 /* ParameterRamper.hpp */,
 				6CC1CE621B2F93D100D95621 /* Info.plist */,
-				6C6027761B3763EF003D6BEB /* TapeDelayViewController.swift */,
+				6C7076D61B41E881006008A7 /* TapeDelayToggleButton.swift */,
 				6CD08EF11B3D6E7400C0255E /* TapeDelayView.swift */,
+				6C6027761B3763EF003D6BEB /* TapeDelayViewController.swift */,
 			);
 			path = TapeDelayFramework;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 				6C6027771B3763EF003D6BEB /* TapeDelayViewController.swift in Sources */,
 				6C9245531B35C347006D7DE9 /* DSPKernel.mm in Sources */,
 				6CD08EF21B3D6E7400C0255E /* TapeDelayView.swift in Sources */,
+				6C7076D71B41E881006008A7 /* TapeDelayToggleButton.swift in Sources */,
 				6CE5B3221B2F9A1200471728 /* TapeDelay.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -71,6 +71,36 @@
                                                                 valueStrings:nil
                                                          dependentParameters:nil];
     
+    AUParameter *shortDelay = [AUParameterTree createParameterWithIdentifier:@"shortDelay" name:@"Short Delay"
+                                                                    address:DelayParamShortDelay
+                                                                        min:0
+                                                                         max:1
+                                                                        unit:kAudioUnitParameterUnit_Boolean
+                                                                    unitName:nil
+                                                                       flags:0
+                                                                valueStrings:nil
+                                                         dependentParameters:nil];
+    
+    AUParameter *mediumDelay = [AUParameterTree createParameterWithIdentifier:@"mediumDelay" name:@"Medium Delay"
+                                                                     address:DelayParamMediumDelay
+                                                                         min:0
+                                                                         max:1
+                                                                        unit:kAudioUnitParameterUnit_Boolean
+                                                                    unitName:nil
+                                                                       flags:0
+                                                                valueStrings:nil
+                                                         dependentParameters:nil];
+    
+    AUParameter *longDelay = [AUParameterTree createParameterWithIdentifier:@"longDelay" name:@"Long Delay"
+                                                                     address:DelayParamLongDelay
+                                                                         min:0
+                                                                         max:1
+                                                                        unit:kAudioUnitParameterUnit_Boolean
+                                                                    unitName:nil
+                                                                       flags:0
+                                                                valueStrings:nil
+                                                         dependentParameters:nil];
+    
     AUParameter *tapeEffect = [AUParameterTree createParameterWithIdentifier:@"tapeEffect" name:@"Tape Effect"
                                                                      address:DelayParamTapeEffect
                                                                          min:0
@@ -87,17 +117,28 @@
     mix.value           = 0.5;
     feedback.value      = 0.2;
     tapeEffect.value    = 0.5;
+    shortDelay.value    = 0;
+    mediumDelay.value   = 0;
+    longDelay.value     = 0;
+    
     _kernel.setParameter(DelayParamTapeSpeed, tapeSpeed.value);
     _kernel.setParameter(DelayParamMix, mix.value);
     _kernel.setParameter(DelayParamFeedback, feedback.value);
     _kernel.setParameter(DelayParamTapeEffect, tapeEffect.value);
+    
+    _kernel.setParameter(DelayParamShortDelay, shortDelay.value);
+    _kernel.setParameter(DelayParamMediumDelay, mediumDelay.value);
+    _kernel.setParameter(DelayParamLongDelay, longDelay.value);
     
     // Create the parameter tree
     _parameterTree = [AUParameterTree createTreeWithChildren:@[
                                                                tapeSpeed,
                                                                mix,
                                                                feedback,
-                                                               tapeEffect
+                                                               tapeEffect,
+                                                               shortDelay,
+                                                               mediumDelay,
+                                                               longDelay
                                                                ]];
     
     // Create the input and output busses.

@@ -73,8 +73,6 @@ class TapeDelayView : UIView {
     
     func createMarker() {
         
-        let markerPoint = CGPathGetCurrentPoint(tapeLayer.path)
-        
         let markerRect = CGRect(x: 0, y: 0, width: 8, height: 8)
         
         let markerPath = CGPathCreateMutable()

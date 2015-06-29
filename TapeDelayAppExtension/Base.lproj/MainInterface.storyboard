@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8121.20" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ppr-xu-QKQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8121.17" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ppr-xu-QKQ">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.16"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.14"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -27,15 +27,52 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="96f-Vd-PnS">
-                                <rect key="frame" x="0.0" y="40" width="600" height="440"/>
+                                <rect key="frame" x="0.0" y="40" width="600" height="380"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ODm-Tt-RHe" customClass="TapeDelayView" customModule="TapeDelayFramework">
+                                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="DMA-HS-dJi">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="128"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="128" id="xfk-Nf-CLM"/>
-                                        </constraints>
-                                    </view>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ODm-Tt-RHe" customClass="TapeDelayView" customModule="TapeDelayFramework">
+                                                <rect key="frame" x="0.0" y="0.0" width="300" height="128"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </view>
+                                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="TUZ-ZJ-KdO">
+                                                <rect key="frame" x="300" y="0.0" width="300" height="128"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PEP-Tn-eLp" customClass="TapeDelayToggleButton" customModule="TapeDelayFramework">
+                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
+                                                        <state key="normal" title="Short"/>
+                                                        <state key="selected">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="delayToggleButtonValueChanged:" destination="ppr-xu-QKQ" eventType="valueChanged" id="Wz7-qv-A1L"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Mh-oH-OJb" customClass="TapeDelayToggleButton" customModule="TapeDelayFramework">
+                                                        <rect key="frame" x="0.0" y="43" width="300" height="42"/>
+                                                        <state key="normal" title="Medium"/>
+                                                        <state key="selected">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="delayToggleButtonValueChanged:" destination="ppr-xu-QKQ" eventType="valueChanged" id="vuw-Ng-GRn"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="drL-47-ZCy" customClass="TapeDelayToggleButton" customModule="TapeDelayFramework">
+                                                        <rect key="frame" x="0.0" y="85" width="300" height="43"/>
+                                                        <state key="normal" title="Long"/>
+                                                        <state key="selected">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="delayToggleButtonValueChanged:" destination="ppr-xu-QKQ" eventType="valueChanged" id="LQk-nE-AFi"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
                                     <view contentMode="scaleToFill" verticalCompressionResistancePriority="1" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SbA-nz-whW" userLabel="TapeSpeed">
                                         <rect key="frame" x="0.0" y="128" width="600" height="66"/>
                                         <subviews>
@@ -82,22 +119,22 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" verticalCompressionResistancePriority="1" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jKJ-5d-CDx" userLabel="Mix">
-                                        <rect key="frame" x="0.0" y="194" width="600" height="82"/>
+                                        <rect key="frame" x="0.0" y="194" width="600" height="62"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A1O-TP-hJo">
-                                                <rect key="frame" x="578" y="67" width="14" height="15"/>
+                                                <rect key="frame" x="578" y="47" width="14" height="15"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kbA-Zh-QPF">
-                                                <rect key="frame" x="8" y="67" width="8" height="15"/>
+                                                <rect key="frame" x="8" y="47" width="8" height="15"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ocK-Nw-iFC">
-                                                <rect key="frame" x="6" y="27" width="588" height="41"/>
+                                                <rect key="frame" x="6" y="7" width="588" height="41"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="iZX-rf-WlI"/>
                                                 </constraints>
@@ -106,7 +143,7 @@
                                                 </connections>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mix" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HGf-hX-88e">
-                                                <rect key="frame" x="8" y="20" width="20" height="15"/>
+                                                <rect key="frame" x="8" y="0.0" width="20" height="15"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -119,7 +156,7 @@
                                             <constraint firstItem="kbA-Zh-QPF" firstAttribute="leading" secondItem="ocK-Nw-iFC" secondAttribute="leading" id="Oak-pd-6J5"/>
                                             <constraint firstItem="HGf-hX-88e" firstAttribute="leading" secondItem="ocK-Nw-iFC" secondAttribute="leading" id="jFF-Z2-Q2S"/>
                                             <constraint firstAttribute="bottom" secondItem="kbA-Zh-QPF" secondAttribute="bottom" id="poN-zD-43M"/>
-                                            <constraint firstItem="HGf-hX-88e" firstAttribute="top" secondItem="jKJ-5d-CDx" secondAttribute="top" constant="20" id="qI3-pw-pSo"/>
+                                            <constraint firstItem="HGf-hX-88e" firstAttribute="top" secondItem="jKJ-5d-CDx" secondAttribute="top" id="qI3-pw-pSo"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="ocK-Nw-iFC" secondAttribute="trailing" id="riw-hI-Dv9"/>
                                             <constraint firstItem="ocK-Nw-iFC" firstAttribute="top" secondItem="HGf-hX-88e" secondAttribute="bottom" constant="-8" id="tYX-81-YYz"/>
                                             <constraint firstItem="A1O-TP-hJo" firstAttribute="centerY" secondItem="kbA-Zh-QPF" secondAttribute="centerY" id="yCN-8m-mVA"/>
@@ -127,22 +164,22 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" verticalCompressionResistancePriority="1" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kmE-aq-c7H" userLabel="Feedback">
-                                        <rect key="frame" x="0.0" y="276" width="600" height="82"/>
+                                        <rect key="frame" x="0.0" y="256" width="600" height="62"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XJj-vb-eQS">
-                                                <rect key="frame" x="578" y="67" width="14" height="15"/>
+                                                <rect key="frame" x="578" y="47" width="14" height="15"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JUK-vv-LAZ">
-                                                <rect key="frame" x="8" y="67" width="8" height="15"/>
+                                                <rect key="frame" x="8" y="47" width="8" height="15"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="mI3-8M-hrW">
-                                                <rect key="frame" x="6" y="27" width="588" height="41"/>
+                                                <rect key="frame" x="6" y="7" width="588" height="41"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="OEy-SC-nEn"/>
                                                 </constraints>
@@ -151,7 +188,7 @@
                                                 </connections>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feedback" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wgw-1v-iMR">
-                                                <rect key="frame" x="8" y="20" width="56" height="15"/>
+                                                <rect key="frame" x="8" y="0.0" width="56" height="15"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -166,28 +203,28 @@
                                             <constraint firstAttribute="trailingMargin" secondItem="mI3-8M-hrW" secondAttribute="trailing" id="ggm-IC-k0D"/>
                                             <constraint firstItem="mI3-8M-hrW" firstAttribute="leading" secondItem="kmE-aq-c7H" secondAttribute="leadingMargin" id="iZi-CT-AAX"/>
                                             <constraint firstItem="JUK-vv-LAZ" firstAttribute="leading" secondItem="mI3-8M-hrW" secondAttribute="leading" id="l6k-3V-nQd"/>
-                                            <constraint firstItem="Wgw-1v-iMR" firstAttribute="top" secondItem="kmE-aq-c7H" secondAttribute="top" constant="20" id="rig-Jt-p4S"/>
+                                            <constraint firstItem="Wgw-1v-iMR" firstAttribute="top" secondItem="kmE-aq-c7H" secondAttribute="top" id="rig-Jt-p4S"/>
                                             <constraint firstItem="mI3-8M-hrW" firstAttribute="trailing" secondItem="XJj-vb-eQS" secondAttribute="trailing" id="x7d-OG-HWl"/>
                                             <constraint firstItem="Wgw-1v-iMR" firstAttribute="leading" secondItem="mI3-8M-hrW" secondAttribute="leading" id="yxF-eL-hYp"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" verticalCompressionResistancePriority="1" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="huQ-aC-mGC" userLabel="TapeEffect">
-                                        <rect key="frame" x="0.0" y="358" width="600" height="82"/>
+                                        <rect key="frame" x="0.0" y="318" width="600" height="62"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jXo-vC-A9m">
-                                                <rect key="frame" x="578" y="67" width="14" height="15"/>
+                                                <rect key="frame" x="578" y="47" width="14" height="15"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RSy-Mg-MQI">
-                                                <rect key="frame" x="8" y="67" width="8" height="15"/>
+                                                <rect key="frame" x="8" y="47" width="8" height="15"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="McO-Mv-eb0">
-                                                <rect key="frame" x="6" y="27" width="588" height="41"/>
+                                                <rect key="frame" x="6" y="7" width="588" height="41"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="pMy-Nj-EgV"/>
                                                 </constraints>
@@ -196,7 +233,7 @@
                                                 </connections>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tape Effect" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZCE-0H-NlP">
-                                                <rect key="frame" x="8" y="20" width="65" height="15"/>
+                                                <rect key="frame" x="8" y="0.0" width="65" height="15"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -209,7 +246,7 @@
                                             <constraint firstAttribute="bottom" secondItem="RSy-Mg-MQI" secondAttribute="bottom" id="X0B-S7-Q6O"/>
                                             <constraint firstItem="McO-Mv-eb0" firstAttribute="trailing" secondItem="jXo-vC-A9m" secondAttribute="trailing" id="ZVy-ds-hFT"/>
                                             <constraint firstItem="RSy-Mg-MQI" firstAttribute="top" secondItem="McO-Mv-eb0" secondAttribute="bottom" id="gJ5-2e-Og6"/>
-                                            <constraint firstItem="ZCE-0H-NlP" firstAttribute="top" secondItem="huQ-aC-mGC" secondAttribute="top" constant="20" id="hGt-d6-zaG"/>
+                                            <constraint firstItem="ZCE-0H-NlP" firstAttribute="top" secondItem="huQ-aC-mGC" secondAttribute="top" id="hGt-d6-zaG"/>
                                             <constraint firstItem="McO-Mv-eb0" firstAttribute="top" secondItem="ZCE-0H-NlP" secondAttribute="bottom" constant="-8" id="idt-hn-EFz"/>
                                             <constraint firstItem="ZCE-0H-NlP" firstAttribute="leading" secondItem="McO-Mv-eb0" secondAttribute="leading" id="mI4-2U-8E7"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="McO-Mv-eb0" secondAttribute="trailing" id="sWZ-bF-yDz"/>
@@ -233,8 +270,12 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="600"/>
                     <connections>
+                        <outlet property="TapeDelayView" destination="ODm-Tt-RHe" id="ito-sy-1Jr"/>
                         <outlet property="feedbackSlider" destination="mI3-8M-hrW" id="NNf-bP-lh7"/>
+                        <outlet property="longDelayButton" destination="drL-47-ZCy" id="qSE-hi-Ruh"/>
+                        <outlet property="mediumDelayButton" destination="8Mh-oH-OJb" id="DgA-Jp-CCK"/>
                         <outlet property="mixSlider" destination="ocK-Nw-iFC" id="dN2-aE-BdU"/>
+                        <outlet property="shortDelayButton" destination="PEP-Tn-eLp" id="gQn-iN-kH0"/>
                         <outlet property="tapeEffectSlider" destination="McO-Mv-eb0" id="otS-vd-UI8"/>
                         <outlet property="tapeSpeedSlider" destination="B7T-hv-7cD" id="G1t-pj-aqC"/>
                     </connections>

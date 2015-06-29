@@ -17,7 +17,10 @@ enum {
     DelayParamTapeSpeed,
     DelayParamMix,
     DelayParamFeedback,
-    DelayParamTapeEffect
+    DelayParamTapeEffect,
+    DelayParamShortDelay,
+    DelayParamMediumDelay,
+    DelayParamLongDelay
 };
 
 class TapeDelayDSPKernel : public DSPKernel {
@@ -79,13 +82,39 @@ public:
     }
     
     void applyDelay(DelayState &state, float *in, float *out, double tapeSpeed, double feedback, double mix, double tapeEffect) {
-        float delayOffset = (400 / 1000) * sampleRate;
-        SInt32 delayLocation = state.bufferPosition - floor(delayOffset);
-        while (delayLocation < 0) {
-            delayLocation += bufferSize;
+        
+        float delayMix = 0;
+        
+        if (shortDelay == true) {
+            float shortDelayOffset = (100 / 1000.) * sampleRate; // 300ms
+            SInt32 shortDelayLocation = state.bufferPosition - floor(shortDelayOffset);
+            while (shortDelayLocation < 0) {
+                shortDelayLocation += bufferSize;
+            }
+            
+            delayMix += state.tapeBuffer[shortDelayLocation];
         }
         
-        float delayMix = state.tapeBuffer[delayLocation] + *in;
+        if (mediumDelay) {
+            float mediumDelayOffset = (400 / 1000.) * sampleRate; // 600ms
+            SInt32 mediumDelayLocation = state.bufferPosition - floor(mediumDelayOffset);
+            while (mediumDelayLocation < 0) {
+                mediumDelayLocation += bufferSize;
+            }
+            
+            delayMix += state.tapeBuffer[mediumDelayLocation];
+        }
+        
+        if (longDelay) {
+            float longDelayOffset = (900 / 1000.) * sampleRate; // 900ms
+            SInt32 longDelayLocation = state.bufferPosition - floor(longDelayOffset);
+            while (longDelayLocation < 0) {
+                longDelayLocation += bufferSize;
+            }
+            
+            delayMix += state.tapeBuffer[longDelayLocation];
+        }
+        
         if (delayMix > 1.0) {
             delayMix = 1.0;
         } else if (delayMix < -1.0) {
@@ -132,6 +161,16 @@ public:
             case DelayParamTapeEffect:
                 tapeEffectRamper.set(clamp(value, 0.0f, 1.0f));
                 break;
+            case DelayParamShortDelay:
+                shortDelay = (value > 0);
+                break;
+            case DelayParamMediumDelay:
+                mediumDelay = (value > 0);
+                break;
+            case DelayParamLongDelay:
+                longDelay = (value > 0);
+                break;
+                
         }
     }
     
@@ -145,6 +184,12 @@ public:
                 return feedbackRamper.goal();
             case DelayParamTapeEffect:
                 return tapeEffectRamper.goal();
+            case DelayParamShortDelay:
+                return shortDelay;
+            case DelayParamMediumDelay:
+                return mediumDelay;
+            case DelayParamLongDelay:
+                return longDelay;
             default: return 0.0f;
         }
     }
@@ -162,6 +207,15 @@ public:
                 break;
             case DelayParamTapeEffect:
                 tapeEffectRamper.startRamp(clamp(value, 0.0f, 1.0f), duration);
+                break;
+            case DelayParamShortDelay:
+                shortDelay = (value > 0);
+                break;
+            case DelayParamMediumDelay:
+                mediumDelay = (value > 0);
+                break;
+            case DelayParamLongDelay:
+                longDelay = (value > 0);
         }
     }
     
@@ -189,6 +243,9 @@ public:
     ParameterRamper feedbackRamper      = 0.0;
     ParameterRamper tapeEffectRamper    = 0.0;
     
+    bool shortDelay;
+    bool mediumDelay;
+    bool longDelay;
 };
 
 
