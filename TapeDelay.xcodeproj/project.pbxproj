@@ -7,14 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C303A081B42928B001C2925 /* TapeDelayToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C303A071B42928B001C2925 /* TapeDelayToggleButton.swift */; };
+		6C5907561B43FE0A001D6C46 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C5907531B43FD67001D6C46 /* Assets.xcassets */; };
+		6C5907591B4402D9001D6C46 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C5907531B43FD67001D6C46 /* Assets.xcassets */; };
 		6C6027521B374F49003D6BEB /* TapeDelayAppEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6027511B374F49003D6BEB /* TapeDelayAppEx.swift */; };
 		6C6027551B374F49003D6BEB /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C6027531B374F49003D6BEB /* MainInterface.storyboard */; };
-		6C6027591B374F49003D6BEB /* TapeDelayAppExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6C60274F1B374F49003D6BEB /* TapeDelayAppExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6C6027661B375456003D6BEB /* TapeDelay.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CE5B31F1B2F9A1200471728 /* TapeDelay.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6C6027701B375618003D6BEB /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C60276F1B375618003D6BEB /* CoreAudioKit.framework */; };
 		6C6027751B376292003D6BEB /* TapeDelayFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CC1CE5E1B2F93D100D95621 /* TapeDelayFramework.framework */; };
 		6C6027771B3763EF003D6BEB /* TapeDelayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6027761B3763EF003D6BEB /* TapeDelayViewController.swift */; };
-		6C7076D71B41E881006008A7 /* TapeDelayToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C7076D61B41E881006008A7 /* TapeDelayToggleButton.swift */; };
 		6C9245531B35C347006D7DE9 /* DSPKernel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6C9245511B35C347006D7DE9 /* DSPKernel.mm */; };
 		6CC1CE441B2F922E00D95621 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC1CE431B2F922E00D95621 /* main.m */; };
 		6CC1CE471B2F922E00D95621 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC1CE461B2F922E00D95621 /* AppDelegate.m */; };
@@ -29,16 +30,11 @@
 		6CE5B3221B2F9A1200471728 /* TapeDelay.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6CE5B3201B2F9A1200471728 /* TapeDelay.mm */; };
 		6CE5B3241B2F9A2C00471728 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CE5B3231B2F9A2C00471728 /* AudioToolbox.framework */; };
 		6CE5B3261B2F9A3A00471728 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CE5B3251B2F9A3A00471728 /* AVFoundation.framework */; };
+		6CEAA41B1B4421A2004C23A1 /* BufferedAudioBus.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6CEAA41A1B4421A2004C23A1 /* BufferedAudioBus.hpp */; };
+		6CEAA41C1B4424C7004C23A1 /* TapeDelayAppExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6C60274F1B374F49003D6BEB /* TapeDelayAppExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		6C6027571B374F49003D6BEB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6CC1CE371B2F922E00D95621 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6C60274E1B374F49003D6BEB;
-			remoteInfo = TapeDelayAppExtension;
-		};
 		6C6027721B375922003D6BEB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6CC1CE371B2F922E00D95621 /* Project object */;
@@ -53,20 +49,16 @@
 			remoteGlobalIDString = 6CC1CE5D1B2F93D100D95621;
 			remoteInfo = TapeDelayFramework;
 		};
+		6CEAA41D1B4424C7004C23A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6CC1CE371B2F922E00D95621 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6C60274E1B374F49003D6BEB;
+			remoteInfo = TapeDelayAppExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		6C9245711B360DF6006D7DE9 /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				6C6027591B374F49003D6BEB /* TapeDelayAppExtension.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		6CC1CE781B2F93D100D95621 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -78,17 +70,28 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6CEAA41F1B4424C8004C23A1 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				6CEAA41C1B4424C7004C23A1 /* TapeDelayAppExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		6C5769211B37670A00FDE2F7 /* BufferedAudioBus.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BufferedAudioBus.hpp; sourceTree = "<group>"; };
+		6C303A071B42928B001C2925 /* TapeDelayToggleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapeDelayToggleButton.swift; sourceTree = "<group>"; };
+		6C5907531B43FD67001D6C46 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6C60274F1B374F49003D6BEB /* TapeDelayAppExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TapeDelayAppExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C6027511B374F49003D6BEB /* TapeDelayAppEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapeDelayAppEx.swift; sourceTree = "<group>"; };
 		6C6027541B374F49003D6BEB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		6C6027561B374F49003D6BEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6C60276F1B375618003D6BEB /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
 		6C6027761B3763EF003D6BEB /* TapeDelayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapeDelayViewController.swift; sourceTree = "<group>"; };
-		6C7076D61B41E881006008A7 /* TapeDelayToggleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapeDelayToggleButton.swift; sourceTree = "<group>"; };
 		6C92454D1B35C08B006D7DE9 /* TapeDelayDSPKernel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TapeDelayDSPKernel.hpp; sourceTree = "<group>"; };
 		6C9245501B35C347006D7DE9 /* DSPKernel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DSPKernel.hpp; sourceTree = "<group>"; };
 		6C9245511B35C347006D7DE9 /* DSPKernel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DSPKernel.mm; sourceTree = "<group>"; };
@@ -111,6 +114,7 @@
 		6CE5B3201B2F9A1200471728 /* TapeDelay.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TapeDelay.mm; sourceTree = "<group>"; };
 		6CE5B3231B2F9A2C00471728 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		6CE5B3251B2F9A3A00471728 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		6CEAA41A1B4421A2004C23A1 /* BufferedAudioBus.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BufferedAudioBus.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +147,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6C5907521B43FD55001D6C46 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6C5907531B43FD67001D6C46 /* Assets.xcassets */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		6C6027501B374F49003D6BEB /* TapeDelayAppExtension */ = {
 			isa = PBXGroup;
 			children = (
@@ -163,6 +175,7 @@
 				6CC1CE5F1B2F93D100D95621 /* TapeDelayFramework */,
 				6C6027501B374F49003D6BEB /* TapeDelayAppExtension */,
 				6CC1CE401B2F922E00D95621 /* Products */,
+				6C5907521B43FD55001D6C46 /* Resources */,
 			);
 			sourceTree = "<group>";
 		};
@@ -179,7 +192,6 @@
 		6CC1CE411B2F922E00D95621 /* TapeDelay */ = {
 			isa = PBXGroup;
 			children = (
-				6C5769211B37670A00FDE2F7 /* BufferedAudioBus.hpp */,
 				6CC1CE451B2F922E00D95621 /* AppDelegate.h */,
 				6CC1CE461B2F922E00D95621 /* AppDelegate.m */,
 				6CC1CE481B2F922E00D95621 /* ViewController.h */,
@@ -204,6 +216,7 @@
 		6CC1CE5F1B2F93D100D95621 /* TapeDelayFramework */ = {
 			isa = PBXGroup;
 			children = (
+				6CEAA41A1B4421A2004C23A1 /* BufferedAudioBus.hpp */,
 				6CC1CE601B2F93D100D95621 /* TapeDelayFramework.h */,
 				6CE5B31F1B2F9A1200471728 /* TapeDelay.h */,
 				6CE5B3201B2F9A1200471728 /* TapeDelay.mm */,
@@ -212,9 +225,9 @@
 				6C9245511B35C347006D7DE9 /* DSPKernel.mm */,
 				6C9245541B3601DE006D7DE9 /* ParameterRamper.hpp */,
 				6CC1CE621B2F93D100D95621 /* Info.plist */,
-				6C7076D61B41E881006008A7 /* TapeDelayToggleButton.swift */,
 				6CD08EF11B3D6E7400C0255E /* TapeDelayView.swift */,
 				6C6027761B3763EF003D6BEB /* TapeDelayViewController.swift */,
+				6C303A071B42928B001C2925 /* TapeDelayToggleButton.swift */,
 			);
 			path = TapeDelayFramework;
 			sourceTree = "<group>";
@@ -228,6 +241,7 @@
 			files = (
 				6CC1CE611B2F93D100D95621 /* TapeDelayFramework.h in Headers */,
 				6C6027661B375456003D6BEB /* TapeDelay.h in Headers */,
+				6CEAA41B1B4421A2004C23A1 /* BufferedAudioBus.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,13 +274,13 @@
 				6CC1CE3C1B2F922E00D95621 /* Frameworks */,
 				6CC1CE3D1B2F922E00D95621 /* Resources */,
 				6CC1CE781B2F93D100D95621 /* Embed Frameworks */,
-				6C9245711B360DF6006D7DE9 /* Embed App Extensions */,
+				6CEAA41F1B4424C8004C23A1 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				6CC1CE721B2F93D100D95621 /* PBXTargetDependency */,
-				6C6027581B374F49003D6BEB /* PBXTargetDependency */,
+				6CEAA41E1B4424C7004C23A1 /* PBXTargetDependency */,
 			);
 			name = TapeDelay;
 			productName = TapeDelay;
@@ -309,6 +323,7 @@
 					};
 					6CC1CE5D1B2F93D100D95621 = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = NK7M84AH48;
 					};
 				};
 			};
@@ -337,6 +352,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C5907591B4402D9001D6C46 /* Assets.xcassets in Resources */,
 				6C6027551B374F49003D6BEB /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -355,6 +371,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C5907561B43FE0A001D6C46 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,9 +401,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C6027771B3763EF003D6BEB /* TapeDelayViewController.swift in Sources */,
+				6C303A081B42928B001C2925 /* TapeDelayToggleButton.swift in Sources */,
 				6C9245531B35C347006D7DE9 /* DSPKernel.mm in Sources */,
 				6CD08EF21B3D6E7400C0255E /* TapeDelayView.swift in Sources */,
-				6C7076D71B41E881006008A7 /* TapeDelayToggleButton.swift in Sources */,
 				6CE5B3221B2F9A1200471728 /* TapeDelay.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -394,11 +411,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		6C6027581B374F49003D6BEB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6C60274E1B374F49003D6BEB /* TapeDelayAppExtension */;
-			targetProxy = 6C6027571B374F49003D6BEB /* PBXContainerItemProxy */;
-		};
 		6C6027731B375922003D6BEB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 6CC1CE5D1B2F93D100D95621 /* TapeDelayFramework */;
@@ -408,6 +420,11 @@
 			isa = PBXTargetDependency;
 			target = 6CC1CE5D1B2F93D100D95621 /* TapeDelayFramework */;
 			targetProxy = 6CC1CE711B2F93D100D95621 /* PBXContainerItemProxy */;
+		};
+		6CEAA41E1B4424C7004C23A1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6C60274E1B374F49003D6BEB /* TapeDelayAppExtension */;
+			targetProxy = 6CEAA41D1B4424C7004C23A1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -443,6 +460,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = TapeDelayAppExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Lofionic.TapeDelay.TapeDelayAppExtension;
@@ -456,6 +474,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = TapeDelayAppExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Lofionic.TapeDelay.TapeDelayAppExtension;
@@ -553,6 +572,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = TapeDelay/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -566,6 +586,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = TapeDelay/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -580,6 +601,7 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -608,6 +630,7 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;

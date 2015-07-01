@@ -11,6 +11,10 @@ import CoreAudioKit
 
 public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
 
+    @IBOutlet weak var backgroundImageView              : UIImageView!
+    @IBOutlet weak var topPanelBackgroundImageView      : UIImageView!
+    @IBOutlet weak var midPanelBackgroundImageView      : UIImageView!
+    
     @IBOutlet weak var tapeSpeedSlider  : UISlider!
     @IBOutlet weak var mixSlider        : UISlider!
     @IBOutlet weak var feedbackSlider   : UISlider!
@@ -24,6 +28,13 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let backgroundImage = UIImage(named:"background")?.resizableImageWithCapInsets(UIEdgeInsetsZero, resizingMode: UIImageResizingMode.Tile)
+        backgroundImageView.image = backgroundImage
+        
+        let panelBackgroundImage = UIImage(named:"panel")?.resizableImageWithCapInsets(UIEdgeInsetsMake(24, 24, 24, 24), resizingMode: UIImageResizingMode.Tile)
+        topPanelBackgroundImageView.image = panelBackgroundImage
+        midPanelBackgroundImageView.image = panelBackgroundImage
         
         connectViewWithAU()
     }
@@ -69,6 +80,7 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
     been created.
     */
     func connectViewWithAU() {
+        return
         
         guard let paramTree = audioUnit?.parameterTree else { return }
         
