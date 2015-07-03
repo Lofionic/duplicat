@@ -32,10 +32,6 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
         let backgroundImage = UIImage(named:"background")?.resizableImageWithCapInsets(UIEdgeInsetsZero, resizingMode: UIImageResizingMode.Tile)
         backgroundImageView.image = backgroundImage
         
-        let panelBackgroundImage = UIImage(named:"panel")?.resizableImageWithCapInsets(UIEdgeInsetsMake(24, 24, 24, 24), resizingMode: UIImageResizingMode.Tile)
-        topPanelBackgroundImageView.image = panelBackgroundImage
-        midPanelBackgroundImageView.image = panelBackgroundImage
-        
         connectViewWithAU()
     }
     
