@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8121.20" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ppr-xu-QKQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8121.20" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ppr-xu-QKQ">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.16"/>
     </dependencies>
@@ -25,33 +25,45 @@
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="border_center" translatesAutoresizingMaskIntoConstraints="NO" id="5Az-Pz-uLk">
                                         <rect key="frame" x="0.0" y="0.0" width="480" height="180"/>
                                     </imageView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NEV-6a-ws7" userLabel="Knob1" customClass="CCRRotaryControl">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NEV-6a-ws7" userLabel="Knob1" customClass="TapeDelayRotaryControl" customModule="TapeDelayFramework">
                                         <rect key="frame" x="28" y="10" width="80" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="ChC-sw-Wqf"/>
                                             <constraint firstAttribute="height" constant="80" id="j58-wH-T5H"/>
                                         </constraints>
+                                        <connections>
+                                            <action selector="mixControlValueChanged:" destination="ppr-xu-QKQ" eventType="valueChanged" id="UAE-Iy-39p"/>
+                                        </connections>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jOu-oN-5v3" userLabel="Knob2" customClass="CCRRotaryControl">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jOu-oN-5v3" userLabel="Knob2" customClass="TapeDelayRotaryControl" customModule="TapeDelayFramework">
                                         <rect key="frame" x="144" y="10" width="80" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="80" id="36L-kX-9kw"/>
                                             <constraint firstAttribute="width" constant="80" id="cTz-Cs-K4p"/>
                                         </constraints>
+                                        <connections>
+                                            <action selector="feedbackControlValueChanged:" destination="ppr-xu-QKQ" eventType="valueChanged" id="HP5-2T-EWA"/>
+                                        </connections>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XKq-vh-Ewi" userLabel="Knob3" customClass="CCRRotaryControl">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XKq-vh-Ewi" userLabel="Knob3" customClass="TapeDelayRotaryControl" customModule="TapeDelayFramework">
                                         <rect key="frame" x="256" y="10" width="80" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="hzj-LF-nv6"/>
                                             <constraint firstAttribute="height" constant="80" id="rCB-jo-olF"/>
                                         </constraints>
+                                        <connections>
+                                            <action selector="tapeSpeedControlValueChanged:" destination="ppr-xu-QKQ" eventType="valueChanged" id="pz9-t9-yJP"/>
+                                        </connections>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JIn-4C-GiP" userLabel="Knob4" customClass="CCRRotaryControl">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JIn-4C-GiP" userLabel="Knob4" customClass="TapeDelayRotaryControl" customModule="TapeDelayFramework">
                                         <rect key="frame" x="372" y="10" width="80" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="80" id="P6T-TP-JjF"/>
                                             <constraint firstAttribute="width" constant="80" id="We4-9V-euw"/>
                                         </constraints>
+                                        <connections>
+                                            <action selector="tapeEffectControlValueChanged:" destination="ppr-xu-QKQ" eventType="valueChanged" id="tJm-Ax-t8D"/>
+                                        </connections>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="msI-ae-RvI" userLabel="Button1" customClass="TapeDelayToggleButton" customModule="TapeDelayFramework">
                                         <rect key="frame" x="164" y="117" width="50" height="40"/>
@@ -61,6 +73,9 @@
                                         </constraints>
                                         <state key="normal" backgroundImage="delay_button_off"/>
                                         <state key="selected" backgroundImage="delay_button_on"/>
+                                        <connections>
+                                            <action selector="delayToggleButtonValueChanged:" destination="ppr-xu-QKQ" eventType="valueChanged" id="6eM-ou-p0q"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oqu-Hn-qSh" userLabel="Button2" customClass="TapeDelayToggleButton" customModule="TapeDelayFramework">
                                         <rect key="frame" x="215" y="117" width="50" height="40"/>
@@ -70,6 +85,9 @@
                                         </constraints>
                                         <state key="normal" backgroundImage="delay_button_off"/>
                                         <state key="selected" backgroundImage="delay_button_on"/>
+                                        <connections>
+                                            <action selector="delayToggleButtonValueChanged:" destination="ppr-xu-QKQ" eventType="valueChanged" id="jsY-hJ-89K"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cr8-vZ-cLL" userLabel="Button3" customClass="TapeDelayToggleButton" customModule="TapeDelayFramework">
                                         <rect key="frame" x="266" y="117" width="50" height="40"/>
@@ -79,6 +97,9 @@
                                         </constraints>
                                         <state key="normal" backgroundImage="delay_button_off"/>
                                         <state key="selected" backgroundImage="delay_button_on"/>
+                                        <connections>
+                                            <action selector="delayToggleButtonValueChanged:" destination="ppr-xu-QKQ" eventType="valueChanged" id="nu9-Dn-4CZ"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -120,6 +141,13 @@
                     <size key="freeformSize" width="800" height="400"/>
                     <connections>
                         <outlet property="backgroundImageView" destination="TzZ-4S-jYI" id="XNy-Yt-iZ8"/>
+                        <outlet property="feedbackControl" destination="jOu-oN-5v3" id="eES-yI-tac"/>
+                        <outlet property="longDelayButton" destination="cr8-vZ-cLL" id="pJu-xg-BgL"/>
+                        <outlet property="mediumDelayButton" destination="Oqu-Hn-qSh" id="csR-wy-1I2"/>
+                        <outlet property="mixControl" destination="NEV-6a-ws7" id="sUc-Oh-YP2"/>
+                        <outlet property="shortDelayButton" destination="msI-ae-RvI" id="3mF-m5-NLS"/>
+                        <outlet property="tapeEffectControl" destination="JIn-4C-GiP" id="ykC-2M-aXL"/>
+                        <outlet property="tapeSpeedControl" destination="XKq-vh-Ewi" id="GUX-Wv-0I2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4fC-Dx-hAZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
