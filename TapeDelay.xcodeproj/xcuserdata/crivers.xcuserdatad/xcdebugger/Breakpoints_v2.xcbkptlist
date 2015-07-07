@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TapeDelayFramework/TapeDelayDSPKernel.hpp"
-            timestampString = "457306595.450215"
+            timestampString = "457997619.543467"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "95"
-            endingLineNumber = "95"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
             landmarkName = "applyDelay(DelayState &amp;state, float *in, float *out, double tapeSpeed, double feedback, double mix, double tapeEffect)"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TapeDelayFramework/TapeDelayDSPKernel.hpp"
-            timestampString = "457306611.582732"
+            timestampString = "457997619.543467"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
             landmarkName = "applyDelay(DelayState &amp;state, float *in, float *out, double tapeSpeed, double feedback, double mix, double tapeEffect)"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TapeDelayFramework/TapeDelayDSPKernel.hpp"
-            timestampString = "457306615.228158"
+            timestampString = "457997619.543467"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
             landmarkName = "applyDelay(DelayState &amp;state, float *in, float *out, double tapeSpeed, double feedback, double mix, double tapeEffect)"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TapeDelayFramework/TapeDelayDSPKernel.hpp"
-            timestampString = "457306975.528081"
+            timestampString = "457999063.581705"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
+            startingLineNumber = "234"
+            endingLineNumber = "234"
             landmarkName = "class TapeDelayDSPKernel"
             landmarkType = "3">
          </BreakpointContent>
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TapeDelayFramework/TapeDelayDSPKernel.hpp"
-            timestampString = "457306975.528081"
+            timestampString = "457999063.581705"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
             landmarkName = "setParameter(AUParameterAddress address, AUValue value)"
             landmarkType = "5">
          </BreakpointContent>
@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TapeDelayFramework/TapeDelayDSPKernel.hpp"
-            timestampString = "457306975.528081"
+            timestampString = "457997619.543467"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
             landmarkName = "applyDelay(DelayState &amp;state, float *in, float *out, double tapeSpeed, double feedback, double mix, double tapeEffect)"
             landmarkType = "5">
          </BreakpointContent>
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TapeDelayFramework/TapeDelayDSPKernel.hpp"
-            timestampString = "457306975.528081"
+            timestampString = "457997619.543467"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "applyDelay(DelayState &amp;state, float *in, float *out, double tapeSpeed, double feedback, double mix, double tapeEffect)"
             landmarkType = "5">
          </BreakpointContent>
@@ -222,6 +222,22 @@
             startingLineNumber = "113"
             endingLineNumber = "113"
             landmarkName = "drawRect(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TapeDelayFramework/TapeDelayDSPKernel.hpp"
+            timestampString = "457998772.748893"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
+            landmarkName = "applyDelay(DelayState &amp;state, float *in, float *out, double tapeSpeed, double feedback, double mix, double tapeEffect)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
