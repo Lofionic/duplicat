@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8121.20" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ppr-xu-QKQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8121.20" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ppr-xu-QKQ">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.16"/>
     </dependencies>
@@ -20,13 +20,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="800" height="400"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Po1-SU-Wjz">
-                                <rect key="frame" x="160" y="110" width="480" height="180"/>
+                                <rect key="frame" x="160" y="85" width="480" height="230"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="border_center" translatesAutoresizingMaskIntoConstraints="NO" id="5Az-Pz-uLk">
-                                        <rect key="frame" x="0.0" y="0.0" width="480" height="180"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="480" height="230"/>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NEV-6a-ws7" userLabel="Knob1" customClass="TapeDelayRotaryControl" customModule="TapeDelayFramework">
-                                        <rect key="frame" x="28" y="10" width="80" height="80"/>
+                                        <rect key="frame" x="28" y="8" width="80" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="ChC-sw-Wqf"/>
                                             <constraint firstAttribute="height" constant="80" id="j58-wH-T5H"/>
@@ -36,7 +36,7 @@
                                         </connections>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jOu-oN-5v3" userLabel="Knob2" customClass="TapeDelayRotaryControl" customModule="TapeDelayFramework">
-                                        <rect key="frame" x="144" y="10" width="80" height="80"/>
+                                        <rect key="frame" x="144" y="8" width="80" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="80" id="36L-kX-9kw"/>
                                             <constraint firstAttribute="width" constant="80" id="cTz-Cs-K4p"/>
@@ -46,7 +46,7 @@
                                         </connections>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XKq-vh-Ewi" userLabel="Knob3" customClass="TapeDelayRotaryControl" customModule="TapeDelayFramework">
-                                        <rect key="frame" x="256" y="10" width="80" height="80"/>
+                                        <rect key="frame" x="256" y="8" width="80" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="hzj-LF-nv6"/>
                                             <constraint firstAttribute="height" constant="80" id="rCB-jo-olF"/>
@@ -56,7 +56,7 @@
                                         </connections>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JIn-4C-GiP" userLabel="Knob4" customClass="TapeDelayRotaryControl" customModule="TapeDelayFramework">
-                                        <rect key="frame" x="372" y="10" width="80" height="80"/>
+                                        <rect key="frame" x="372" y="8" width="80" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="80" id="P6T-TP-JjF"/>
                                             <constraint firstAttribute="width" constant="80" id="We4-9V-euw"/>
@@ -66,7 +66,7 @@
                                         </connections>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="msI-ae-RvI" userLabel="Button1" customClass="TapeDelayToggleButton" customModule="TapeDelayFramework">
-                                        <rect key="frame" x="164" y="117" width="50" height="40"/>
+                                        <rect key="frame" x="164" y="121" width="50" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="2gG-Fw-Csr"/>
                                             <constraint firstAttribute="width" constant="50" id="Yai-3T-zB4"/>
@@ -78,7 +78,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oqu-Hn-qSh" userLabel="Button2" customClass="TapeDelayToggleButton" customModule="TapeDelayFramework">
-                                        <rect key="frame" x="215" y="117" width="50" height="40"/>
+                                        <rect key="frame" x="215" y="121" width="50" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="gRL-tv-XJF"/>
                                             <constraint firstAttribute="width" constant="50" id="oi6-bc-I5A"/>
@@ -90,7 +90,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cr8-vZ-cLL" userLabel="Button3" customClass="TapeDelayToggleButton" customModule="TapeDelayFramework">
-                                        <rect key="frame" x="266" y="117" width="50" height="40"/>
+                                        <rect key="frame" x="266" y="121" width="50" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="kag-tE-pJu"/>
                                             <constraint firstAttribute="height" constant="40" id="nZy-Ki-4dg"/>
@@ -103,12 +103,10 @@
                                     </button>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="NEV-6a-ws7" firstAttribute="centerY" secondItem="Po1-SU-Wjz" secondAttribute="centerY" constant="-40" id="3Lz-kb-p9a"/>
                                     <constraint firstAttribute="bottom" secondItem="5Az-Pz-uLk" secondAttribute="bottom" id="5Hy-z8-UlF"/>
                                     <constraint firstItem="msI-ae-RvI" firstAttribute="top" secondItem="Oqu-Hn-qSh" secondAttribute="top" id="5o4-D3-MxK"/>
                                     <constraint firstItem="cr8-vZ-cLL" firstAttribute="top" secondItem="msI-ae-RvI" secondAttribute="top" id="6Kz-Ca-DYC"/>
                                     <constraint firstItem="jOu-oN-5v3" firstAttribute="top" secondItem="NEV-6a-ws7" secondAttribute="top" id="DCI-TX-puR"/>
-                                    <constraint firstItem="Oqu-Hn-qSh" firstAttribute="centerY" secondItem="Po1-SU-Wjz" secondAttribute="centerY" constant="47" id="DYG-is-DsA"/>
                                     <constraint firstItem="Oqu-Hn-qSh" firstAttribute="centerX" secondItem="Po1-SU-Wjz" secondAttribute="centerX" id="FEy-0N-SyG"/>
                                     <constraint firstItem="XKq-vh-Ewi" firstAttribute="centerX" secondItem="Po1-SU-Wjz" secondAttribute="centerX" constant="56" id="Fyu-7H-2sO"/>
                                     <constraint firstItem="NEV-6a-ws7" firstAttribute="centerX" secondItem="Po1-SU-Wjz" secondAttribute="centerX" constant="-172" id="HON-f7-QHz"/>
@@ -117,11 +115,13 @@
                                     <constraint firstItem="5Az-Pz-uLk" firstAttribute="top" secondItem="Po1-SU-Wjz" secondAttribute="top" id="Tly-7H-Uxs"/>
                                     <constraint firstItem="Oqu-Hn-qSh" firstAttribute="leading" secondItem="msI-ae-RvI" secondAttribute="trailing" constant="1" id="Ttn-Nt-IfE"/>
                                     <constraint firstAttribute="trailing" secondItem="5Az-Pz-uLk" secondAttribute="trailing" id="X3L-wl-l9x"/>
-                                    <constraint firstAttribute="height" constant="180" id="fsl-lw-uBg"/>
+                                    <constraint firstAttribute="height" constant="230" id="fsl-lw-uBg"/>
                                     <constraint firstItem="jOu-oN-5v3" firstAttribute="centerX" secondItem="Po1-SU-Wjz" secondAttribute="centerX" constant="-56" id="hB8-gJ-6Ny"/>
+                                    <constraint firstItem="NEV-6a-ws7" firstAttribute="top" secondItem="5Az-Pz-uLk" secondAttribute="top" constant="8" id="n6Q-D8-aeS"/>
                                     <constraint firstItem="5Az-Pz-uLk" firstAttribute="leading" secondItem="Po1-SU-Wjz" secondAttribute="leading" id="ojf-em-QOv"/>
                                     <constraint firstItem="XKq-vh-Ewi" firstAttribute="top" secondItem="NEV-6a-ws7" secondAttribute="top" id="qI7-eU-FOs"/>
                                     <constraint firstAttribute="width" constant="480" id="s5y-bK-xTz"/>
+                                    <constraint firstItem="Oqu-Hn-qSh" firstAttribute="top" secondItem="5Az-Pz-uLk" secondAttribute="top" constant="121" id="vP2-aj-vxJ"/>
                                     <constraint firstItem="JIn-4C-GiP" firstAttribute="centerX" secondItem="Po1-SU-Wjz" secondAttribute="centerX" constant="172" id="vaI-UT-suC"/>
                                 </constraints>
                             </view>
@@ -156,7 +156,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="border_center" width="480" height="180"/>
+        <image name="border_center" width="480" height="230"/>
         <image name="delay_button_off" width="50" height="40"/>
         <image name="delay_button_on" width="50" height="40"/>
     </resources>
