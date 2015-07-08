@@ -92,7 +92,7 @@ public:
         float delayMix = 0;
         
         if (shortDelay == true) {
-            float shortDelayOffset = (100 / 1000.) * sampleRate; // 300ms
+            float shortDelayOffset = (200 / 1000.) * sampleRate; // 300ms
             SInt32 shortDelayLocation = state.bufferPosition - floor(shortDelayOffset);
             while (shortDelayLocation < 0) {
                 shortDelayLocation += bufferSize;
@@ -102,7 +102,7 @@ public:
         }
         
         if (mediumDelay) {
-            float mediumDelayOffset = (400 / 1000.) * sampleRate; // 600ms
+            float mediumDelayOffset = (600 / 1000.) * sampleRate; // 600ms
             SInt32 mediumDelayLocation = state.bufferPosition - floor(mediumDelayOffset);
             while (mediumDelayLocation < 0) {
                 mediumDelayLocation += bufferSize;
@@ -112,7 +112,7 @@ public:
         }
         
         if (longDelay) {
-            float longDelayOffset = (900 / 1000.) * sampleRate; // 900ms
+            float longDelayOffset = (1000 / 1000.) * sampleRate; // 900ms
             SInt32 longDelayLocation = state.bufferPosition - floor(longDelayOffset);
             while (longDelayLocation < 0) {
                 longDelayLocation += bufferSize;

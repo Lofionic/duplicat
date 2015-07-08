@@ -327,6 +327,7 @@
 					};
 					6CC1CE3E1B2F922E00D95621 = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = NK7M84AH48;
 					};
 					6CC1CE5D1B2F93D100D95621 = {
 						CreatedOnToolsVersion = 7.0;
@@ -471,7 +472,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = TapeDelayAppExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Lofionic.TapeDelay.TapeDelayAppExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lofionic.duplicat.DuplicatAppExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -485,7 +486,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = TapeDelayAppExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Lofionic.TapeDelay.TapeDelayAppExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lofionic.duplicat.DuplicatAppExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -584,7 +585,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = TapeDelay/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Lofionic.TapeDelay;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lofionic.duplicat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -598,7 +599,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = TapeDelay/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Lofionic.TapeDelay;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lofionic.duplicat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -623,7 +624,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Lofionic.TapeDelayFramework;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lofionic.duplicatFramework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -652,7 +653,7 @@
 					"-ObjC",
 					"-all_load",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.Lofionic.TapeDelayFramework;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lofionic.duplicatFramework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
