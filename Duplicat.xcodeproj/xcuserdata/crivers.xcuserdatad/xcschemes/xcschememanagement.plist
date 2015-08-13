@@ -4,10 +4,10 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>TapeDelay.xcscheme</key>
+		<key>TapeDelayApp.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>3</integer>
 		</dict>
 		<key>TapeDelayAppExtension.xcscheme</key>
 		<dict>
@@ -48,6 +48,21 @@
 			<true/>
 		</dict>
 		<key>6CC1CE661B2F93D100D95621</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6CC9A9081B7CA98B003BAA75</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6CC9A91B1B7CA98B003BAA75</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6CC9A9261B7CA98B003BAA75</key>
 		<dict>
 			<key>primary</key>
 			<true/>

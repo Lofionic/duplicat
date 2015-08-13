@@ -14,49 +14,59 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6CC1CE3E1B2F922E00D95621"
-               BuildableName = "TapeDelay.app"
-               BlueprintName = "TapeDelay"
-               ReferencedContainer = "container:TapeDelay.xcodeproj">
+               BlueprintIdentifier = "6CC9A9081B7CA98B003BAA75"
+               BuildableName = "TapeDelayApp.app"
+               BlueprintName = "TapeDelayApp"
+               ReferencedContainer = "container:Duplicat.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      buildConfiguration = "Debug">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6CC1CE661B2F93D100D95621"
-               BuildableName = "TapeDelayFrameworkTests.xctest"
-               BlueprintName = "TapeDelayFrameworkTests"
-               ReferencedContainer = "container:TapeDelay.xcodeproj">
+               BlueprintIdentifier = "6CC9A91B1B7CA98B003BAA75"
+               BuildableName = "DuplicatTests.xctest"
+               BlueprintName = "DuplicatTests"
+               ReferencedContainer = "container:Duplicat.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "6CC9A9261B7CA98B003BAA75"
+               BuildableName = "DuplicatUITests.xctest"
+               BlueprintName = "DuplicatUITests"
+               ReferencedContainer = "container:Duplicat.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6CC1CE3E1B2F922E00D95621"
-            BuildableName = "TapeDelay.app"
-            BlueprintName = "TapeDelay"
-            ReferencedContainer = "container:TapeDelay.xcodeproj">
+            BlueprintIdentifier = "6CC9A9081B7CA98B003BAA75"
+            BuildableName = "TapeDelayApp.app"
+            BlueprintName = "TapeDelayApp"
+            ReferencedContainer = "container:Duplicat.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
    <LaunchAction
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
@@ -65,29 +75,29 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6CC1CE3E1B2F922E00D95621"
-            BuildableName = "TapeDelay.app"
-            BlueprintName = "TapeDelay"
-            ReferencedContainer = "container:TapeDelay.xcodeproj">
+            BlueprintIdentifier = "6CC9A9081B7CA98B003BAA75"
+            BuildableName = "TapeDelayApp.app"
+            BlueprintName = "TapeDelayApp"
+            ReferencedContainer = "container:Duplicat.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
+      buildConfiguration = "Release"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6CC1CE3E1B2F922E00D95621"
-            BuildableName = "TapeDelay.app"
-            BlueprintName = "TapeDelay"
-            ReferencedContainer = "container:TapeDelay.xcodeproj">
+            BlueprintIdentifier = "6CC9A9081B7CA98B003BAA75"
+            BuildableName = "TapeDelayApp.app"
+            BlueprintName = "TapeDelayApp"
+            ReferencedContainer = "container:Duplicat.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

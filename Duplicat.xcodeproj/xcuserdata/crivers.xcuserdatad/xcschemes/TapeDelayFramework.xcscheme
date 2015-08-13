@@ -17,27 +17,27 @@
                BlueprintIdentifier = "6CC1CE5D1B2F93D100D95621"
                BuildableName = "TapeDelayFramework.framework"
                BlueprintName = "TapeDelayFramework"
-               ReferencedContainer = "container:TapeDelay.xcodeproj">
+               ReferencedContainer = "container:Duplicat.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      buildConfiguration = "Debug">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
    <LaunchAction
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
@@ -48,17 +48,17 @@
             BlueprintIdentifier = "6CC1CE5D1B2F93D100D95621"
             BuildableName = "TapeDelayFramework.framework"
             BlueprintName = "TapeDelayFramework"
-            ReferencedContainer = "container:TapeDelay.xcodeproj">
+            ReferencedContainer = "container:Duplicat.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
+      buildConfiguration = "Release"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
       <MacroExpansion>
          <BuildableReference
@@ -66,7 +66,7 @@
             BlueprintIdentifier = "6CC1CE5D1B2F93D100D95621"
             BuildableName = "TapeDelayFramework.framework"
             BlueprintName = "TapeDelayFramework"
-            ReferencedContainer = "container:TapeDelay.xcodeproj">
+            ReferencedContainer = "container:Duplicat.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
