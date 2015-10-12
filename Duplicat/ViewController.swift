@@ -11,13 +11,18 @@ import TapeDelayFramework
 
 class ViewController: UIViewController {
     
-    @IBOutlet var auContainerView : UIView!
+    @IBOutlet var auContainerView       : UIView!
+    @IBOutlet var backgroundImageView   : UIImageView!
     
     var duplicatViewController : TapeDelayViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        if let backgroundImage = backgroundImageView.image {
+            backgroundImageView.image = backgroundImage.resizableImageWithCapInsets(UIEdgeInsetsZero, resizingMode: UIImageResizingMode.Tile);
+        }
         
         embedPlugInView()
     }
