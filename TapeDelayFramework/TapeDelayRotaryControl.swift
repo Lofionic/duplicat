@@ -15,7 +15,6 @@ class TapeDelayRotaryControl : UIControl {
     
     var value : Float           = 0.0 {
         didSet {
-            self.sendActionsForControlEvents(UIControlEvents.ValueChanged)
             self.setNeedsDisplay()
         }
     }
@@ -81,16 +80,12 @@ class TapeDelayRotaryControl : UIControl {
             }
             
             sendActionsForControlEvents(UIControlEvents.ValueChanged)
-            setNeedsDisplay()
-            
-            
         }
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         trackingTouches = false
         resignFirstResponder()
-        setNeedsDisplay()
     }
     
     override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {

@@ -11,15 +11,15 @@ import CoreAudioKit
 public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
 
     @IBOutlet weak var backgroundImageView              : UIImageView!
-    
+  
     @IBOutlet weak var tapeSpeedControl     : TapeDelayRotaryControl!
     @IBOutlet weak var mixControl           : TapeDelayRotaryControl!
     @IBOutlet weak var feedbackControl      : TapeDelayRotaryControl!
     @IBOutlet weak var tapeEffectControl    : TapeDelayRotaryControl!
     
-    @IBOutlet weak var shortDelayButton     : TapeDelayToggleButton!
-    @IBOutlet weak var mediumDelayButton    : TapeDelayToggleButton!
-    @IBOutlet weak var longDelayButton      : TapeDelayToggleButton!
+    @IBOutlet public weak var shortDelayButton     : TapeDelayToggleButton!
+    @IBOutlet public weak var mediumDelayButton    : TapeDelayToggleButton!
+    @IBOutlet public weak var longDelayButton      : TapeDelayToggleButton!
   
     @IBOutlet weak var tapeDelayView : TapeDelayView!
     
@@ -103,6 +103,11 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
         mixControl.value         = mixParameter!.value
         feedbackControl.value    = feedbackParameter!.value
         tapeEffectControl.value  = tapeEffectParameter!.value
+        
+        shortDelayButton.selected   = shortDelayParameter!.value == 1.0;
+        mediumDelayButton.selected  = mediumDelayParameter!.value == 1.0;
+        longDelayButton.selected    = longDelayParameter!.value == 1.0;
+        
     }
     
     @IBAction func tapeSpeedControlValueChanged(sender: AnyObject) {

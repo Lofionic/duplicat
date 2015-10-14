@@ -8,9 +8,9 @@
 import UIKit
 import Foundation
 
-class TapeDelayToggleButton : UIButton {
+public class TapeDelayToggleButton : UIButton {
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         self.addTarget(self, action: "didTouchUpInside", forControlEvents: .TouchUpInside)
     }
     

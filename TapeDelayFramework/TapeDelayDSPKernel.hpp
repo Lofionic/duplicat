@@ -127,8 +127,6 @@ public:
             delayMix = -1.0;
         }
         
-       
-        
         float feedbackSignal =  *in + (delayMix * (feedback * 0.9));
         
         // Apply tape distortion to recorded signal
@@ -260,10 +258,10 @@ private:
     AudioBufferList* outBufferListPtr = nullptr;
     
 public:
-    ParameterRamper tapeSpeedRamper     = 1.0;
-    ParameterRamper mixRamper           = 0.0;
-    ParameterRamper feedbackRamper      = 0.0;
-    ParameterRamper tapeEffectRamper    = 0.0;
+    ParameterRamper tapeSpeedRamper = 0.0;
+    ParameterRamper mixRamper = 0.0;
+    ParameterRamper feedbackRamper = 0.0;
+    ParameterRamper tapeEffectRamper = 0.0;
     
     bool shortDelay;
     bool mediumDelay;

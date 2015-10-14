@@ -118,7 +118,7 @@
     feedback.value      = 0.2;
     tapeEffect.value    = 0.2;
     shortDelay.value    = 0;
-    mediumDelay.value   = 0;
+    mediumDelay.value   = 1;
     longDelay.value     = 0;
     
     _kernel.setParameter(DelayParamTapeSpeed, tapeSpeed.value);
