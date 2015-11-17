@@ -78,7 +78,7 @@ class TapeDelayRotaryControl : UIControl {
             } else if (value < 0) {
                 value = 0
             }
-            
+
             sendActionsForControlEvents(UIControlEvents.ValueChanged)
         }
     }
@@ -109,6 +109,4 @@ class TapeDelayRotaryControl : UIControl {
             CGContextRestoreGState(ctx)
         }
     }
-    
-    
 }

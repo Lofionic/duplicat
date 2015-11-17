@@ -85,11 +85,12 @@ class ViewController: UIViewController {
         
         let storyboard = UIStoryboard(name: "MainInterface", bundle: appExtensionBundle)
         duplicatViewController = storyboard.instantiateInitialViewController() as! TapeDelayViewController
-        
+
         // Present the view controller's view.
         if let view = duplicatViewController.view {
             addChildViewController(duplicatViewController)
             view.frame = auContainerView.bounds
+            view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
             
             auContainerView.addSubview(view)
             duplicatViewController.didMoveToParentViewController(self)

@@ -17,6 +17,8 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
     @IBOutlet weak var feedbackControl      : TapeDelayRotaryControl!
     @IBOutlet weak var tapeEffectControl    : TapeDelayRotaryControl!
     
+    @IBOutlet weak var mixSlider    : UISlider!
+    
     @IBOutlet public weak var shortDelayButton     : TapeDelayToggleButton!
     @IBOutlet public weak var mediumDelayButton    : TapeDelayToggleButton!
     @IBOutlet public weak var longDelayButton      : TapeDelayToggleButton!
@@ -84,30 +86,55 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
         shortDelayParameter = paramTree.valueForKey("shortDelay") as? AUParameter
         mediumDelayParameter = paramTree.valueForKey("mediumDelay") as? AUParameter
         longDelayParameter = paramTree.valueForKey("longDelay") as? AUParameter
-        
+
+        weak var weakSelf = self;
         parameterObserverToken = paramTree.tokenByAddingParameterObserver { address, value in
             dispatch_async(dispatch_get_main_queue()) {
                 if address == self.tapeSpeedParameter!.address {
-                    self.tapeSpeedControl.value = value
+                    weakSelf!.updateTapeSpeedControl();
                 } else if address == self.mixParameter!.address {
-                    self.mixControl.value = value
+                    weakSelf!.updateMixControl()
                 } else if address == self.feedbackParameter!.address {
-                    self.feedbackControl.value = value
+                    weakSelf!.updateFeedbackControl()
                 } else if address == self.tapeEffectParameter!.address {
-                    self.tapeEffectControl.value = value
+                    weakSelf!.updateTapeSpeedControl();
+                } else if address == self.shortDelayParameter!.address ||
+                    address == self.mediumDelayParameter!.address ||
+                    address == self.longDelayParameter!.address {
+                        weakSelf!.updateDelayButtons();
                 }
             }
         }
         
-        tapeSpeedControl.value   = tapeSpeedParameter!.value
-        mixControl.value         = mixParameter!.value
-        feedbackControl.value    = feedbackParameter!.value
-        tapeEffectControl.value  = tapeEffectParameter!.value
+        updateTapeSpeedControl();
+        updateMixControl();
+        updateFeedbackControl();
+        updateTapeEffectControl();
         
+        updateDelayButtons();
+        
+    }
+    
+    private func updateTapeSpeedControl() {
+        tapeSpeedControl.value   = tapeSpeedParameter!.value
+    }
+    
+    private func updateMixControl() {
+        mixControl.value = mixParameter!.value
+    }
+    
+    private func updateFeedbackControl() {
+        feedbackControl.value    = feedbackParameter!.value
+    }
+    
+    private func updateTapeEffectControl() {
+        tapeEffectControl.value  = tapeEffectParameter!.value
+    }
+    
+    private func updateDelayButtons() {
         shortDelayButton.selected   = shortDelayParameter!.value == 1.0;
         mediumDelayButton.selected  = mediumDelayParameter!.value == 1.0;
         longDelayButton.selected    = longDelayParameter!.value == 1.0;
-        
     }
     
     @IBAction func tapeSpeedControlValueChanged(sender: AnyObject) {
