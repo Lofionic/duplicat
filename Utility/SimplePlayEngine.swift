@@ -73,17 +73,10 @@ class SimplePlayEngine {
     }
 
     // MARK: Initialization
-    
 	init(componentsFoundCallback: (Void -> Void)? = nil) {
 		self.componentsFoundCallback = componentsFoundCallback
 
         engine.attachNode(player)
-
-        guard let fileURL = NSBundle.mainBundle().URLForResource("drumLoop", withExtension: "caf") else {
-            fatalError("\"drumLoop.caf\" file not found.")
-        }
-
-		setPlayerFile(fileURL)
 
 		if componentsFoundCallback != nil {
 			// Only bother to look up components if the client provided a callback.
@@ -148,13 +141,24 @@ class SimplePlayEngine {
 		}
 	}
 	
-	private func setPlayerFile(fileURL: NSURL) {
+    func setPlayerFile(fileURL: NSURL) {
 		do {
+
+            if (isPlaying) {
+                player.pause();
+                engine.stop();
+            }
+            
 			let file = try AVAudioFile(forReading: fileURL)
             
-            self.file = file
+            self.file = file;
             
-            engine.connect(player, to: engine.mainMixerNode, format: file.processingFormat)
+            if (effect != nil) {
+                self.engine.disconnectNodeInput(effect!);
+                self.engine.connect(self.player, to: effect!, format: self.file!.processingFormat)
+                self.engine.connect(effect!, to: self.engine.mainMixerNode, format: self.file!.processingFormat)
+            }
+            
 		}
 		catch {
 			fatalError("Could not create AVAudioFile instance. error: \(error).")
@@ -278,11 +282,7 @@ class SimplePlayEngine {
 				
 				// Disconnect player -> mixer.
 				self.engine.disconnectNodeInput(self.engine.mainMixerNode)
-				
-				// Connect player -> effect -> mixer.
-				self.engine.connect(self.player, to: avAudioUnitEffect, format: self.file!.processingFormat)
-				self.engine.connect(avAudioUnitEffect, to: self.engine.mainMixerNode, format: self.file!.processingFormat)
-				
+
 				self.audioUnit = avAudioUnitEffect.AUAudioUnit
                 self.presetList = avAudioUnitEffect.AUAudioUnit.factoryPresets ?? []
 				

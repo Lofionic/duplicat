@@ -10,7 +10,7 @@ import UIKit
 import TapeDelayFramework
 import AudioToolbox
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet var auContainerView       : UIView!
     @IBOutlet var backgroundImageView   : UIImageView!
@@ -21,6 +21,21 @@ class ViewController: UIViewController {
     var duplicatViewController  : TapeDelayViewController!
     var playEngine              : SimplePlayEngine!
 
+    struct AudioSample {
+        
+        var title           : String!
+        var filename        : String!
+        var fileExtension   : String!
+        
+        init(title: String, filename: String, fileExtension: String) {
+            self.title = title;
+            self.filename = filename;
+            self.fileExtension = fileExtension;
+        }
+    }
+    
+    var audioSamples = [AudioSample]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -53,6 +68,32 @@ class ViewController: UIViewController {
             // self.connectParametersToControls()
             self.duplicatViewController.audioUnit = self.playEngine.audioUnit as? TapeDelay;
         }
+        
+        // Set up the audio samples
+        audioSamples = [
+            AudioSample(title: "Drums", filename: "drumLoop", fileExtension: "caf"),
+            AudioSample(title: "Guitar", filename: "gtrLoop", fileExtension: "wav"),
+            AudioSample(title: "Vocals", filename: "drumLoop", fileExtension: "caf"),
+            AudioSample(title: "Synth", filename: "gtrLoop", fileExtension: "wav")
+        ]
+        
+        //        guard let fileURL = NSBundle.mainBundle().URLForResource("gtrLoop", withExtension: "wav") else {
+        //            fatalError("\"drumLoop.caf\" file not found.")
+        //        }
+        
+//         setPlayerFile(fileURL)
+        
+        selectAudioSampleAtIndex(0);
+    }
+    
+    func selectAudioSampleAtIndex(index: Int) {
+        let selectedAudioSample = audioSamples[index]
+        guard let fileURL = NSBundle.mainBundle().URLForResource(selectedAudioSample.filename, withExtension: selectedAudioSample.fileExtension) else {
+            fatalError("AudioSample file not found.")
+        }
+        
+        playEngine.setPlayerFile(fileURL)
+        
     }
     
     func fourCharCodeToOSType(inCode: NSString) -> OSType
@@ -109,5 +150,24 @@ class ViewController: UIViewController {
         
         playButton.setTitle(titleText, forState: .Normal)
     }
+    
+    //// UIPickerView
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1;
+    }
+ 
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return audioSamples.count;
+    }
+    
+    func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let string = audioSamples[row].title
+        return NSAttributedString(string: string, attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectAudioSampleAtIndex(row);
+    }
 }
+
 

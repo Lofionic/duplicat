@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C149D801C4310F600C0EE96 /* gtrLoop.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6C149D7F1C4310F600C0EE96 /* gtrLoop.wav */; };
 		6C189A661BCE6BCD000BCD81 /* SimplePlayEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C189A641BCE6BCD000BCD81 /* SimplePlayEngine.swift */; };
 		6C189A671BCE6BCD000BCD81 /* drumLoop.caf in Resources */ = {isa = PBXBuildFile; fileRef = 6C189A651BCE6BCD000BCD81 /* drumLoop.caf */; };
 		6C189A681BCE7C49000BCD81 /* TapeDelayRotaryControl.swift in Headers */ = {isa = PBXBuildFile; fileRef = 6CE70F001B4804A700D4C944 /* TapeDelayRotaryControl.swift */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -91,6 +92,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6C149D7F1C4310F600C0EE96 /* gtrLoop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gtrLoop.wav; sourceTree = "<group>"; };
 		6C189A641BCE6BCD000BCD81 /* SimplePlayEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimplePlayEngine.swift; path = Utility/SimplePlayEngine.swift; sourceTree = "<group>"; };
 		6C189A651BCE6BCD000BCD81 /* drumLoop.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = drumLoop.caf; path = Utility/drumLoop.caf; sourceTree = "<group>"; };
 		6C303A071B42928B001C2925 /* TapeDelayToggleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapeDelayToggleButton.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 		6C189A631BCE6BB9000BCD81 /* SimplePlayEngine */ = {
 			isa = PBXGroup;
 			children = (
+				6C149D7F1C4310F600C0EE96 /* gtrLoop.wav */,
 				6C189A641BCE6BCD000BCD81 /* SimplePlayEngine.swift */,
 				6C189A651BCE6BCD000BCD81 /* drumLoop.caf */,
 			);
@@ -388,6 +391,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CC15B861BCBA96C00290680 /* .gitignore in Resources */,
+				6C149D801C4310F600C0EE96 /* gtrLoop.wav in Resources */,
 				6CC9A9161B7CA98B003BAA75 /* LaunchScreen.storyboard in Resources */,
 				6C189A671BCE6BCD000BCD81 /* drumLoop.caf in Resources */,
 				6CC9A9131B7CA98B003BAA75 /* Assets.xcassets in Resources */,
