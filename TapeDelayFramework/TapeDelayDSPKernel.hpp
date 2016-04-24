@@ -129,28 +129,28 @@ public:
         
         float feedbackSignal =  *in + (delayMix * (feedback * 0.9));
         
-        // Apply tape distortion to recorded signal
-        float distortion = 0.1 + (tapeEffect * 100);
-        feedbackSignal = tanh(feedbackSignal * distortion) / distortion;
-        
-        // Filter feedback signal
-        float cutoff = 0.7 - powf(tapeEffect, 2) * 0.6;
-        state.q = 1.0f - cutoff;
-        state.p = cutoff + 0.8f * cutoff * state.q;
-        state.f = state.p + state.p - 1.0f;
-        
-        state.q = 0 * (1.0f + 0.5f * state.q * (1.0f - state.q + 5.6f * state.q * state.q));
-        
-        feedbackSignal -= state.q * state.b4; //feedback
-        
-        state.t1 = state.b1;  state.b1 = (feedbackSignal + state.b0) * state.p - state.b1 * state.f;
-        state.t2 = state.b2;  state.b2 = (state.b1 + state.t1) * state.p - state.b2 * state.f;
-        state.t1 = state.b3;  state.b3 = (state.b2 + state.t2) * state.p - state.b3 * state.f;
-        state.b4 = (state.b3 + state.t1) * state.p - state.b4 * state.f;
-
-        state.b4 = state.b4 - state.b4 * state.b4 * state.b4 * 0.166667f;    //clipping
-        
-        feedbackSignal = state.b4;
+//        // Apply tape distortion to recorded signal
+//        float distortion = 0.1 + (tapeEffect * 20);
+//        feedbackSignal = tanh(feedbackSignal * distortion) / distortion;
+//        
+//        // Filter feedback signal
+//        float cutoff = 0.7 - powf(tapeEffect, 2) * 0.2;
+//        state.q = 1.0f - cutoff;
+//        state.p = cutoff + 0.8f * cutoff * state.q;
+//        state.f = state.p + state.p - 1.0f;
+//        
+//        state.q = 0 * (1.0f + 0.5f * state.q * (1.0f - state.q + 5.6f * state.q * state.q));
+//        
+//        feedbackSignal -= state.q * state.b4; //feedback
+//        
+//        state.t1 = state.b1;  state.b1 = (feedbackSignal + state.b0) * state.p - state.b1 * state.f;
+//        state.t2 = state.b2;  state.b2 = (state.b1 + state.t1) * state.p - state.b2 * state.f;
+//        state.t1 = state.b3;  state.b3 = (state.b2 + state.t2) * state.p - state.b3 * state.f;
+//        state.b4 = (state.b3 + state.t1) * state.p - state.b4 * state.f;
+//
+//        state.b4 = state.b4 - state.b4 * state.b4 * state.b4 * 0.166667f;    //clipping
+//        
+//        feedbackSignal = state.b4;
         
         *out = *in + ((delayMix - *in) * mix);
         
