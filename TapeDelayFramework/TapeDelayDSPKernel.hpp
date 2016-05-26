@@ -52,7 +52,7 @@ public:
         delayStates.resize(channelCount);
         
         sampleRate = float(inSampleRate);
-        bufferSize = sampleRate * (maxDelayTimeMS / 1000.0);
+        bufferSize = sampleRate * 10 * (maxDelayTimeMS / 1000.0);
         
         for (DelayState& state : delayStates) {
             state.init(bufferSize);
@@ -89,79 +89,104 @@ public:
     
     void applyDelay(DelayState &state, float *in, float *out, double tapeSpeed, double feedback, double mix, double tapeEffect) {
         
-        float delayMix = 0;
+        float delaySignal = 0;
         
         if (shortDelay == true) {
-            float shortDelayOffset = (200 / 1000.) * sampleRate; // 300ms
-            SInt32 shortDelayLocation = state.bufferPosition - floor(shortDelayOffset);
-            while (shortDelayLocation < 0) {
-                shortDelayLocation += bufferSize;
+            float shortDelayOffset = 6 * sampleRate; // 600ms+
+
+            SInt32 shortDelayLocationH = state.bufferPosition - ceil(shortDelayOffset);
+            while (shortDelayLocationH < 0) {
+                shortDelayLocationH += bufferSize;
             }
             
-            delayMix += state.tapeBuffer[shortDelayLocation];
+            SInt32 shortDelayLocationL = state.bufferPosition - floor(shortDelayOffset);
+            
+            while (shortDelayLocationL < 0) {
+                shortDelayLocationL = bufferSize + shortDelayLocationL;
+            }
+            
+            float d = shortDelayOffset - floor(shortDelayOffset);
+            float s = (state.tapeBuffer[shortDelayLocationL] + (state.tapeBuffer[shortDelayLocationH] - state.tapeBuffer[shortDelayLocationL]) * d);
+
+            delaySignal = s;
         }
         
         if (mediumDelay) {
-            float mediumDelayOffset = (600 / 1000.) * sampleRate; // 600ms
-            SInt32 mediumDelayLocation = state.bufferPosition - floor(mediumDelayOffset);
-            while (mediumDelayLocation < 0) {
-                mediumDelayLocation += bufferSize;
+            float medDelayOffset = 12 * sampleRate; // 1200ms+
+            SInt32 medDelayLocationH = state.bufferPosition - ceil(medDelayOffset);
+            while (medDelayLocationH < 0) {
+                medDelayLocationH += bufferSize;
             }
             
-            delayMix += state.tapeBuffer[mediumDelayLocation];
+            SInt32 medDelayLocationL = state.bufferPosition - floor(medDelayOffset);
+            
+            while (medDelayLocationL < 0) {
+                medDelayLocationL = bufferSize + medDelayLocationL;
+            }
+            
+            float d = medDelayOffset - floor(medDelayOffset);
+            float s = (state.tapeBuffer[medDelayLocationL] + (state.tapeBuffer[medDelayLocationH] - state.tapeBuffer[medDelayLocationL]) * d);
+            
+            delaySignal = tanhf(delaySignal + s);
         }
         
         if (longDelay) {
-            float longDelayOffset = (1000 / 1000.) * sampleRate; // 900ms
-            SInt32 longDelayLocation = state.bufferPosition - floor(longDelayOffset);
-            while (longDelayLocation < 0) {
-                longDelayLocation += bufferSize;
+            float longDelayOffset = 20 * sampleRate; // 2000ms+
+            SInt32 delayLocationH = state.bufferPosition - ceil(longDelayOffset);
+            while (delayLocationH < 0) {
+                delayLocationH += bufferSize;
             }
             
-            delayMix += state.tapeBuffer[longDelayLocation];
+            SInt32 delayLocationL = state.bufferPosition - floor(longDelayOffset);
+            while (delayLocationL < 0) {
+                delayLocationL += bufferSize;
+            }
+            
+            float d = longDelayOffset - floor(longDelayOffset);
+            float s = (state.tapeBuffer[delayLocationL] + (state.tapeBuffer[delayLocationH] - state.tapeBuffer[delayLocationL]) * d);
+            
+            s = state.tapeBuffer[delayLocationH];
+            
+            delaySignal = tanhf(delaySignal + s);
         }
+
+        float feedbackSignal = tanhf(*in + (delaySignal * feedback * 2));
         
-        if (delayMix > 1.0) {
-            delayMix = 1.0;
-        } else if (delayMix < -1.0) {
-            delayMix = -1.0;
-        }
+        // Apply tape distortion to recorded signal
+        float distortion = tanhf(feedbackSignal * 10) / 5;
+        feedbackSignal = feedbackSignal + ((distortion - feedbackSignal) * tapeEffect);
         
-        float feedbackSignal =  *in + (delayMix * (feedback * 0.9));
+        // Filter feedback signal
+        float cutoff = 0.7 - (tapeEffect * 0.5);
+        state.q = 1.0f - cutoff;
+        state.p = cutoff + 0.8f * cutoff * state.q;
+        state.f = state.p + state.p - 1.0f;
         
-//        // Apply tape distortion to recorded signal
-//        float distortion = 0.1 + (tapeEffect * 20);
-//        feedbackSignal = tanh(feedbackSignal * distortion) / distortion;
-//        
-//        // Filter feedback signal
-//        float cutoff = 0.7 - powf(tapeEffect, 2) * 0.2;
-//        state.q = 1.0f - cutoff;
-//        state.p = cutoff + 0.8f * cutoff * state.q;
-//        state.f = state.p + state.p - 1.0f;
-//        
-//        state.q = 0 * (1.0f + 0.5f * state.q * (1.0f - state.q + 5.6f * state.q * state.q));
-//        
-//        feedbackSignal -= state.q * state.b4; //feedback
-//        
-//        state.t1 = state.b1;  state.b1 = (feedbackSignal + state.b0) * state.p - state.b1 * state.f;
-//        state.t2 = state.b2;  state.b2 = (state.b1 + state.t1) * state.p - state.b2 * state.f;
-//        state.t1 = state.b3;  state.b3 = (state.b2 + state.t2) * state.p - state.b3 * state.f;
-//        state.b4 = (state.b3 + state.t1) * state.p - state.b4 * state.f;
-//
-//        state.b4 = state.b4 - state.b4 * state.b4 * state.b4 * 0.166667f;    //clipping
-//        
-//        feedbackSignal = state.b4;
+        state.q = 0 * (1.0f + 0.5f * state.q * (1.0f - state.q + 5.6f * state.q * state.q));
         
-        *out = *in + ((delayMix - *in) * mix);
+        feedbackSignal -= state.q * state.b4; //feedback
         
-        // Testing
-        // *out = feedbackSignal;
+        state.t1 = state.b1;  state.b1 = (feedbackSignal + state.b0) * state.p - state.b1 * state.f;
+        state.t2 = state.b2;  state.b2 = (state.b1 + state.t1) * state.p - state.b2 * state.f;
+        state.t1 = state.b3;  state.b3 = (state.b2 + state.t2) * state.p - state.b3 * state.f;
+        state.b4 = (state.b3 + state.t1) * state.p - state.b4 * state.f;
+
+        state.b4 = state.b4 - state.b4 * state.b4 * state.b4 * 0.166667f;    //clipping
         
-        UInt32 n = 1 + (10.0 * tapeSpeed);
+        feedbackSignal = state.b4;
+        
+        *out = *in + ((delaySignal - *in) * mix);
+        
+        // Writes to the tape buffer.
+        UInt32 n = 10 + (50.0 * tapeSpeed);
+
+        float rampFrom = lastSample;
         for (int j = 0; j < n; j++) {
-            state.tapeBuffer[state.bufferPosition] = feedbackSignal;
+            float d = (float)j / n;
+            lastSample = rampFrom + ((feedbackSignal - rampFrom) * d);
+            state.tapeBuffer[state.bufferPosition] = lastSample;
             state.bufferPosition++;
-            while (state.bufferPosition > bufferSize) {
+            while (state.bufferPosition >= bufferSize) {
                 state.bufferPosition -= bufferSize;
             }
         }
@@ -247,12 +272,13 @@ public:
     
     
 private:
-   
     std::vector<DelayState> delayStates;
     
     float sampleRate = 44100.0;
     float maxDelayTimeMS = 2000;
     UInt32 bufferSize;
+    
+    float lastSample;
     
     AudioBufferList* inBufferListPtr = nullptr;
     AudioBufferList* outBufferListPtr = nullptr;

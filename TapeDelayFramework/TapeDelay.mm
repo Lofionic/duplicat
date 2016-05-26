@@ -120,7 +120,7 @@
     shortDelay.value    = 0;
     mediumDelay.value   = 1;
     longDelay.value     = 0;
-    
+
     _kernel.setParameter(DelayParamTapeSpeed, tapeSpeed.value);
     _kernel.setParameter(DelayParamMix, mix.value);
     _kernel.setParameter(DelayParamFeedback, feedback.value);
