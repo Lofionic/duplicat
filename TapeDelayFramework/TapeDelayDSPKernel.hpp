@@ -52,7 +52,7 @@ public:
         delayStates.resize(channelCount);
         
         sampleRate = float(inSampleRate);
-        bufferSize = sampleRate * 10 * (maxDelayTimeMS / 1000.0);
+        bufferSize = sampleRate * oversample * (maxDelayTimeMS / 1000.0);
         
         for (DelayState& state : delayStates) {
             state.init(bufferSize);
@@ -89,10 +89,11 @@ public:
     
     void applyDelay(DelayState &state, float *in, float *out, double tapeSpeed, double feedback, double mix, double tapeEffect) {
         
-        float delaySignal = 0;
+        float s1 = 0, s2 = 0, s3 = 0;
+        float sampleMultiplier = oversample * (sampleRate / (1 + (tapeSpeed * 2)));
         
         if (shortDelay == true) {
-            float shortDelayOffset = 6 * sampleRate; // 600ms+
+            float shortDelayOffset = (300 / 1000.) * sampleMultiplier; // 150ms+
 
             SInt32 shortDelayLocationH = state.bufferPosition - ceil(shortDelayOffset);
             while (shortDelayLocationH < 0) {
@@ -100,38 +101,32 @@ public:
             }
             
             SInt32 shortDelayLocationL = state.bufferPosition - floor(shortDelayOffset);
-            
             while (shortDelayLocationL < 0) {
                 shortDelayLocationL = bufferSize + shortDelayLocationL;
             }
             
             float d = shortDelayOffset - floor(shortDelayOffset);
-            float s = (state.tapeBuffer[shortDelayLocationL] + (state.tapeBuffer[shortDelayLocationH] - state.tapeBuffer[shortDelayLocationL]) * d);
-
-            delaySignal = s;
+            s1 = (state.tapeBuffer[shortDelayLocationL] + (state.tapeBuffer[shortDelayLocationH] - state.tapeBuffer[shortDelayLocationL]) * d);
         }
         
         if (mediumDelay) {
-            float medDelayOffset = 12 * sampleRate; // 1200ms+
+            float medDelayOffset = (900 / 1000.) * sampleMultiplier; // 300ms+
             SInt32 medDelayLocationH = state.bufferPosition - ceil(medDelayOffset);
             while (medDelayLocationH < 0) {
                 medDelayLocationH += bufferSize;
             }
             
             SInt32 medDelayLocationL = state.bufferPosition - floor(medDelayOffset);
-            
             while (medDelayLocationL < 0) {
                 medDelayLocationL = bufferSize + medDelayLocationL;
             }
             
             float d = medDelayOffset - floor(medDelayOffset);
-            float s = (state.tapeBuffer[medDelayLocationL] + (state.tapeBuffer[medDelayLocationH] - state.tapeBuffer[medDelayLocationL]) * d);
-            
-            delaySignal = tanhf(delaySignal + s);
+            s2 = (state.tapeBuffer[medDelayLocationL] + (state.tapeBuffer[medDelayLocationH] - state.tapeBuffer[medDelayLocationL]) * d);
         }
         
         if (longDelay) {
-            float longDelayOffset = 20 * sampleRate; // 2000ms+
+            float longDelayOffset = (1500 / 1000.) * sampleMultiplier; // 1200ms+
             SInt32 delayLocationH = state.bufferPosition - ceil(longDelayOffset);
             while (delayLocationH < 0) {
                 delayLocationH += bufferSize;
@@ -143,47 +138,43 @@ public:
             }
             
             float d = longDelayOffset - floor(longDelayOffset);
-            float s = (state.tapeBuffer[delayLocationL] + (state.tapeBuffer[delayLocationH] - state.tapeBuffer[delayLocationL]) * d);
-            
-            s = state.tapeBuffer[delayLocationH];
-            
-            delaySignal = tanhf(delaySignal + s);
+            s3 = (state.tapeBuffer[delayLocationL] + (state.tapeBuffer[delayLocationH] - state.tapeBuffer[delayLocationL]) * d);
         }
 
-        float feedbackSignal = tanhf(*in + (delaySignal * feedback * 2));
+        float delaySignal = tanhf(s1 + s2 + s3);
         
-        // Apply tape distortion to recorded signal
-        float distortion = tanhf(feedbackSignal * 10) / 5;
-        feedbackSignal = feedbackSignal + ((distortion - feedbackSignal) * tapeEffect);
+        // Write signal will be written to the tape.
+        float writeSignal = tanhf(*in + (delaySignal * feedback * 1.2f));
         
-        // Filter feedback signal
-        float cutoff = 0.7 - (tapeEffect * 0.5);
+        // Apply tape distortion to write signal.
+        float distortion = tanhf(writeSignal * 6) / 3;
+        writeSignal = writeSignal + ((distortion - writeSignal) * tapeEffect);
+        
+        // Filter write signal
+        float cutoff = 0.7 - (tapeEffect * 0.6);
         state.q = 1.0f - cutoff;
         state.p = cutoff + 0.8f * cutoff * state.q;
         state.f = state.p + state.p - 1.0f;
         
         state.q = 0 * (1.0f + 0.5f * state.q * (1.0f - state.q + 5.6f * state.q * state.q));
         
-        feedbackSignal -= state.q * state.b4; //feedback
+        writeSignal -= state.q * state.b4; // filter feedback
         
-        state.t1 = state.b1;  state.b1 = (feedbackSignal + state.b0) * state.p - state.b1 * state.f;
+        state.t1 = state.b1;  state.b1 = (writeSignal + state.b0) * state.p - state.b1 * state.f;
         state.t2 = state.b2;  state.b2 = (state.b1 + state.t1) * state.p - state.b2 * state.f;
         state.t1 = state.b3;  state.b3 = (state.b2 + state.t2) * state.p - state.b3 * state.f;
         state.b4 = (state.b3 + state.t1) * state.p - state.b4 * state.f;
 
         state.b4 = state.b4 - state.b4 * state.b4 * state.b4 * 0.166667f;    //clipping
         
-        feedbackSignal = state.b4;
+        writeSignal = state.b4;
         
         *out = *in + ((delaySignal - *in) * mix);
-        
-        // Writes to the tape buffer.
-        UInt32 n = 10 + (50.0 * tapeSpeed);
 
         float rampFrom = lastSample;
-        for (int j = 0; j < n; j++) {
-            float d = (float)j / n;
-            lastSample = rampFrom + ((feedbackSignal - rampFrom) * d);
+        for (int j = 0; j < oversample; j++) {
+            float d = (float)(j + 1) / oversample;
+            lastSample = rampFrom + ((writeSignal - rampFrom) * d);
             state.tapeBuffer[state.bufferPosition] = lastSample;
             state.bufferPosition++;
             while (state.bufferPosition >= bufferSize) {
@@ -275,7 +266,8 @@ private:
     std::vector<DelayState> delayStates;
     
     float sampleRate = 44100.0;
-    float maxDelayTimeMS = 2000;
+    const float maxDelayTimeMS = 1500;
+    const int oversample = 4;
     UInt32 bufferSize;
     
     float lastSample;
