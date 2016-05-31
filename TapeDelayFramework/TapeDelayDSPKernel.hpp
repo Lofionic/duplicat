@@ -93,7 +93,7 @@ public:
         float sampleMultiplier = oversample * (sampleRate / (1 + (tapeSpeed * 2)));
         
         if (shortDelay == true) {
-            float shortDelayOffset = (300 / 1000.) * sampleMultiplier; // 150ms+
+            float shortDelayOffset = (300 / 1000.) * sampleMultiplier;
 
             SInt32 shortDelayLocationH = state.bufferPosition - ceil(shortDelayOffset);
             while (shortDelayLocationH < 0) {
@@ -110,7 +110,7 @@ public:
         }
         
         if (mediumDelay) {
-            float medDelayOffset = (900 / 1000.) * sampleMultiplier; // 300ms+
+            float medDelayOffset = (900 / 1000.) * sampleMultiplier;
             SInt32 medDelayLocationH = state.bufferPosition - ceil(medDelayOffset);
             while (medDelayLocationH < 0) {
                 medDelayLocationH += bufferSize;
@@ -126,7 +126,7 @@ public:
         }
         
         if (longDelay) {
-            float longDelayOffset = (1500 / 1000.) * sampleMultiplier; // 1200ms+
+            float longDelayOffset = (1800 / 1000.) * sampleMultiplier;
             SInt32 delayLocationH = state.bufferPosition - ceil(longDelayOffset);
             while (delayLocationH < 0) {
                 delayLocationH += bufferSize;
@@ -266,7 +266,7 @@ private:
     std::vector<DelayState> delayStates;
     
     float sampleRate = 44100.0;
-    const float maxDelayTimeMS = 1500;
+    const float maxDelayTimeMS = 1800;
     const int oversample = 4;
     UInt32 bufferSize;
     
