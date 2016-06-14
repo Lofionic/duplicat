@@ -4,7 +4,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -19,22 +18,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="leather" translatesAutoresizingMaskIntoConstraints="NO" id="JHk-Ay-UlS">
+                            <imageView userInteractionEnabled="NO" contentMode="redraw" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="leather" translatesAutoresizingMaskIntoConstraints="NO" id="JHk-Ay-UlS">
                                 <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user_guide" translatesAutoresizingMaskIntoConstraints="NO" id="H8J-mf-I69">
                                 <rect key="frame" x="174" y="20" width="676" height="966"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="H8J-mf-I69" secondAttribute="height" multiplier="7:10" id="HU6-KA-DTX"/>
-                                    <constraint firstAttribute="height" constant="20" id="ocL-Kn-cWK"/>
-                                    <constraint firstAttribute="height" constant="800" id="qz8-Vi-0Da"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="ocL-Kn-cWK"/>
-                                        <exclude reference="qz8-Vi-0Da"/>
-                                    </mask>
-                                </variation>
                             </imageView>
                             <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fmX-hM-mEt">
                                 <rect key="frame" x="-32" y="1006" width="1088" height="320"/>
@@ -62,16 +53,10 @@
                             <constraint firstItem="JHk-Ay-UlS" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="gfb-qn-0cp"/>
                             <constraint firstAttribute="leading" secondItem="JHk-Ay-UlS" secondAttribute="leading" id="hPg-jx-d7W"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="f63-cS-Dpd" secondAttribute="bottom" constant="40" id="jEi-rp-PHH"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="JHk-Ay-UlS" secondAttribute="leading" id="oaH-9Y-7rP"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="JHk-Ay-UlS" secondAttribute="bottom" id="oeN-cX-PRl"/>
                             <constraint firstAttribute="trailing" secondItem="JHk-Ay-UlS" secondAttribute="trailing" id="uBM-5V-j4f"/>
                             <constraint firstItem="f63-cS-Dpd" firstAttribute="width" secondItem="fmX-hM-mEt" secondAttribute="width" constant="16" id="xGm-8w-G0f"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="oaH-9Y-7rP"/>
-                            </mask>
-                        </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <nil key="simulatedStatusBarMetrics"/>

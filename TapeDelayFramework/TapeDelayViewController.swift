@@ -65,7 +65,6 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
     
     public func createAudioUnitWithComponentDescription(desc: AudioComponentDescription) throws -> AUAudioUnit {
         audioUnit = try TapeDelay(componentDescription: desc, options: [])
-        
         return audioUnit!
     }
     

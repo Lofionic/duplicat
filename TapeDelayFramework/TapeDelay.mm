@@ -28,6 +28,7 @@
 @synthesize parameterTree = _parameterTree;
 
 -(instancetype)initWithComponentDescription:(AudioComponentDescription)componentDescription options:(AudioComponentInstantiationOptions)options error:(NSError * __nullable __autoreleasing * __nullable)outError {
+    
     self = [super initWithComponentDescription:componentDescription options:options error:outError];
     
     if (self == nil) {
