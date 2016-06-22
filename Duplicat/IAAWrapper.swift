@@ -14,6 +14,7 @@ import TapeDelayFramework
 public protocol IAAWrapperDelegate {
     func iaaWrapperDidConnect(iaaWrapper : IAAWrapper)
     func iaaWrapperDidDisconnect(iaaWrapper : IAAWrapper)
+    func iaaWrapperDidReceiveHostIcon(iaaWrapper : IAAWrapper, hostIcon : UIImage)
 }
 
 public class IAAWrapper: NSObject {
@@ -326,6 +327,21 @@ public class IAAWrapper: NSObject {
     
     private func getAudioUnitIcon() {
         NSLog("[getAudioUnitIcon]")
+        if remoteIOUnit != nil {
+            let hostIcon = AudioOutputUnitGetHostIcon(remoteIOUnit, 100);
+            if let delegate = self.delegate {
+                delegate.iaaWrapperDidReceiveHostIcon(self, hostIcon: hostIcon!)
+            }
+        }
+    }
+    
+    public func goToHost() {
+        if remoteIOUnit != nil {
+            var instrumentUrl = CFURLCreateWithString(nil, nil, nil)
+            var dataSize = UInt32(sizeof(CFURLRef))
+            CheckError(AudioUnitGetProperty(remoteIOUnit, 102 /* kAudioUnitProperty_PeerURL */, kAudioUnitScope_Global, 0, &instrumentUrl, &dataSize), desc: "Getting PeerURL Property")
+            UIApplication.sharedApplication().openURL(instrumentUrl)
+        }
     }
     
     private func fourCharCodeFrom(string : String) -> FourCharCode

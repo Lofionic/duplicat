@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
@@ -40,9 +39,9 @@
                                 <rect key="frame" x="-40" y="1006" width="1104" height="320"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="big-ug-AEN">
-                                <rect key="frame" x="8" y="8" width="330" height="66"/>
+                                <rect key="frame" x="0.0" y="0.0" width="330" height="66"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4Yu-cA-VzX">
+                                    <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4Yu-cA-VzX">
                                         <rect key="frame" x="8" y="8" width="50" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="44" id="LcN-3S-S6X"/>
@@ -63,16 +62,25 @@
                                             <constraint firstAttribute="width" constant="80" id="iV1-FM-Wnw"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="transport_rewind"/>
+                                        <connections>
+                                            <action selector="onRewindTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gZz-fb-GG3"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NXc-PJ-NRN">
                                         <rect key="frame" x="154" y="8" width="80" height="50"/>
                                         <state key="normal" backgroundImage="transport_play"/>
                                         <state key="selected" backgroundImage="transport_pause"/>
+                                        <connections>
+                                            <action selector="onPlayTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="M9I-6K-sjg"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="56L-Yy-Bwu">
                                         <rect key="frame" x="242" y="8" width="80" height="50"/>
                                         <state key="normal" backgroundImage="transport_record_off"/>
                                         <state key="selected" backgroundImage="transport_record_on"/>
+                                        <connections>
+                                            <action selector="onRecordTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="X2M-Xt-jbw"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -111,7 +119,7 @@
                             <constraint firstItem="f63-cS-Dpd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="D0u-r2-bAm"/>
                             <constraint firstItem="fmX-hM-mEt" firstAttribute="bottom" secondItem="f63-cS-Dpd" secondAttribute="bottom" id="F3f-z6-B0G"/>
                             <constraint firstItem="f63-cS-Dpd" firstAttribute="height" secondItem="fmX-hM-mEt" secondAttribute="height" id="JuJ-pe-sSd"/>
-                            <constraint firstItem="big-ug-AEN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="LEs-ab-wqJ"/>
+                            <constraint firstItem="big-ug-AEN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="LEs-ab-wqJ"/>
                             <constraint firstItem="f63-cS-Dpd" firstAttribute="top" secondItem="H8J-mf-I69" secondAttribute="bottom" constant="20" id="TM6-rg-LXf"/>
                             <constraint firstItem="H8J-mf-I69" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="azZ-rw-Wmx"/>
                             <constraint firstItem="JHk-Ay-UlS" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="gfb-qn-0cp"/>
@@ -119,7 +127,7 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="f63-cS-Dpd" secondAttribute="bottom" constant="40" id="jEi-rp-PHH"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="JHk-Ay-UlS" secondAttribute="bottom" id="oeN-cX-PRl"/>
                             <constraint firstAttribute="trailing" secondItem="JHk-Ay-UlS" secondAttribute="trailing" id="uBM-5V-j4f"/>
-                            <constraint firstItem="big-ug-AEN" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="vlB-2d-tga"/>
+                            <constraint firstItem="big-ug-AEN" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="vlB-2d-tga"/>
                             <constraint firstItem="f63-cS-Dpd" firstAttribute="width" secondItem="fmX-hM-mEt" secondAttribute="width" constant="16" id="xGm-8w-G0f"/>
                         </constraints>
                     </view>
@@ -131,6 +139,7 @@
                         <outlet property="auContainerView" destination="fmX-hM-mEt" id="Nmg-GT-CUA"/>
                         <outlet property="backgroundImageView" destination="JHk-Ay-UlS" id="HRn-9N-3xP"/>
                         <outlet property="iaaControlContainerView" destination="big-ug-AEN" id="GoW-ez-uYK"/>
+                        <outlet property="iaaControlHostIconImageView" destination="4Yu-cA-VzX" id="CfH-za-flJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

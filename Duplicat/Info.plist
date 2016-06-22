@@ -2,10 +2,25 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleDisplayName</key>
-	<string>$(PRODUCT_NAME)</string>
+	<key>AudioComponents</key>
+	<array>
+		<dict>
+			<key>manufacturer</key>
+			<string>dupl</string>
+			<key>name</key>
+			<string>Lofionic Duplicat</string>
+			<key>subtype</key>
+			<string>iasd</string>
+			<key>type</key>
+			<string>aurx</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -36,6 +51,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -46,20 +63,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-	<key>AudioComponents</key>
-	<array>
-		<dict>
-			<key>manufacturer</key>
-			<string>dupl</string>
-			<key>name</key>
-			<string>Lofionic Duplicat</string>
-			<key>subtype</key>
-			<string>iasd</string>
-			<key>type</key>
-			<string>aurx</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-	</array>
 </dict>
 </plist>

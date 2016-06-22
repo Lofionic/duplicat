@@ -18,9 +18,9 @@ class ViewController: UIViewController {
     @IBOutlet var auContainerView           : UIView!
     @IBOutlet var backgroundImageView       : UIImageView!
     @IBOutlet var auContainerBevelView      : UIImageView!
-    @IBOutlet var iaaControlContainerView   : UIView!
     
-    @IBOutlet var playButton    : UIButton!
+    @IBOutlet var iaaControlContainerView       : UIView!
+    @IBOutlet var iaaControlHostIconImageView   : UIImageView!
     
     var duplicatViewController  : TapeDelayViewController!
     var iaaWrapper : IAAWrapper!
@@ -38,6 +38,7 @@ class ViewController: UIViewController {
         }
         
         iaaControlContainerView.hidden = true
+        iaaControlHostIconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onHostImageTapped)))
         
         embedPlugInView()
         
@@ -83,6 +84,22 @@ class ViewController: UIViewController {
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent;
     }
+
+    func onHostImageTapped(gesture: UITapGestureRecognizer) {
+        if let iaaWrapperUnwrapped = iaaWrapper {
+            iaaWrapperUnwrapped.goToHost()
+        }
+    }
+    
+    @IBAction func onRewindTapped(sender: AnyObject) {
+    }
+    
+    @IBAction func onPlayTapped(sender: AnyObject) {
+    }
+    
+    @IBAction func onRecordTapped(sender: AnyObject) {
+    }
+    
 }
 
 extension ViewController : IAAWrapperDelegate {
@@ -94,7 +111,9 @@ extension ViewController : IAAWrapperDelegate {
         iaaControlContainerView.hidden = true
     }
     
-    
+    func iaaWrapperDidReceiveHostIcon(iaaWrapper: IAAWrapper, hostIcon: UIImage) {
+        iaaControlHostIconImageView.image = hostIcon
+    }
 }
 
 

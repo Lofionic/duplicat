@@ -11,7 +11,7 @@ import Foundation
 public class TapeDelayToggleButton : UIButton {
     
     public override func awakeFromNib() {
-        self.addTarget(self, action: "didTouchUpInside", forControlEvents: .TouchUpInside)
+        self.addTarget(self, action: #selector(TapeDelayToggleButton.didTouchUpInside), forControlEvents: .TouchUpInside)
     }
     
     func didTouchUpInside() {
@@ -23,5 +23,4 @@ public class TapeDelayToggleButton : UIButton {
         
         self.sendActionsForControlEvents(.ValueChanged)
     }
-    
 }
