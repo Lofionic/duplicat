@@ -14,9 +14,9 @@
 #import <vector>
 
 enum {
-    DelayParamTapeSpeed,
     DelayParamMix,
     DelayParamFeedback,
+    DelayParamTapeSpeed,
     DelayParamTapeEffect,
     DelayParamShortDelay,
     DelayParamMediumDelay,
@@ -65,6 +65,7 @@ public:
     }
 
     void process(AUAudioFrameCount frameCount, AUAudioFrameCount bufferOffset) override {
+
         int channelCount = int(delayStates.size());
         
         // For each sample.

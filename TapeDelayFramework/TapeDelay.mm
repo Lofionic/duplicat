@@ -42,16 +42,6 @@
     _kernel.init(defaultFormat.channelCount, defaultFormat.sampleRate);
     
     // Create parameter objects
-    AUParameter *tapeSpeed = [AUParameterTree createParameterWithIdentifier:@"tapeSpeed" name:@"Tape Speed"
-                                                                    address:DelayParamTapeSpeed
-                                                                        min:0.0
-                                                                        max:1.0
-                                                                       unit:kAudioUnitParameterUnit_Generic
-                                                                   unitName:nil
-                                                                      flags:0
-                                                               valueStrings:nil
-                                                        dependentParameters:nil];
-    
     AUParameter *mix = [AUParameterTree createParameterWithIdentifier:@"mix" name:@"Mix"
                                                               address:DelayParamMix
                                                                   min:0.0
@@ -63,15 +53,25 @@
                                                   dependentParameters:nil];
     
     AUParameter *feedback = [AUParameterTree createParameterWithIdentifier:@"feedback" name:@"Feedback"
-                                                                     address:DelayParamFeedback
-                                                                         min:0
-                                                                         max:1.0
-                                                                        unit:kAudioUnitParameterUnit_LinearGain
-                                                                    unitName:nil
-                                                                       flags:0
-                                                                valueStrings:nil
-                                                         dependentParameters:nil];
+                                                                   address:DelayParamFeedback
+                                                                       min:0
+                                                                       max:1.0
+                                                                      unit:kAudioUnitParameterUnit_LinearGain
+                                                                  unitName:nil
+                                                                     flags:0
+                                                              valueStrings:nil
+                                                       dependentParameters:nil];
     
+    AUParameter *tapeSpeed = [AUParameterTree createParameterWithIdentifier:@"tapeSpeed" name:@"Tape Speed"
+                                                                    address:DelayParamTapeSpeed
+                                                                        min:0.0
+                                                                        max:1.0
+                                                                       unit:kAudioUnitParameterUnit_Generic
+                                                                   unitName:nil
+                                                                      flags:0
+                                                               valueStrings:nil
+                                                        dependentParameters:nil];
+
     AUParameter *shortDelay = [AUParameterTree createParameterWithIdentifier:@"shortDelay" name:@"Short Delay"
                                                                     address:DelayParamShortDelay
                                                                         min:0
@@ -111,8 +111,7 @@
                                                                        flags:0
                                                                 valueStrings:nil
                                                          dependentParameters:nil];
-    
-    
+
     // Initialize parameter values
     tapeSpeed.value     = 0.5;
     mix.value           = 0.5;
@@ -133,15 +132,17 @@
     
     // Create the parameter tree
     _parameterTree = [AUParameterTree createTreeWithChildren:@[
-                                                               tapeSpeed,
                                                                mix,
                                                                feedback,
+                                                               tapeSpeed,
                                                                tapeEffect,
                                                                shortDelay,
                                                                mediumDelay,
                                                                longDelay
                                                                ]];
     
+
+        
     // Create the input and output busses.
     _inputBus.init(defaultFormat, 8);
     _outputBus = [[AUAudioUnitBus alloc] initWithFormat:defaultFormat error:nil];
@@ -183,11 +184,10 @@
                 return @"?";
             }
     };
-    
+
     self.maximumFramesToRender = 512;
     return self;
 }
-
 
 #pragma mark - AVAudioUnit overrides
 
@@ -263,6 +263,7 @@
                               AudioBufferList            *outputData,
                               const AURenderEvent        *realtimeEventListHead,
                               AURenderPullInputBlock      pullInputBlock) {
+        
         AudioUnitRenderActionFlags pullFlags = 0;
         
         AUAudioUnitStatus err = input->pullInput(&pullFlags, timestamp, frameCount, 0, pullInputBlock);

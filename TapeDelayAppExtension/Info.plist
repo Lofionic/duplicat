@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>TapeDelayAppExtension</string>
+	<string>DuplicatExtension</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -30,11 +30,11 @@
 			<array>
 				<dict>
 					<key>description</key>
-					<string>TapeDelay</string>
+					<string>Duplicat</string>
 					<key>manufacturer</key>
 					<string>LFDU</string>
 					<key>name</key>
-					<string>Lofionic: Tape Delay</string>
+					<string>Lofionic: Duplicat</string>
 					<key>sandboxSafe</key>
 					<true/>
 					<key>subtype</key>

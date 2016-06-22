@@ -37,7 +37,7 @@ class TapeDelayRotaryControl : UIControl {
         self.userInteractionEnabled = true
         
         // Set up the double tap gesture
-        let doubleTapGesture = UITapGestureRecognizer(target: self, action: "doubleTap:")
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTap))
         doubleTapGesture.numberOfTapsRequired = 2
         self.addGestureRecognizer(doubleTapGesture)
     }

@@ -9,6 +9,8 @@
 #ifndef TapeDelay_h
 #define TapeDelay_h
 
+#define kDuplicatParam_Mix @"mix"
+
 #import <AudioToolbox/AudioToolbox.h>
 
 @interface TapeDelay : AUAudioUnit
