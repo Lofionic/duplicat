@@ -12,23 +12,19 @@ import AudioToolbox
 import AVFoundation
 
 class ViewController: UIViewController {
-    
-    let kSampleRate = 44100.0
-    
+
     @IBOutlet var auContainerView           : UIView!
     @IBOutlet var backgroundImageView       : UIImageView!
     @IBOutlet var auContainerBevelView      : UIImageView!
     
-    @IBOutlet var iaaControlContainerView       : UIView!
-    @IBOutlet var iaaControlHostIconImageView   : UIImageView!
+    @IBOutlet var transportView : IAATransportView!
     
     var duplicatViewController  : TapeDelayViewController!
-    var iaaWrapper : IAAWrapper!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
+
+        // Configure resizable images in UI
         if let backgroundImage = backgroundImageView.image {
             backgroundImageView.image = backgroundImage.resizableImageWithCapInsets(UIEdgeInsetsZero, resizingMode: UIImageResizingMode.Tile);
         }
@@ -36,18 +32,25 @@ class ViewController: UIViewController {
         if let auContainerBevelBackgroundImage = auContainerBevelView.image {
             auContainerBevelView.image = auContainerBevelBackgroundImage.resizableImageWithCapInsets(UIEdgeInsetsMake(8, 8, 8, 8), resizingMode: UIImageResizingMode.Stretch);
         }
-        
-        iaaControlContainerView.hidden = true
-        iaaControlHostIconImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onHostImageTapped)))
-        
+
+        // Embed the effect's plugin view
         embedPlugInView()
+
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let iaaWrapper = appDelegate.iaaWrapper
         
-        iaaWrapper = IAAWrapper()
-        iaaWrapper.createAndPublish()
-        iaaWrapper.delegate = self
-        
-        let au = iaaWrapper.getAudioUnit()
-        duplicatViewController.audioUnit = au
+        if let iaaWrapper = iaaWrapper {
+            
+            // Create the iaaWrapper and publish it for IAA
+            iaaWrapper.createAndPublish()
+            
+            // Link transport view to the iaaWrapper
+            transportView.delegate = iaaWrapper
+            
+            // Link effect's view controller to the iaaWrapper's audio unit
+            duplicatViewController.audioUnit = iaaWrapper.getAudioUnit()
+            
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -80,40 +83,11 @@ class ViewController: UIViewController {
             duplicatViewController.didMoveToParentViewController(self)
         }
     }
-    
+
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent;
     }
 
-    func onHostImageTapped(gesture: UITapGestureRecognizer) {
-        if let iaaWrapperUnwrapped = iaaWrapper {
-            iaaWrapperUnwrapped.goToHost()
-        }
-    }
-    
-    @IBAction func onRewindTapped(sender: AnyObject) {
-    }
-    
-    @IBAction func onPlayTapped(sender: AnyObject) {
-    }
-    
-    @IBAction func onRecordTapped(sender: AnyObject) {
-    }
-    
-}
-
-extension ViewController : IAAWrapperDelegate {
-    func iaaWrapperDidConnect(iaaWrapper: IAAWrapper) {
-        iaaControlContainerView.hidden = false
-    }
-    
-    func iaaWrapperDidDisconnect(iaaWrapper: IAAWrapper) {
-        iaaControlContainerView.hidden = true
-    }
-    
-    func iaaWrapperDidReceiveHostIcon(iaaWrapper: IAAWrapper, hostIcon: UIImage) {
-        iaaControlHostIconImageView.image = hostIcon
-    }
 }
 
 

@@ -39,7 +39,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bevel" translatesAutoresizingMaskIntoConstraints="NO" id="f63-cS-Dpd">
                                 <rect key="frame" x="-40" y="1006" width="1104" height="320"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="big-ug-AEN">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="big-ug-AEN" customClass="IAATransportView" customModule="Lofionic_Duplicat" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="330" height="66"/>
                                 <subviews>
                                     <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4Yu-cA-VzX">
@@ -57,30 +57,30 @@
                                             </mask>
                                         </variation>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zrk-B3-olb">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zrk-B3-olb">
                                         <rect key="frame" x="66" y="8" width="80" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="iV1-FM-Wnw"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="transport_rewind"/>
                                         <connections>
-                                            <action selector="onRewindTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gZz-fb-GG3"/>
+                                            <action selector="onRewindTapped:" destination="big-ug-AEN" eventType="touchUpInside" id="4AX-FF-nnP"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NXc-PJ-NRN">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NXc-PJ-NRN">
                                         <rect key="frame" x="154" y="8" width="80" height="50"/>
                                         <state key="normal" backgroundImage="transport_play"/>
                                         <state key="selected" backgroundImage="transport_pause"/>
                                         <connections>
-                                            <action selector="onPlayTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="M9I-6K-sjg"/>
+                                            <action selector="onPlayTapped:" destination="big-ug-AEN" eventType="touchUpInside" id="2tY-pW-HA1"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="56L-Yy-Bwu">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="56L-Yy-Bwu">
                                         <rect key="frame" x="242" y="8" width="80" height="50"/>
                                         <state key="normal" backgroundImage="transport_record_off"/>
                                         <state key="selected" backgroundImage="transport_record_on"/>
                                         <connections>
-                                            <action selector="onRecordTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="X2M-Xt-jbw"/>
+                                            <action selector="onRecordTapped:" destination="big-ug-AEN" eventType="touchUpInside" id="pCB-li-rNn"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -110,6 +110,12 @@
                                         <exclude reference="I4d-cC-Hvg"/>
                                     </mask>
                                 </variation>
+                                <connections>
+                                    <outlet property="hostIcon" destination="4Yu-cA-VzX" id="WUM-X3-pff"/>
+                                    <outlet property="playButton" destination="NXc-PJ-NRN" id="cqW-bF-FQ6"/>
+                                    <outlet property="recordButton" destination="56L-Yy-Bwu" id="JIY-8i-lIu"/>
+                                    <outlet property="rewindButton" destination="zrk-B3-olb" id="FfR-1A-8cP"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -139,8 +145,7 @@
                         <outlet property="auContainerBevelView" destination="f63-cS-Dpd" id="Hvc-sA-nbV"/>
                         <outlet property="auContainerView" destination="fmX-hM-mEt" id="Nmg-GT-CUA"/>
                         <outlet property="backgroundImageView" destination="JHk-Ay-UlS" id="HRn-9N-3xP"/>
-                        <outlet property="iaaControlContainerView" destination="big-ug-AEN" id="GoW-ez-uYK"/>
-                        <outlet property="iaaControlHostIconImageView" destination="4Yu-cA-VzX" id="CfH-za-flJ"/>
+                        <outlet property="transportView" destination="big-ug-AEN" id="DHS-n4-lMJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -174,6 +179,6 @@
         <image name="transport_record_off" width="80" height="50"/>
         <image name="transport_record_on" width="80" height="50"/>
         <image name="transport_rewind" width="80" height="50"/>
-        <image name="user_guide" width="1680" height="2400"/>
+        <image name="user_guide" width="560" height="800"/>
     </resources>
 </document>

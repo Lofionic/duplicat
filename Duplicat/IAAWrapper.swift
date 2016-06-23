@@ -10,17 +10,10 @@ import UIKit
 import AVFoundation
 import TapeDelayFramework
 
-
-public protocol IAAWrapperDelegate {
-    func iaaWrapperDidConnect(iaaWrapper : IAAWrapper)
-    func iaaWrapperDidDisconnect(iaaWrapper : IAAWrapper)
-    func iaaWrapperDidReceiveHostIcon(iaaWrapper : IAAWrapper, hostIcon : UIImage)
-}
+let kIAATransportStateChangedNotification:String = "IAATransportStateChangedNotification"
 
 public class IAAWrapper: NSObject {
 
-    public var delegate : IAAWrapperDelegate?
-    
     private let kSampleRate = 44100.0
     
     private var graph : AUGraph
@@ -29,24 +22,34 @@ public class IAAWrapper: NSObject {
     private var isConnected  : Bool
     private var isForeground : Bool
     
+    private(set) public var isPlaying : Bool
+    private(set) public var isRecording : Bool
+    
     private var duplicatUnit : AudioUnit
     private var remoteIOUnit : AudioUnit
+    
+    private var callbackInfo : UnsafeMutablePointer<HostCallbackInfo>
+    
+    private var hostIcon : UIImage?
     
     internal func getAudioUnit() -> AudioUnit {
         return duplicatUnit
     }
 
-    
     override init() {
 
         graph = nil;
         
-        graphStarted    = false;
-        isConnected     = false;
-        isForeground    = false;
+        graphStarted    = false
+        isConnected     = false
+        isForeground    = false
         
-        duplicatUnit = nil;
-        remoteIOUnit = nil;
+        duplicatUnit = nil
+        remoteIOUnit = nil
+        callbackInfo = nil
+        
+        isPlaying = false
+        isRecording = false
         
         super.init()
         
@@ -58,7 +61,6 @@ public class IAAWrapper: NSObject {
                                                          name: UIApplicationDidEnterBackgroundNotification,
                                                          object: nil)
         
-        
         NSNotificationCenter.defaultCenter().addObserver(self,
                                                          selector: #selector(appHasGoneForeground),
                                                          name: UIApplicationWillEnterForegroundNotification,
@@ -69,6 +71,14 @@ public class IAAWrapper: NSObject {
                                                          name: UIApplicationWillTerminateNotification,
                                                          object: nil)
         
+        //TODO: Listen for AVAudioSessionMediaServicesWereResetNotification
+        //        //If media services get reset republish output node
+        //        [[NSNotificationCenter defaultCenter] addObserverForName:AVAudioSessionMediaServicesWereResetNotification object: nil queue: nil usingBlock: ^(NSNotification *note) {
+        //
+        //            //Throw away entire engine and rebuild like starting the app from scratch
+        //            [self cleanup];
+        //            [self createAndPublish];
+        //            }];
     }
     
     func createAndPublish() {
@@ -76,6 +86,7 @@ public class IAAWrapper: NSObject {
         addAudioUnitPropertyListeners()
         publishOutputAudioUnit()
         checkStartStopGraph()
+
     }
     
     private func createGraph() {
@@ -89,6 +100,10 @@ public class IAAWrapper: NSObject {
         componentDescription.componentFlags = 0
         componentDescription.componentFlagsMask = 0
         AUAudioUnit.registerSubclass(TapeDelay.self, asComponentDescription: componentDescription, name: "Local Tape Delay", version: UInt32.max);
+        
+        AVAudioUnit.instantiateWithComponentDescription(componentDescription, options: []) { avAudioUnit, error in
+            NSLog("Done an instantiate")
+        }
         
         // Remote IO description
         var ioUnitDescription = AudioComponentDescription()
@@ -185,11 +200,9 @@ public class IAAWrapper: NSObject {
 
     func audioUnitPropertyChangedListener(inObject: UnsafeMutablePointer<Void>, inUnit:AudioUnit, inPropID: AudioUnitPropertyID, inScope: AudioUnitScope, inElement: AudioUnitElement) {
         if (inPropID == kAudioUnitProperty_IsInterAppConnected) {
-            NSLog("PropertyChanged: IsInterAppConnected")
-            isHostConnected()
+            checkIsHostConnected()
             postUpdateStateNotification()
         } else if (inPropID == kAudioOutputUnitProperty_HostTransportState) {
-            NSLog("PropertyChanged: HostTransportState")
             updateStateFromTransportCallBack()
             postUpdateStateNotification()
         }
@@ -277,17 +290,17 @@ public class IAAWrapper: NSObject {
     @objc
     private func appHasGoneForeground() {
         isForeground = true;
-        isHostConnected()
+        checkIsHostConnected()
         checkStartStopGraph()
         updateStateFromTransportCallBack()
     }
     
     @objc
     private func cleanup() {
-        
+        //TODO: Add cleanup
     }
     
-    private func isHostConnected() {
+    private func checkIsHostConnected() {
         if (remoteIOUnit != nil) {
             var data = UInt32(0)
             var dataSize = UInt32(sizeof(UInt32))
@@ -299,14 +312,8 @@ public class IAAWrapper: NSObject {
                     checkStartStopGraph()
                     getHostCallBackInfo()
                     getAudioUnitIcon()
-                    if (delegate != nil) {
-                        delegate?.iaaWrapperDidConnect(self)
-                    }
                 } else {
                     checkStartStopGraph()
-                    if (delegate != nil) {
-                        delegate?.iaaWrapperDidDisconnect(self)
-                    }
                 }
             }
             
@@ -315,32 +322,77 @@ public class IAAWrapper: NSObject {
     
     private func postUpdateStateNotification() {
         NSLog("[postUpdateStateNotification]")
+        dispatch_async(dispatch_get_main_queue(), {
+            NSNotificationCenter.defaultCenter().postNotificationName(kIAATransportStateChangedNotification, object: self)
+            if (self.isPlaying) {
+                NSLog("IsPlaying")
+            }
+            
+            if (self.isRecording) {
+                NSLog("IsRecording")
+            }
+        })
     }
     
     private func getHostCallBackInfo() {
         NSLog("[getHostCallBackInfo]")
+        if (isConnected) {
+            if (callbackInfo != nil) {
+                free(callbackInfo)
+            }
+        
+            var datasize = UInt32(sizeof(HostCallbackInfo))
+            callbackInfo = UnsafeMutablePointer<HostCallbackInfo>(malloc(sizeof(HostCallbackInfo)))
+            let result = AudioUnitGetProperty(remoteIOUnit, kAudioUnitProperty_HostCallbacks, kAudioUnitScope_Global, 0, callbackInfo, &datasize)
+            if (result != noErr) {
+                free(callbackInfo)
+                callbackInfo = nil
+            }
+        }
     }
     
+    // This is called when the app enters the foreground, or when the host transport state is changed.
     private func updateStateFromTransportCallBack() {
-        NSLog("[updateStateFromTransportCallBack]")
+        // Transport state will only be updated when the app is connected and in the foreground.
+        if (isConnected && isForeground) {
+            if (callbackInfo == nil) {
+                getHostCallBackInfo()
+            }
+            
+            if (callbackInfo != nil) {
+                let hostPlaying = UnsafeMutablePointer<DarwinBoolean>.alloc(1)
+                hostPlaying[0] = isPlaying ? true : false
+                
+                let hostRecording = UnsafeMutablePointer<DarwinBoolean>.alloc(1)
+                hostRecording[0] = isRecording ? true : false
+                
+                var outCurrentSampleInTimeLine = Float64(0)
+                
+                let hostUserData = callbackInfo.memory.hostUserData
+                let transportStateProc = callbackInfo.memory.transportStateProc2
+                if let transportStateProcUnwrapped = transportStateProc {
+                    let result = transportStateProcUnwrapped(hostUserData,
+                                                             hostPlaying,
+                                                             hostRecording,
+                                                             nil,
+                                                             &outCurrentSampleInTimeLine,
+                                                             nil,
+                                                             nil,
+                                                             nil)
+                    
+                    if (result == noErr) {
+                        isPlaying = hostPlaying.memory.boolValue
+                        isRecording = hostRecording.memory.boolValue
+                    }
+                }
+            }
+        }
     }
     
     private func getAudioUnitIcon() {
         NSLog("[getAudioUnitIcon]")
         if remoteIOUnit != nil {
-            let hostIcon = AudioOutputUnitGetHostIcon(remoteIOUnit, 100);
-            if let delegate = self.delegate {
-                delegate.iaaWrapperDidReceiveHostIcon(self, hostIcon: hostIcon!)
-            }
-        }
-    }
-    
-    public func goToHost() {
-        if remoteIOUnit != nil {
-            var instrumentUrl = CFURLCreateWithString(nil, nil, nil)
-            var dataSize = UInt32(sizeof(CFURLRef))
-            CheckError(AudioUnitGetProperty(remoteIOUnit, 102 /* kAudioUnitProperty_PeerURL */, kAudioUnitScope_Global, 0, &instrumentUrl, &dataSize), desc: "Getting PeerURL Property")
-            UIApplication.sharedApplication().openURL(instrumentUrl)
+            hostIcon = AudioOutputUnitGetHostIcon(remoteIOUnit, 100);
         }
     }
     
@@ -510,4 +562,36 @@ public class IAAWrapper: NSObject {
             print("huh?")
         }
     }
+}
+
+extension IAAWrapper : IAATransportViewDelegate {
+    
+    public func isHostPlaying() -> Bool {
+        return isPlaying
+    }
+    
+    public func isHostConnected() -> Bool {
+        return isConnected
+    }
+    
+    public func isHostRecording() -> Bool {
+        return isRecording
+    }
+    
+    public func getHostIcon() -> UIImage? {
+        return hostIcon
+    }
+    
+    public func goToHost() {
+        if remoteIOUnit != nil {
+            var instrumentUrl = CFURLCreateWithString(nil, nil, nil)
+            var dataSize = UInt32(sizeof(CFURLRef))
+            CheckError(AudioUnitGetProperty(remoteIOUnit, kAudioUnitProperty_PeerURL, kAudioUnitScope_Global, 0, &instrumentUrl, &dataSize), desc: "Getting PeerURL Property")
+            UIApplication.sharedApplication().openURL(instrumentUrl)
+        }
+    }
+    
+    public func hostRewind() { }
+    public func hostPlay() { }
+    public func hostRecord() { }
 }
