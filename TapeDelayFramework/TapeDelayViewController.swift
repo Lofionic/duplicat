@@ -56,27 +56,6 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
         }
     }
     
-    var paramIDs = [AudioUnitParameterID]()
-    public var audioUnit : AudioUnit? {
-        didSet {
-            /*
-             We may be on a dispatch worker queue processing an XPC request at
-             this time, and quite possibly the main queue is busy creating the
-             view. To be thread-safe, dispatch onto the main queue.
-             
-             It's also possible that we are already on the main queue, so to
-             protect against deadlock in that case, dispatch asynchronously.
-             */
-            dispatch_async(dispatch_get_main_queue()) {
-                if self.isViewLoaded() {
-                    if let audioUnitUnwrapped = self.audioUnit {
-                        self.connectViewWithAU(audioUnitUnwrapped)
-                    }
-                }
-            }
-        }
-    }
-        
     var tapeSpeedParameter:         AUParameter?
     var mixParameter:               AUParameter?
     var feedbackParameter:          AUParameter?
@@ -138,74 +117,58 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
         updateDelayButtons();
     }
     
-    func connectViewWithAU(audioUnit: AudioUnit?) {
-        
-        // Fetch the parameter IDs from the AudioUnit
-        // These IDs will be used to get & set parameters
-        var size: UInt32 = 0
-        var propertyBool = DarwinBoolean(true)
-        AudioUnitGetPropertyInfo(
-            audioUnit!,
-            kAudioUnitProperty_ParameterList,
-            kAudioUnitScope_Global,
-            0,
-            &size,
-            &propertyBool)
-        let numParams = Int(size)/sizeof(AudioUnitParameterID)
-        paramIDs = [AudioUnitParameterID](count: Int(numParams), repeatedValue: 0)
-        AudioUnitGetProperty(
-            audioUnit!,
-            kAudioUnitProperty_ParameterList,
-            kAudioUnitScope_Global,
-            0,
-            &paramIDs,
-            &size)
-
-        updateTapeSpeedControl();
-        updateMixControl();
-        updateFeedbackControl();
-        updateTapeEffectControl();
-        
-        updateDelayButtons();
-    }
+//    func connectViewWithAU(audioUnit: AudioUnit?) {
+//        
+//        // Fetch the parameter IDs from the AudioUnit
+//        // These IDs will be used to get & set parameters
+//        var size: UInt32 = 0
+//        var propertyBool = DarwinBoolean(true)
+//        AudioUnitGetPropertyInfo(
+//            audioUnit!,
+//            kAudioUnitProperty_ParameterList,
+//            kAudioUnitScope_Global,
+//            0,
+//            &size,
+//            &propertyBool)
+//        let numParams = Int(size)/sizeof(AudioUnitParameterID)
+//        paramIDs = [AudioUnitParameterID](count: Int(numParams), repeatedValue: 0)
+//        AudioUnitGetProperty(
+//            audioUnit!,
+//            kAudioUnitProperty_ParameterList,
+//            kAudioUnitScope_Global,
+//            0,
+//            &paramIDs,
+//            &size)
+//
+//        updateTapeSpeedControl();
+//        updateMixControl();
+//        updateFeedbackControl();
+//        updateTapeEffectControl();
+//        
+//        updateDelayButtons();
+//    }
     
     private func updateMixControl() {
         if (tapeDelayAudioUnit != nil) {
             mixControl.value = mixParameter!.value
-        } else if (audioUnit != nil) {
-            var value : AudioUnitParameterValue = 0
-            AudioUnitGetParameter(audioUnit!, self.paramIDs[0], kAudioUnitScope_Global, 0, &value)
-            mixControl.value = value
         }
     }
     
     private func updateFeedbackControl() {
         if (tapeDelayAudioUnit != nil) {
             feedbackControl.value    = feedbackParameter!.value
-        } else if (audioUnit != nil) {
-            var value : AudioUnitParameterValue = 0
-            AudioUnitGetParameter(audioUnit!, self.paramIDs[1], kAudioUnitScope_Global, 0, &value)
-            feedbackControl.value = value
         }
     }
     
     private func updateTapeSpeedControl() {
         if (tapeDelayAudioUnit != nil) {
             tapeSpeedControl.value   = tapeSpeedParameter!.value
-        } else if (audioUnit != nil) {
-            var value : AudioUnitParameterValue = 0
-            AudioUnitGetParameter(audioUnit!, self.paramIDs[2], kAudioUnitScope_Global, 0, &value)
-            tapeSpeedControl.value = value
         }
     }
 
     private func updateTapeEffectControl() {
         if (tapeDelayAudioUnit != nil) {
             tapeEffectControl.value  = tapeEffectParameter!.value
-        } else if (audioUnit != nil) {
-            var value : AudioUnitParameterValue = 0
-            AudioUnitGetParameter(audioUnit!, self.paramIDs[3], kAudioUnitScope_Global, 0, &value)
-            tapeEffectControl.value = value
         }
     }
     
@@ -215,48 +178,30 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
             shortDelayButton.selected   = shortDelayParameter!.value == 1.0
             mediumDelayButton.selected  = mediumDelayParameter!.value == 1.0
             longDelayButton.selected    = longDelayParameter!.value == 1.0
-        } else if (audioUnit != nil) {
-            var value : AudioUnitParameterValue = 0
-            AudioUnitGetParameter(audioUnit!, self.paramIDs[4], kAudioUnitScope_Global, 0, &value)
-            shortDelayButton.selected = value == 1
-            
-            AudioUnitGetParameter(audioUnit!, self.paramIDs[5], kAudioUnitScope_Global, 0, &value)
-            mediumDelayButton.selected = value == 1
-            
-            AudioUnitGetParameter(audioUnit!, self.paramIDs[6], kAudioUnitScope_Global, 0, &value)
-            longDelayButton.selected = value == 1
         }
     }
     
     @IBAction func tapeSpeedControlValueChanged(sender: AnyObject) {
         if (tapeDelayAudioUnit != nil) {
             tapeSpeedParameter?.setValue(self.tapeSpeedControl.value, originator: parameterObserverToken!)
-        } else if (audioUnit != nil) {
-            AudioUnitSetParameter(audioUnit!, self.paramIDs[2], kAudioUnitScope_Global, 0, self.tapeSpeedControl.value, 0)
         }
     }
     
     @IBAction func mixControlValueChanged(sender: AnyObject) {
         if (tapeDelayAudioUnit != nil) {
             mixParameter?.setValue(self.mixControl.value, originator: parameterObserverToken!)
-        } else if (audioUnit != nil) {
-            AudioUnitSetParameter(audioUnit!, self.paramIDs[0], kAudioUnitScope_Global, 0, self.mixControl.value, 0)
         }
     }
     
     @IBAction func feedbackControlValueChanged(sender: AnyObject) {
         if (tapeDelayAudioUnit != nil) {
             feedbackParameter?.setValue(self.feedbackControl.value, originator: parameterObserverToken!)
-        } else if (audioUnit != nil) {
-            AudioUnitSetParameter(audioUnit!, self.paramIDs[1], kAudioUnitScope_Global, 0, self.feedbackControl.value, 0)
         }
     }
     
     @IBAction func tapeEffectControlValueChanged(sender: AnyObject) {
         if (tapeDelayAudioUnit != nil) {
             tapeEffectParameter?.setValue(self.tapeEffectControl.value, originator: parameterObserverToken!)
-        } else if (audioUnit != nil) {
-            AudioUnitSetParameter(audioUnit!, self.paramIDs[3], kAudioUnitScope_Global, 0, self.tapeEffectControl.value, 0)
         }
     }
     
@@ -271,15 +216,6 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
                 mediumDelayParameter?.setValue(auValue, originator: parameterObserverToken!)
             } else if tapeDelayToggleButton == longDelayButton {
                 longDelayParameter?.setValue(auValue, originator: parameterObserverToken!)
-            }
-        } else if (audioUnit != nil) {
-            let auValue = (tapeDelayToggleButton.selected ? 1.0 : 0.0) as AudioUnitParameterValue
-            if tapeDelayToggleButton == shortDelayButton {
-                AudioUnitSetParameter(audioUnit!, self.paramIDs[4], kAudioUnitScope_Global, 0, auValue, 0)
-            } else if tapeDelayToggleButton == mediumDelayButton {
-                AudioUnitSetParameter(audioUnit!, self.paramIDs[5], kAudioUnitScope_Global, 0, auValue, 0)
-            } else if tapeDelayToggleButton == longDelayButton {
-                AudioUnitSetParameter(audioUnit!, self.paramIDs[6], kAudioUnitScope_Global, 0, auValue, 0)
             }
         }
     }

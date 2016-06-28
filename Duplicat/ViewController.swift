@@ -34,7 +34,7 @@ class ViewController: UIViewController {
         }
 
         // Embed the effect's plugin view
-        embedPlugInView()
+         embedPlugInView()
 
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let iaaWrapper = appDelegate.iaaWrapper
@@ -42,13 +42,14 @@ class ViewController: UIViewController {
         if let iaaWrapper = iaaWrapper {
             
             // Create the iaaWrapper and publish it for IAA
+            iaaWrapper.delegate = self
             iaaWrapper.createAndPublish()
             
             // Link transport view to the iaaWrapper
             transportView.delegate = iaaWrapper
             
             // Link effect's view controller to the iaaWrapper's audio unit
-            duplicatViewController.audioUnit = iaaWrapper.getAudioUnit()
+//            duplicatViewController.audioUnit = iaaWrapper.getAudioUnit()
             
         }
     }
@@ -90,4 +91,11 @@ class ViewController: UIViewController {
 
 }
 
+extension ViewController : IAAWrapperDelegate {
+    func audioUnitDidConnect(iaaWrapper: IAAWrapper, audioUnit : AUAudioUnit?) {
+        if let audioUnit = audioUnit  {
+            duplicatViewController.tapeDelayAudioUnit = (audioUnit as! TapeDelay)
+        }
+    }
+}
 

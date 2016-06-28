@@ -6,11 +6,11 @@
 	<array>
 		<dict>
 			<key>manufacturer</key>
-			<string>dupl</string>
+			<string>lfnc</string>
 			<key>name</key>
 			<string>Lofionic Duplicat</string>
 			<key>subtype</key>
-			<string>iasd</string>
+			<string>dupl</string>
 			<key>type</key>
 			<string>aurx</string>
 			<key>version</key>
@@ -23,6 +23,10 @@
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIcons</key>
+	<dict/>
+	<key>CFBundleIcons~ipad</key>
+	<dict/>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -35,6 +39,19 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.lofionic.duplicat</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>Duplicat-1.0.audiobus</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>

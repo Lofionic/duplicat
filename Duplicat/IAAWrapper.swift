@@ -12,11 +12,18 @@ import TapeDelayFramework
 
 let kIAATransportStateChangedNotification:String = "IAATransportStateChangedNotification"
 
+protocol IAAWrapperDelegate {
+    func audioUnitDidConnect(iaaWrapper : IAAWrapper, audioUnit : AUAudioUnit?)
+}
+
 public class IAAWrapper: NSObject {
 
+    var delegate : IAAWrapperDelegate?
+    
     private let kSampleRate = 44100.0
     
-    private var graph : AUGraph
+    private var avEngine : AVAudioEngine
+    private var effectNode : AVAudioUnit?
     
     private var graphStarted : Bool
     private var isConnected  : Bool
@@ -25,27 +32,24 @@ public class IAAWrapper: NSObject {
     private(set) public var isPlaying : Bool
     private(set) public var isRecording : Bool
     
-    private var duplicatUnit : AudioUnit
-    private var remoteIOUnit : AudioUnit
-    
     private var callbackInfo : UnsafeMutablePointer<HostCallbackInfo>
     
     private var hostIcon : UIImage?
     
+    private var audioBusController : ABAudiobusController?
+    
     internal func getAudioUnit() -> AudioUnit {
-        return duplicatUnit
+        return self.effectNode!.audioUnit
     }
 
     override init() {
 
-        graph = nil;
+        avEngine = AVAudioEngine()
         
         graphStarted    = false
         isConnected     = false
         isForeground    = false
-        
-        duplicatUnit = nil
-        remoteIOUnit = nil
+
         callbackInfo = nil
         
         isPlaying = false
@@ -82,95 +86,64 @@ public class IAAWrapper: NSObject {
     }
     
     func createAndPublish() {
-        createGraph()
+        connectAudioUnit()
         addAudioUnitPropertyListeners()
         publishOutputAudioUnit()
-        checkStartStopGraph()
-
+        publishAudiobus()
     }
     
-    private func createGraph() {
-        CheckError(NewAUGraph(&graph), desc: "Creating AUGraph")
+    private func connectAudioUnit() {
         
         // Register the Duplicat AU process
-        var componentDescription = AudioComponentDescription()
-        componentDescription.componentType = kAudioUnitType_Effect
-        componentDescription.componentSubType = fourCharCodeFrom("dely")
-        componentDescription.componentManufacturer = fourCharCodeFrom("LFDU")
-        componentDescription.componentFlags = 0
-        componentDescription.componentFlagsMask = 0
-        AUAudioUnit.registerSubclass(TapeDelay.self, asComponentDescription: componentDescription, name: "Local Tape Delay", version: UInt32.max);
+        var localComponentDescription = AudioComponentDescription()
+        localComponentDescription.componentType = kIAAComponentType
+        localComponentDescription.componentSubType = fourCharCodeFrom(kIAAComponentSubtype)
+        localComponentDescription.componentManufacturer = fourCharCodeFrom(kIAAComponentManufacturer)
+        localComponentDescription.componentFlags = 0
+        localComponentDescription.componentFlagsMask = 0
+        AUAudioUnit.registerSubclass(TapeDelay.self, asComponentDescription: localComponentDescription, name: "Local Tape Delay", version: UInt32.max);
         
-        AVAudioUnit.instantiateWithComponentDescription(componentDescription, options: []) { avAudioUnit, error in
-            NSLog("Done an instantiate")
+        var effectComponentDescription = AudioComponentDescription()
+        effectComponentDescription.componentType = kIAAComponentType
+        effectComponentDescription.componentSubType = fourCharCodeFrom(kIAAComponentSubtype)
+        effectComponentDescription.componentManufacturer = fourCharCodeFrom(kIAAComponentManufacturer)
+        AVAudioUnit.instantiateWithComponentDescription(effectComponentDescription, options: []) { avAudioUnit, error in
+        
+            // Assert that the avAudioUnit has been created succesfully
+            if let avAudioUnit = avAudioUnit {
+                
+                self.effectNode = avAudioUnit
+                self.avEngine.attachNode(avAudioUnit)
+                
+                if let engineInputNode = self.avEngine.inputNode {
+                    var maxFrames : UInt32 = 4096;
+                    self.CheckError(AudioUnitSetProperty(avAudioUnit.audioUnit,
+                        kAudioUnitProperty_MaximumFramesPerSlice,
+                        kAudioUnitScope_Global,
+                        0,
+                        &maxFrames,
+                        UInt32(sizeof(UInt32))),
+                                    desc: "Setting AU max frames");
+
+                    let hardwareFormat = self.avEngine.outputNode.outputFormatForBus(0)
+                    let pluginFormat = AVAudioFormat(standardFormatWithSampleRate: AVAudioSession.sharedInstance().sampleRate, channels: 2)
+                    
+                    self.avEngine.connect(self.avEngine.mainMixerNode, to: self.avEngine.outputNode, format: hardwareFormat)
+                    self.avEngine.connect(avAudioUnit, to: self.avEngine.mainMixerNode, format: pluginFormat)
+                    self.avEngine.connect(engineInputNode, to: avAudioUnit, format: pluginFormat)
+                }
+                
+                self.audioUnitDidConnect()
+            }
+        }
+    }
+    
+    private func audioUnitDidConnect() {
+        if let delegate = self.delegate {
+            delegate.audioUnitDidConnect(self, audioUnit: self.effectNode?.AUAudioUnit)
         }
         
-        // Remote IO description
-        var ioUnitDescription = AudioComponentDescription()
-        ioUnitDescription.componentManufacturer = kAudioUnitManufacturer_Apple;
-        ioUnitDescription.componentFlags = 0;
-        ioUnitDescription.componentFlagsMask = 0;
-        ioUnitDescription.componentType = kAudioUnitType_Output;
-        ioUnitDescription.componentSubType = kAudioUnitSubType_RemoteIO;
-
-        var remoteIONode = AUNode()
-        CheckError(AUGraphAddNode(graph, &ioUnitDescription, &remoteIONode), desc:"Creating RemoteIO node")
-        
-        var duplicatNode = AUNode()
-        CheckError(AUGraphAddNode(graph, &componentDescription, &duplicatNode), desc: "Creating Duplicat node")
-        CheckError(AUGraphOpen(graph), desc: "Opening AUGraph");
-        
-        remoteIOUnit = nil
-        CheckError(AUGraphNodeInfo(graph, remoteIONode, nil, &remoteIOUnit), desc:"Getting RemoteIO unit")
-        
-        // Grab the duplicat audio unit
-        CheckError(AUGraphNodeInfo(graph, duplicatNode, nil, &duplicatUnit), desc: "Getting Duplicat unit")
-        
-        // Enable IO for recording
-        var flag : UInt32 = 1
-        CheckError(AudioUnitSetProperty(remoteIOUnit,
-            kAudioOutputUnitProperty_EnableIO,
-            kAudioUnitScope_Input,
-            1,
-            &flag,
-            UInt32(sizeof(UInt32))),
-                   desc: "Enabling IO for recording")
-        
-        CheckError(AudioUnitSetProperty(remoteIOUnit,
-            kAudioOutputUnitProperty_EnableIO,
-            kAudioUnitScope_Output,
-            0,
-            &flag,
-            UInt32(sizeof(UInt32))),
-                   desc: "Enabling IO for playback")
-        
-        // Required: Effect AudioUnit needs to be able to render max 4096 frames.
-        var maxFrames : UInt32 = 4096;
-        CheckError(AudioUnitSetProperty(duplicatUnit,
-            kAudioUnitProperty_MaximumFramesPerSlice,
-            kAudioUnitScope_Global,
-            0,
-            &maxFrames,
-            UInt32(sizeof(UInt32))),
-                   desc: "Setting AU max frames");
-        
-        var streamFormat : AudioStreamBasicDescription = AudioStreamBasicDescription()
-        streamFormat.mChannelsPerFrame  = 2 // stereo
-        streamFormat.mSampleRate        = AVAudioSession.sharedInstance().sampleRate
-        streamFormat.mFormatID          = kAudioFormatLinearPCM
-        streamFormat.mFormatFlags       = kAudioFormatFlagIsFloat | kAudioFormatFlagIsNonInterleaved
-        streamFormat.mBytesPerFrame 	= UInt32(sizeof(Float32))
-        streamFormat.mBytesPerPacket    = UInt32(sizeof(Float32))
-        streamFormat.mBitsPerChannel    = 32
-        streamFormat.mFramesPerPacket   = 1
-        
-        CheckError(AudioUnitSetProperty(duplicatUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Input, 0, &streamFormat, UInt32(sizeof(AudioStreamBasicDescription))), desc: "Setting duplicat output format")
-        CheckError(AudioUnitSetProperty(duplicatUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 0, &streamFormat, UInt32(sizeof(AudioStreamBasicDescription))), desc: "Setting duplicat output format")
-        CheckError(AudioUnitSetProperty(remoteIOUnit, kAudioUnitProperty_StreamFormat, kAudioUnitScope_Output, 1, &streamFormat, UInt32(sizeof(AudioStreamBasicDescription))), desc: "Setting RemoteIO output format")
-        
-        CheckError(AUGraphConnectNodeInput(graph, duplicatNode, 0, remoteIONode, 0), desc: "Connecting duplicat to RemoteIO")
-        CheckError(AUGraphConnectNodeInput(graph, remoteIONode, 1, duplicatNode, 0), desc: "Connecting RemoteIO to duplicat")
-
+        checkStartStopGraph()
     }
     
     private func addAudioUnitPropertyListeners() {
@@ -178,14 +151,19 @@ public class IAAWrapper: NSObject {
         var s : UnsafeMutablePointer<Void>;
         s = UnsafeMutablePointer(Unmanaged.passRetained(self).toOpaque())
         
-        CheckError(AudioUnitAddPropertyListener(remoteIOUnit,
+        if let inputNode = self.avEngine.inputNode {
+    
+        CheckError(AudioUnitAddPropertyListener(inputNode.audioUnit,
             kAudioUnitProperty_IsInterAppConnected,
             AudioUnitPropertyChangeDispatcher,
             s), desc: "Adding IsInterAppConnected property listener");
-        CheckError(AudioUnitAddPropertyListener(remoteIOUnit,
+        CheckError(AudioUnitAddPropertyListener(inputNode.audioUnit,
             kAudioOutputUnitProperty_HostTransportState,
             AudioUnitPropertyChangeDispatcher,
             s), desc: "Adding HostTransportState property listener");
+        }
+        
+        NSLog("Listeners Added")
     }
     
     let AudioUnitPropertyChangeDispatcher : @convention(c) (inRefCon: UnsafeMutablePointer<Void>, inUnit: COpaquePointer, inID: UInt32, inScope: UInt32, inElement: UInt32) -> Void = {
@@ -209,25 +187,43 @@ public class IAAWrapper: NSObject {
     }
     
     private func publishOutputAudioUnit() {
-        var desc = AudioComponentDescription(componentType: OSType(kAudioUnitType_RemoteEffect), componentSubType: fourCharCodeFrom("iasd"), componentManufacturer: fourCharCodeFrom("dupl"), componentFlags: 0, componentFlagsMask: 0);
+        if let inputNode = avEngine.inputNode {
+        
+        var desc = AudioComponentDescription(componentType: OSType(kIAAComponentType), componentSubType: fourCharCodeFrom(kIAAComponentSubtype), componentManufacturer: fourCharCodeFrom(kIAAComponentManufacturer), componentFlags: 0, componentFlagsMask: 0);
         CheckError(
-            AudioOutputUnitPublish(&desc, "Lofionic Duplicat", 1, remoteIOUnit),
+            AudioOutputUnitPublish(&desc, "Lofionic Duplicat", 1, inputNode.audioUnit),
             desc: "Publishing IAA Component");
+        }
+    
+        NSLog("IAA Published")
+    }
+    
+    private func publishAudiobus() {
+            // Create the audiodus controller
+            self.audioBusController = ABAudiobusController(apiKey: kAudiobusKey)
+            self.audioBusController?.connectionPanelPosition = ABConnectionPanelPositionLeft
+            
+            // Create the audiobus filter port
+            let desc = AudioComponentDescription(componentType: OSType(kIAAComponentType), componentSubType: fourCharCodeFrom(kIAAComponentSubtype), componentManufacturer: fourCharCodeFrom(kIAAComponentManufacturer), componentFlags: 0, componentFlagsMask: 0);
+            let filterPort = ABFilterPort.init(name: "Main Port", title: "Main Port", audioComponentDescription: desc, audioUnit: avEngine.outputNode.audioUnit)
+            audioBusController?.addFilterPort(filterPort)
+            
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(audiobusConnectionsChangedNotifactionReceived), name: ABConnectionsChangedNotification, object: audioBusController)
+    }
+    
+    @objc
+    private func audiobusConnectionsChangedNotifactionReceived(note : NSNotification) {
+        // Audiobus connection state has changed, we need to stop or start the graph.
+        checkStartStopGraph()
     }
     
     private func checkStartStopGraph() {
         NSLog("[checkStartStopGraph]");
-        if (isConnected) {
+        // If IAA & AudioBus is disconnected...
+        if isConnected || (audioBusController != nil && (audioBusController!.connected || audioBusController!.memberOfActiveAudiobusSession)) {
             if (!graphStarted) {
                 setAudioSessionActive()
-                if (graph != nil) {
-                    var graphInitialized : DarwinBoolean = true
-                    CheckError(AUGraphIsInitialized(graph, &graphInitialized), desc: "graphIsInitialized?")
-                    if (!graphInitialized) {
-                        CheckError(AUGraphInitialize(graph), desc: "Initializing AUGraph")
-                    }
-                    startGraph()
-                }
+                startGraph()
             }
         } else {
             if (!isForeground) {
@@ -241,30 +237,29 @@ public class IAAWrapper: NSObject {
     
     private func startGraph() {
         NSLog("[startGraph]")
-        if (!graphStarted) {
-            if (graph != nil) {
-                CheckError(AUGraphStart(graph), desc: "Starting graph")
-                graphStarted = true;
-            }
+
+        do {
+            try avEngine.start()
+            graphStarted = true
+            NSLog("Engine started")
+        } catch {
+            NSLog("Failed to start engine")
         }
     }
     
     private func stopGraph() {
         NSLog("[stopGraph]")
-        if (graphStarted) {
-            if (graph != nil) {
-                CheckError(AUGraphStop(graph), desc: "Stopping graph")
-                graphStarted = false;
-            }
-        }
+        avEngine.pause()
+        graphStarted = false
     }
     
     private func setAudioSessionActive() {
+        NSLog("[setAudioSessionActive]")
         let session = AVAudioSession.sharedInstance()
         
         do {
             try session.setPreferredSampleRate(kSampleRate);
-            try session.setCategory(AVAudioSessionCategoryPlayback, withOptions: AVAudioSessionCategoryOptions.MixWithOthers)
+            try session.setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: AVAudioSessionCategoryOptions.MixWithOthers)
             try session.setActive(true)
         } catch {
             NSLog("ERROR: setting audio session active")
@@ -273,6 +268,7 @@ public class IAAWrapper: NSObject {
     }
     
     private func setAudioSessionInactive() {
+        NSLog("[setAudioSessionInactive]")
         let session = AVAudioSession.sharedInstance()
         do {
             try session.setActive(false)
@@ -301,22 +297,25 @@ public class IAAWrapper: NSObject {
     }
     
     private func checkIsHostConnected() {
-        if (remoteIOUnit != nil) {
+        
+        NSLog("[checkIsHostConnected]")
+        if let inputNode = self.avEngine.inputNode {
             var data = UInt32(0)
             var dataSize = UInt32(sizeof(UInt32))
-            CheckError(AudioUnitGetProperty(remoteIOUnit, kAudioUnitProperty_IsInterAppConnected, kAudioUnitScope_Global, 0, &data, &dataSize), desc: "AudioUnitGetProperty_IsInterAppConnected")
+            CheckError(AudioUnitGetProperty(inputNode.audioUnit, kAudioUnitProperty_IsInterAppConnected, kAudioUnitScope_Global, 0, &data, &dataSize), desc: "AudioUnitGetProperty_IsInterAppConnected")
             let connect = (data > 0 ? true : false)
             if (connect != isConnected) {
                 isConnected = connect
                 if (isConnected) {
+                    NSLog("host did connect")
                     checkStartStopGraph()
                     getHostCallBackInfo()
                     getAudioUnitIcon()
                 } else {
+                    NSLog("host did disconnect")
                     checkStartStopGraph()
                 }
             }
-            
         }
     }
     
@@ -341,12 +340,14 @@ public class IAAWrapper: NSObject {
                 free(callbackInfo)
             }
         
-            var datasize = UInt32(sizeof(HostCallbackInfo))
-            callbackInfo = UnsafeMutablePointer<HostCallbackInfo>(malloc(sizeof(HostCallbackInfo)))
-            let result = AudioUnitGetProperty(remoteIOUnit, kAudioUnitProperty_HostCallbacks, kAudioUnitScope_Global, 0, callbackInfo, &datasize)
-            if (result != noErr) {
-                free(callbackInfo)
-                callbackInfo = nil
+            if let inputNode = self.avEngine.inputNode {
+                var datasize = UInt32(sizeof(HostCallbackInfo))
+                callbackInfo = UnsafeMutablePointer<HostCallbackInfo>(malloc(sizeof(HostCallbackInfo)))
+                let result = AudioUnitGetProperty(inputNode.audioUnit, kAudioUnitProperty_HostCallbacks, kAudioUnitScope_Global, 0, callbackInfo, &datasize)
+                if (result != noErr) {
+                    free(callbackInfo)
+                    callbackInfo = nil
+                }
             }
         }
     }
@@ -389,10 +390,18 @@ public class IAAWrapper: NSObject {
         }
     }
     
+    private func sendStateToRemoteHost(event: AudioUnitRemoteControlEvent) {
+        if let inputNode = self.avEngine.inputNode {
+            var controlEvent = event.rawValue
+            let dataSize = UInt32(sizeof(AudioUnitRemoteControlEvent))
+            CheckError(AudioUnitSetProperty(inputNode.audioUnit, kAudioOutputUnitProperty_RemoteControlToHost, kAudioUnitScope_Global, 0, &controlEvent, dataSize), desc: "Sending remote control event")
+        }
+    }
+    
     private func getAudioUnitIcon() {
         NSLog("[getAudioUnitIcon]")
-        if remoteIOUnit != nil {
-            hostIcon = AudioOutputUnitGetHostIcon(remoteIOUnit, 100);
+        if let inputNode = self.avEngine.inputNode {
+            hostIcon = AudioOutputUnitGetHostIcon(inputNode.audioUnit, 100);
         }
     }
     
@@ -562,6 +571,7 @@ public class IAAWrapper: NSObject {
             print("huh?")
         }
     }
+    
 }
 
 extension IAAWrapper : IAATransportViewDelegate {
@@ -571,7 +581,7 @@ extension IAAWrapper : IAATransportViewDelegate {
     }
     
     public func isHostConnected() -> Bool {
-        return isConnected
+        return isConnected && !(audioBusController != nil && audioBusController!.connected)
     }
     
     public func isHostRecording() -> Bool {
@@ -583,15 +593,54 @@ extension IAAWrapper : IAATransportViewDelegate {
     }
     
     public func goToHost() {
-        if remoteIOUnit != nil {
+        if let inputNode = self.avEngine.inputNode {
             var instrumentUrl = CFURLCreateWithString(nil, nil, nil)
             var dataSize = UInt32(sizeof(CFURLRef))
-            CheckError(AudioUnitGetProperty(remoteIOUnit, kAudioUnitProperty_PeerURL, kAudioUnitScope_Global, 0, &instrumentUrl, &dataSize), desc: "Getting PeerURL Property")
+            CheckError(AudioUnitGetProperty(inputNode.audioUnit, kAudioUnitProperty_PeerURL, kAudioUnitScope_Global, 0, &instrumentUrl, &dataSize), desc: "Getting PeerURL Property")
             UIApplication.sharedApplication().openURL(instrumentUrl)
         }
     }
     
-    public func hostRewind() { }
-    public func hostPlay() { }
-    public func hostRecord() { }
+    public func canPlay() -> Bool {
+        return isConnected
+    }
+    
+    public func canRewind() -> Bool {
+        return isConnected
+    }
+    
+    public func canRecord() -> Bool {
+        return self.avEngine.inputNode != nil && !isPlaying
+    }
+
+    public func hostRewind() {
+        sendStateToRemoteHost(.Rewind)
+        NSNotificationCenter.defaultCenter().postNotificationName(kIAATransportStateChangedNotification, object: self)
+    }
+    
+    public func hostPlay() {
+        sendStateToRemoteHost(.TogglePlayPause)
+        NSNotificationCenter.defaultCenter().postNotificationName(kIAATransportStateChangedNotification, object: self)
+    }
+    
+    public func hostRecord() {
+        sendStateToRemoteHost(.ToggleRecord)
+        NSNotificationCenter.defaultCenter().postNotificationName(kIAATransportStateChangedNotification, object: self)
+    }
+}
+
+extension IAAWrapper : ABAudiobusControllerStateIODelegate {
+    
+    public func audiobusStateDictionaryForCurrentState() -> [NSObject : AnyObject]! {
+        
+        let stateDictionary = NSMutableDictionary.init(capacity: 10)
+        
+        
+        
+        return stateDictionary as [NSObject : AnyObject]
+    }
+    
+    public func loadStateFromAudiobusStateDictionary(dictionary: [NSObject : AnyObject]!, responseMessage outResponseMessage: AutoreleasingUnsafeMutablePointer<NSString?>) {
+        
+    }
 }

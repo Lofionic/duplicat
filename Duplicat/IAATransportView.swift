@@ -14,6 +14,11 @@ public protocol IAATransportViewDelegate {
     func isHostRecording() -> Bool
     func isHostConnected() -> Bool
     func getHostIcon() -> UIImage?
+
+    func canPlay() -> Bool
+    func canRewind() -> Bool
+    func canRecord() -> Bool
+    
     
     func goToHost()
     func hostRewind()
@@ -83,6 +88,10 @@ public class IAATransportView: UIView {
             
             self.playButton.selected = delegate.isHostPlaying()
             self.recordButton.selected = delegate.isHostRecording()
+            
+//            self.rewindButton.enabled = delegate.canRewind()
+//            self.playButton.enabled = delegate.canPlay()
+//            self.recordButton.enabled = delegate.canRecord()
             
             self.hostIcon.image = delegate.getHostIcon()
         }

@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Duplicat/ViewController.swift"
-            timestampString = "488307347.450272"
+            filePath = "Duplicat/IAAWrapper.swift"
+            timestampString = "488819871.209963"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "203"
+            endingLineNumber = "203"
+            landmarkName = "publishAudiobus()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Duplicat/IAAWrapper.swift"
-            timestampString = "488307189.499479"
+            timestampString = "488819871.209963"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "339"
-            endingLineNumber = "339"
-            landmarkName = "goToHost()"
+            startingLineNumber = "207"
+            endingLineNumber = "207"
+            landmarkName = "publishAudiobus()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,46 +41,14 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Duplicat/ViewController.swift"
-            timestampString = "488307347.450272"
+            filePath = "Duplicat/IAAWrapper.swift"
+            timestampString = "488819871.209963"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
-            landmarkName = "onHostImageTapped(_:)"
+            startingLineNumber = "204"
+            endingLineNumber = "204"
+            landmarkName = "publishAudiobus()"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Lofionic_Duplicat.ViewController.onHostImageTapped (__ObjC.UITapGestureRecognizer) -&gt; ()"
-                  moduleName = "Lofionic Duplicat"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/crivers/Projects/Xcode/duplicat/Duplicat/ViewController.swift"
-                  timestampString = "488307364.246641"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "89"
-                  endingLineNumber = "89"
-                  offsetFromSymbolStart = "28">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Lofionic_Duplicat.ViewController.onHostImageTapped (__ObjC.UITapGestureRecognizer) -&gt; ()"
-                  moduleName = "Lofionic Duplicat"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/crivers/Projects/Xcode/duplicat/Duplicat/ViewController.swift"
-                  timestampString = "488307364.246765"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "89"
-                  endingLineNumber = "89"
-                  offsetFromSymbolStart = "76">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -89,13 +57,61 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Duplicat/ViewController.swift"
-            timestampString = "488307347.450272"
+            filePath = "Duplicat/IAAWrapper.swift"
+            timestampString = "488819871.209963"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
-            landmarkName = "onHostImageTapped(_:)"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
+            landmarkName = "checkStartStopGraph()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Duplicat/IAAWrapper.swift"
+            timestampString = "488819871.209963"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
+            landmarkName = "audiobusConnectionsChangedNotifactionReceived(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TapeDelayFramework/TapeDelay.mm"
+            timestampString = "488817424.199854"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "271"
+            endingLineNumber = "271"
+            landmarkName = "-internalRenderBlock"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TapeDelayFramework/TapeDelay.mm"
+            timestampString = "488818905.4058"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "272"
+            endingLineNumber = "272"
+            landmarkName = "-internalRenderBlock"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
