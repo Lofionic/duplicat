@@ -116,38 +116,7 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
         
         updateDelayButtons();
     }
-    
-//    func connectViewWithAU(audioUnit: AudioUnit?) {
-//        
-//        // Fetch the parameter IDs from the AudioUnit
-//        // These IDs will be used to get & set parameters
-//        var size: UInt32 = 0
-//        var propertyBool = DarwinBoolean(true)
-//        AudioUnitGetPropertyInfo(
-//            audioUnit!,
-//            kAudioUnitProperty_ParameterList,
-//            kAudioUnitScope_Global,
-//            0,
-//            &size,
-//            &propertyBool)
-//        let numParams = Int(size)/sizeof(AudioUnitParameterID)
-//        paramIDs = [AudioUnitParameterID](count: Int(numParams), repeatedValue: 0)
-//        AudioUnitGetProperty(
-//            audioUnit!,
-//            kAudioUnitProperty_ParameterList,
-//            kAudioUnitScope_Global,
-//            0,
-//            &paramIDs,
-//            &size)
-//
-//        updateTapeSpeedControl();
-//        updateMixControl();
-//        updateFeedbackControl();
-//        updateTapeEffectControl();
-//        
-//        updateDelayButtons();
-//    }
-    
+        
     private func updateMixControl() {
         if (tapeDelayAudioUnit != nil) {
             mixControl.value = mixParameter!.value

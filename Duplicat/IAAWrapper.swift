@@ -199,16 +199,17 @@ public class IAAWrapper: NSObject {
     }
     
     private func publishAudiobus() {
-            // Create the audiodus controller
-            self.audioBusController = ABAudiobusController(apiKey: kAudiobusKey)
-            self.audioBusController?.connectionPanelPosition = ABConnectionPanelPositionLeft
-            
-            // Create the audiobus filter port
-            let desc = AudioComponentDescription(componentType: OSType(kIAAComponentType), componentSubType: fourCharCodeFrom(kIAAComponentSubtype), componentManufacturer: fourCharCodeFrom(kIAAComponentManufacturer), componentFlags: 0, componentFlagsMask: 0);
-            let filterPort = ABFilterPort.init(name: "Main Port", title: "Main Port", audioComponentDescription: desc, audioUnit: avEngine.outputNode.audioUnit)
-            audioBusController?.addFilterPort(filterPort)
-            
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(audiobusConnectionsChangedNotifactionReceived), name: ABConnectionsChangedNotification, object: audioBusController)
+        // Create the audiodus controller
+        self.audioBusController = ABAudiobusController(apiKey: kAudiobusKey)
+        self.audioBusController?.stateIODelegate = self
+        self.audioBusController?.connectionPanelPosition = ABConnectionPanelPositionLeft
+        
+        // Create the audiobus filter port
+        let desc = AudioComponentDescription(componentType: OSType(kIAAComponentType), componentSubType: fourCharCodeFrom(kIAAComponentSubtype), componentManufacturer: fourCharCodeFrom(kIAAComponentManufacturer), componentFlags: 0, componentFlagsMask: 0);
+        let filterPort = ABFilterPort.init(name: "Main Port", title: "Main Port", audioComponentDescription: desc, audioUnit: avEngine.outputNode.audioUnit)
+        audioBusController?.addFilterPort(filterPort)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(audiobusConnectionsChangedNotifactionReceived), name: ABConnectionsChangedNotification, object: audioBusController)
     }
     
     @objc
@@ -632,15 +633,88 @@ extension IAAWrapper : IAATransportViewDelegate {
 extension IAAWrapper : ABAudiobusControllerStateIODelegate {
     
     public func audiobusStateDictionaryForCurrentState() -> [NSObject : AnyObject]! {
+
+        if let effectNode = self.effectNode {
+            // Fetch the parameter IDs from the AudioUnit
+            // These IDs will be used to get & set parameters
+            var size: UInt32 = 0
+            var propertyBool = DarwinBoolean(true)
+            AudioUnitGetPropertyInfo(
+                effectNode.audioUnit,
+                kAudioUnitProperty_ParameterList,
+                kAudioUnitScope_Global,
+                0,
+                &size,
+                &propertyBool)
+            let numParams = Int(size)/sizeof(AudioUnitParameterID)
+            var paramIDs = [AudioUnitParameterID](count: Int(numParams), repeatedValue: 0)
+            AudioUnitGetProperty(
+                effectNode.audioUnit,
+                kAudioUnitProperty_ParameterList,
+                kAudioUnitScope_Global,
+                0,
+                &paramIDs,
+                &size)
         
-        let stateDictionary = NSMutableDictionary.init(capacity: 10)
-        
-        
+            let stateDictionary = NSMutableDictionary.init(capacity: paramIDs.count)
+            for paramID in paramIDs {
+                
+                var value = AudioUnitParameterValue(0)
+                AudioUnitGetParameter(effectNode.audioUnit, paramID, kAudioUnitScope_Global, 0, &value)
+                
+                stateDictionary.setValue(value, forKey: String(paramID))
+            }
         
         return stateDictionary as [NSObject : AnyObject]
+        } else {
+            return NSDictionary() as [NSObject : AnyObject]
+        }
     }
     
     public func loadStateFromAudiobusStateDictionary(dictionary: [NSObject : AnyObject]!, responseMessage outResponseMessage: AutoreleasingUnsafeMutablePointer<NSString?>) {
         
+        if let effectNode = self.effectNode {
+            let stateDictionary = dictionary as NSDictionary
+            for thisKey in stateDictionary.allKeys {
+                let paramId = UInt32(thisKey as! String)
+                
+                if let paramId = paramId {
+                    let value = stateDictionary.objectForKey(thisKey) as! AudioUnitParameterValue
+                    AudioUnitSetParameter(effectNode.audioUnit, paramId, kAudioUnitScope_Global, 0, value, 0)
+                }
+            }
+        }
     }
 }
+
+// Some useful code for fetching parameter IDs from an audio unit.
+//    func connectViewWithAU(audioUnit: AudioUnit?) {
+//
+//        // Fetch the parameter IDs from the AudioUnit
+//        // These IDs will be used to get & set parameters
+//        var size: UInt32 = 0
+//        var propertyBool = DarwinBoolean(true)
+//        AudioUnitGetPropertyInfo(
+//            audioUnit!,
+//            kAudioUnitProperty_ParameterList,
+//            kAudioUnitScope_Global,
+//            0,
+//            &size,
+//            &propertyBool)
+//        let numParams = Int(size)/sizeof(AudioUnitParameterID)
+//        paramIDs = [AudioUnitParameterID](count: Int(numParams), repeatedValue: 0)
+//        AudioUnitGetProperty(
+//            audioUnit!,
+//            kAudioUnitProperty_ParameterList,
+//            kAudioUnitScope_Global,
+//            0,
+//            &paramIDs,
+//            &size)
+//
+//        updateTapeSpeedControl();
+//        updateMixControl();
+//        updateFeedbackControl();
+//        updateTapeEffectControl();
+//
+//        updateDelayButtons();
+//    }
