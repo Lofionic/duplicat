@@ -333,6 +333,7 @@
 				6C60274B1B374F49003D6BEB /* Sources */,
 				6C60274C1B374F49003D6BEB /* Frameworks */,
 				6C60274D1B374F49003D6BEB /* Resources */,
+				6C15DE761D24140C00ECB413 /* Set Bundle Version */,
 			);
 			buildRules = (
 			);
@@ -371,7 +372,7 @@
 				6CC9A9071B7CA98B003BAA75 /* Resources */,
 				6CC9A93C1B7CAB51003BAA75 /* Embed Frameworks */,
 				6CC9A9401B7CAB54003BAA75 /* Embed App Extensions */,
-				6C15DE741D2408B700ECB413 /* Set Build Number */,
+				6C15DE741D2408B700ECB413 /* Set Bundle Version */,
 			);
 			buildRules = (
 			);
@@ -468,14 +469,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6C15DE741D2408B700ECB413 /* Set Build Number */ = {
+		6C15DE741D2408B700ECB413 /* Set Bundle Version */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Set Build Number";
+			name = "Set Bundle Version";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\ngit=$(sh /etc/profile; which git)\nnumber_of_commits=$(\"$git\" rev-list HEAD --count)\ngit_release_version=$(\"$git\" describe --tags --always --abbrev=0)\n\ntarget_plist=\"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\ndsym_plist=\"$DWARF_DSYM_FOLDER_PATH/$DWARF_DSYM_FILE_NAME/Contents/Info.plist\"\n\nfor plist in \"$target_plist\" \"$dsym_plist\"; do\nif [ -f \"$plist\" ]; then\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $number_of_commits\" \"$plist\"\nfi\ndone";
+		};
+		6C15DE761D24140C00ECB413 /* Set Bundle Version */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Set Bundle Version";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
