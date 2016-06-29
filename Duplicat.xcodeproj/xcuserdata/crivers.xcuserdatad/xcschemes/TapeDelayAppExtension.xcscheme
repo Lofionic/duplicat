@@ -16,8 +16,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6C60274E1B374F49003D6BEB"
-               BuildableName = "TapeDelayAppex.appex"
-               BlueprintName = "TapeDelayAppex"
+               BuildableName = "DuplicatAppex.appex"
+               BlueprintName = "DuplicatAppex"
                ReferencedContainer = "container:Duplicat.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -48,8 +48,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6C60274E1B374F49003D6BEB"
-            BuildableName = "TapeDelayAppex.appex"
-            BlueprintName = "TapeDelayAppex"
+            BuildableName = "DuplicatAppex.appex"
+            BlueprintName = "DuplicatAppex"
             ReferencedContainer = "container:Duplicat.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
