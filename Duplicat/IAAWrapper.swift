@@ -131,6 +131,9 @@ public class IAAWrapper: NSObject {
                 
                 self.effectNode = avAudioUnit
                 
+                // Connect the nodes
+                self.avEngine.attachNode(avAudioUnit)
+                
                 var maxFrames : UInt32 = 4096;
                 self.CheckError(AudioUnitSetProperty(avAudioUnit.audioUnit,
                     kAudioUnitProperty_MaximumFramesPerSlice,
@@ -140,12 +143,8 @@ public class IAAWrapper: NSObject {
                     UInt32(sizeof(UInt32))),
                                 desc: "Setting AU max frames");
 
-                // Connect the nodes
-                self.avEngine.attachNode(avAudioUnit)
-                
                 self.avEngine.connect(avAudioUnit, to: self.avEngine.mainMixerNode, format: nil)
                 self.avEngine.connect(self.avEngine.mainMixerNode, to: self.avEngine.outputNode, format: nil)
-
                 
                 self.audioUnitDidConnect()
             }
@@ -231,7 +230,7 @@ public class IAAWrapper: NSObject {
         // Audiobus connection state has changed, we need to stop or start the graph.
         
         if let audiobus = audioBusController {
-            if (audiobus.audiobusConnected || audiobus.memberOfActiveAudiobusSession) {
+            if (audiobus.audiobusConnected) {
                 isAudiobusConnected = true
                 NSLog("AudioBus connected")
             } else {
@@ -240,7 +239,6 @@ public class IAAWrapper: NSObject {
             }
         }
         checkIsHostConnected()
-        
         checkStartStopGraph()
     }
     
@@ -336,8 +334,8 @@ public class IAAWrapper: NSObject {
     @objc
     private func cleanup() {
         stopGraph()
-        setAudioSessionInactive()
         avEngine.stop()
+        setAudioSessionInactive()
     }
     
     private func checkIsHostConnected() {
