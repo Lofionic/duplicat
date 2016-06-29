@@ -62,10 +62,10 @@ class ViewController: UIViewController {
         /*
         Locate the app extension's bundle, in the app bundle's PlugIns
         subdirectory. Load its MainInterface storyboard, and obtain the
-        `FilterDemoViewController` from that.
+        `TapeDelayViewController` from that.
         */
         let builtInPlugInsURL = NSBundle.mainBundle().builtInPlugInsURL!
-        let pluginURL = builtInPlugInsURL.URLByAppendingPathComponent("TapeDelayAppex.appex")
+        let pluginURL = builtInPlugInsURL.URLByAppendingPathComponent("DuplicatAppex.appex")
         let appExtensionBundle = NSBundle(URL: pluginURL)
         
         let storyboard = UIStoryboard(name: "MainInterface", bundle: appExtensionBundle)
