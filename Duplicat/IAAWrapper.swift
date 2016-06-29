@@ -28,6 +28,9 @@ public class IAAWrapper: NSObject {
     private var graphStarted : Bool
     private var isConnected  : Bool
     private var isForeground : Bool
+    private var isAudiobusConnected : Bool
+    
+    private var streamFormat : AudioStreamBasicDescription
     
     private(set) public var isPlaying : Bool
     private(set) public var isRecording : Bool
@@ -37,6 +40,7 @@ public class IAAWrapper: NSObject {
     private var hostIcon : UIImage?
     
     private var audioBusController : ABAudiobusController?
+    private var audioBusfilterPort : ABFilterPort?
     
     internal func getAudioUnit() -> AudioUnit {
         return self.effectNode!.audioUnit
@@ -49,11 +53,14 @@ public class IAAWrapper: NSObject {
         graphStarted    = false
         isConnected     = false
         isForeground    = false
+        isAudiobusConnected = false
 
         callbackInfo = nil
         
         isPlaying = false
         isRecording = false
+        
+        streamFormat = AudioStreamBasicDescription()
         
         super.init()
         
@@ -74,6 +81,11 @@ public class IAAWrapper: NSObject {
                                                          selector: #selector(cleanup),
                                                          name: UIApplicationWillTerminateNotification,
                                                          object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserverForName(AVAudioSessionMediaServicesWereResetNotification, object: nil, queue: nil) { note in
+            self.cleanup()
+            self.createAndPublish()
+        }
         
         //TODO: Listen for AVAudioSessionMediaServicesWereResetNotification
         //        //If media services get reset republish output node
@@ -107,31 +119,33 @@ public class IAAWrapper: NSObject {
         effectComponentDescription.componentType = kIAAComponentType
         effectComponentDescription.componentSubType = fourCharCodeFrom(kIAAComponentSubtype)
         effectComponentDescription.componentManufacturer = fourCharCodeFrom(kIAAComponentManufacturer)
+//        effectComponentDescription.componentManufacturer = kAudioUnitManufacturer_Apple
+//        effectComponentDescription.componentType = kAudioUnitType_Effect
+//        effectComponentDescription.componentSubType = kAudioUnitSubType_Delay
+//        effectComponentDescription.componentFlags = 0
+//        effectComponentDescription.componentFlagsMask = 0
         AVAudioUnit.instantiateWithComponentDescription(effectComponentDescription, options: []) { avAudioUnit, error in
         
             // Assert that the avAudioUnit has been created succesfully
             if let avAudioUnit = avAudioUnit {
                 
                 self.effectNode = avAudioUnit
+                
+                var maxFrames : UInt32 = 4096;
+                self.CheckError(AudioUnitSetProperty(avAudioUnit.audioUnit,
+                    kAudioUnitProperty_MaximumFramesPerSlice,
+                    kAudioUnitScope_Global,
+                    0,
+                    &maxFrames,
+                    UInt32(sizeof(UInt32))),
+                                desc: "Setting AU max frames");
+
+                // Connect the nodes
                 self.avEngine.attachNode(avAudioUnit)
                 
-                if let engineInputNode = self.avEngine.inputNode {
-                    var maxFrames : UInt32 = 4096;
-                    self.CheckError(AudioUnitSetProperty(avAudioUnit.audioUnit,
-                        kAudioUnitProperty_MaximumFramesPerSlice,
-                        kAudioUnitScope_Global,
-                        0,
-                        &maxFrames,
-                        UInt32(sizeof(UInt32))),
-                                    desc: "Setting AU max frames");
+                self.avEngine.connect(avAudioUnit, to: self.avEngine.mainMixerNode, format: nil)
+                self.avEngine.connect(self.avEngine.mainMixerNode, to: self.avEngine.outputNode, format: nil)
 
-                    let hardwareFormat = self.avEngine.outputNode.outputFormatForBus(0)
-                    let pluginFormat = AVAudioFormat(standardFormatWithSampleRate: AVAudioSession.sharedInstance().sampleRate, channels: 2)
-                    
-                    self.avEngine.connect(self.avEngine.mainMixerNode, to: self.avEngine.outputNode, format: hardwareFormat)
-                    self.avEngine.connect(avAudioUnit, to: self.avEngine.mainMixerNode, format: pluginFormat)
-                    self.avEngine.connect(engineInputNode, to: avAudioUnit, format: pluginFormat)
-                }
                 
                 self.audioUnitDidConnect()
             }
@@ -206,8 +220,8 @@ public class IAAWrapper: NSObject {
         
         // Create the audiobus filter port
         let desc = AudioComponentDescription(componentType: OSType(kIAAComponentType), componentSubType: fourCharCodeFrom(kIAAComponentSubtype), componentManufacturer: fourCharCodeFrom(kIAAComponentManufacturer), componentFlags: 0, componentFlagsMask: 0);
-        let filterPort = ABFilterPort.init(name: "Main Port", title: "Main Port", audioComponentDescription: desc, audioUnit: avEngine.outputNode.audioUnit)
-        audioBusController?.addFilterPort(filterPort)
+        self.audioBusfilterPort = ABFilterPort.init(name: "Main Port", title: "Main Port", audioComponentDescription: desc, audioUnit: avEngine.outputNode.audioUnit)
+        audioBusController?.addFilterPort(self.audioBusfilterPort)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(audiobusConnectionsChangedNotifactionReceived), name: ABConnectionsChangedNotification, object: audioBusController)
     }
@@ -215,13 +229,27 @@ public class IAAWrapper: NSObject {
     @objc
     private func audiobusConnectionsChangedNotifactionReceived(note : NSNotification) {
         // Audiobus connection state has changed, we need to stop or start the graph.
+        
+        if let audiobus = audioBusController {
+            if (audiobus.audiobusConnected || audiobus.memberOfActiveAudiobusSession) {
+                isAudiobusConnected = true
+                NSLog("AudioBus connected")
+            } else {
+                isAudiobusConnected = false
+                NSLog("AudioBus not connected")
+            }
+        }
+        checkIsHostConnected()
+        
         checkStartStopGraph()
     }
     
     private func checkStartStopGraph() {
         NSLog("[checkStartStopGraph]");
+
+        
         // If IAA & AudioBus is disconnected...
-        if isConnected || (audioBusController != nil && (audioBusController!.connected || audioBusController!.memberOfActiveAudiobusSession)) {
+        if isConnected || isAudiobusConnected {
             if (!graphStarted) {
                 setAudioSessionActive()
                 startGraph()
@@ -239,6 +267,13 @@ public class IAAWrapper: NSObject {
     private func startGraph() {
         NSLog("[startGraph]")
 
+        // Connect the input
+        if let effectNode = self.effectNode {
+            if let inputNode = self.avEngine.inputNode {
+                let format = effectNode.inputFormatForBus(0)
+                self.avEngine.connect(inputNode, to: effectNode, format: format)
+            }
+        }
         do {
             try avEngine.start()
             graphStarted = true
@@ -250,6 +285,12 @@ public class IAAWrapper: NSObject {
     
     private func stopGraph() {
         NSLog("[stopGraph]")
+        
+        // Disconnect the input
+        if let inputNode = self.avEngine.inputNode {
+            self.avEngine.disconnectNodeOutput(inputNode)
+        }
+        
         avEngine.pause()
         graphStarted = false
     }
@@ -294,7 +335,9 @@ public class IAAWrapper: NSObject {
     
     @objc
     private func cleanup() {
-        //TODO: Add cleanup
+        stopGraph()
+        setAudioSessionInactive()
+        avEngine.stop()
     }
     
     private func checkIsHostConnected() {
@@ -582,7 +625,7 @@ extension IAAWrapper : IAATransportViewDelegate {
     }
     
     public func isHostConnected() -> Bool {
-        return isConnected && !(audioBusController != nil && audioBusController!.connected)
+        return isConnected && !isAudiobusConnected
     }
     
     public func isHostRecording() -> Bool {
