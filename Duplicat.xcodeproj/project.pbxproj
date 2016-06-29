@@ -31,7 +31,6 @@
 		6CC9A90E1B7CA98B003BAA75 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC9A90D1B7CA98B003BAA75 /* ViewController.swift */; };
 		6CC9A9111B7CA98B003BAA75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CC9A90F1B7CA98B003BAA75 /* Main.storyboard */; };
 		6CC9A9131B7CA98B003BAA75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CC9A9121B7CA98B003BAA75 /* Assets.xcassets */; };
-		6CC9A9161B7CA98B003BAA75 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CC9A9141B7CA98B003BAA75 /* LaunchScreen.storyboard */; };
 		6CC9A9381B7CAB50003BAA75 /* TapeDelayFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CC1CE5E1B2F93D100D95621 /* TapeDelayFramework.framework */; };
 		6CC9A9391B7CAB50003BAA75 /* TapeDelayFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6CC1CE5E1B2F93D100D95621 /* TapeDelayFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6CC9A93D1B7CAB53003BAA75 /* TapeDelayAppex.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6C60274F1B374F49003D6BEB /* TapeDelayAppex.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -139,7 +138,6 @@
 		6CC9A90D1B7CA98B003BAA75 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		6CC9A9101B7CA98B003BAA75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6CC9A9121B7CA98B003BAA75 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		6CC9A9151B7CA98B003BAA75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6CC9A9171B7CA98B003BAA75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6CC9A9411B7CACF4003BAA75 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6CD08EF11B3D6E7400C0255E /* TapeDelayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapeDelayView.swift; sourceTree = "<group>"; };
@@ -297,7 +295,6 @@
 				83D5415E1D109487002D2B00 /* IAAWrapper.swift */,
 				6CC285571D217A9C00FD8292 /* IAASettings.swift */,
 				6CC9A90F1B7CA98B003BAA75 /* Main.storyboard */,
-				6CC9A9141B7CA98B003BAA75 /* LaunchScreen.storyboard */,
 				6CC9A9121B7CA98B003BAA75 /* Assets.xcassets */,
 			);
 			name = TapeDelayApp;
@@ -374,6 +371,7 @@
 				6CC9A9071B7CA98B003BAA75 /* Resources */,
 				6CC9A93C1B7CAB51003BAA75 /* Embed Frameworks */,
 				6CC9A9401B7CAB54003BAA75 /* Embed App Extensions */,
+				6C15DE741D2408B700ECB413 /* Set Build Number */,
 			);
 			buildRules = (
 			);
@@ -461,7 +459,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CC15B861BCBA96C00290680 /* .gitignore in Resources */,
-				6CC9A9161B7CA98B003BAA75 /* LaunchScreen.storyboard in Resources */,
 				6CC9A9131B7CA98B003BAA75 /* Assets.xcassets in Resources */,
 				6CC9A9451B7CB6BA003BAA75 /* Assets.xcassets in Resources */,
 				6CC9A9111B7CA98B003BAA75 /* Main.storyboard in Resources */,
@@ -469,6 +466,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6C15DE741D2408B700ECB413 /* Set Build Number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Set Build Number";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\ngit=$(sh /etc/profile; which git)\nnumber_of_commits=$(\"$git\" rev-list HEAD --count)\ngit_release_version=$(\"$git\" describe --tags --always --abbrev=0)\n\ntarget_plist=\"$TARGET_BUILD_DIR/$INFOPLIST_PATH\"\ndsym_plist=\"$DWARF_DSYM_FOLDER_PATH/$DWARF_DSYM_FILE_NAME/Contents/Info.plist\"\n\nfor plist in \"$target_plist\" \"$dsym_plist\"; do\nif [ -f \"$plist\" ]; then\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $number_of_commits\" \"$plist\"\nfi\ndone";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6C60274B1B374F49003D6BEB /* Sources */ = {
@@ -539,14 +553,6 @@
 				6CC9A9101B7CA98B003BAA75 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		6CC9A9141B7CA98B003BAA75 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6CC9A9151B7CA98B003BAA75 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

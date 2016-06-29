@@ -48,9 +48,6 @@ class ViewController: UIViewController {
             // Link transport view to the iaaWrapper
             transportView.delegate = iaaWrapper
             
-            // Link effect's view controller to the iaaWrapper's audio unit
-//            duplicatViewController.audioUnit = iaaWrapper.getAudioUnit()
-            
         }
     }
     

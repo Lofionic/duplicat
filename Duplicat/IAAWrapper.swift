@@ -28,6 +28,8 @@ public class IAAWrapper: NSObject {
     private var graphStarted : Bool
     private var isConnected  : Bool
     private var isForeground : Bool
+    
+    private var isAudiobusSession : Bool
     private var isAudiobusConnected : Bool
     
     private var streamFormat : AudioStreamBasicDescription
@@ -53,8 +55,10 @@ public class IAAWrapper: NSObject {
         graphStarted    = false
         isConnected     = false
         isForeground    = false
+        
         isAudiobusConnected = false
-
+        isAudiobusSession = false
+        
         callbackInfo = nil
         
         isPlaying = false
@@ -119,11 +123,6 @@ public class IAAWrapper: NSObject {
         effectComponentDescription.componentType = kIAAComponentType
         effectComponentDescription.componentSubType = fourCharCodeFrom(kIAAComponentSubtype)
         effectComponentDescription.componentManufacturer = fourCharCodeFrom(kIAAComponentManufacturer)
-//        effectComponentDescription.componentManufacturer = kAudioUnitManufacturer_Apple
-//        effectComponentDescription.componentType = kAudioUnitType_Effect
-//        effectComponentDescription.componentSubType = kAudioUnitSubType_Delay
-//        effectComponentDescription.componentFlags = 0
-//        effectComponentDescription.componentFlagsMask = 0
         AVAudioUnit.instantiateWithComponentDescription(effectComponentDescription, options: []) { avAudioUnit, error in
         
             // Assert that the avAudioUnit has been created succesfully
@@ -142,10 +141,10 @@ public class IAAWrapper: NSObject {
                     &maxFrames,
                     UInt32(sizeof(UInt32))),
                                 desc: "Setting AU max frames");
-
+                
+                let format: AVAudioFormat? = self.avEngine.outputNode.outputFormatForBus(0)
                 self.avEngine.connect(avAudioUnit, to: self.avEngine.mainMixerNode, format: nil)
                 self.avEngine.connect(self.avEngine.mainMixerNode, to: self.avEngine.outputNode, format: nil)
-                
                 self.audioUnitDidConnect()
             }
         }
@@ -228,17 +227,10 @@ public class IAAWrapper: NSObject {
     @objc
     private func audiobusConnectionsChangedNotifactionReceived(note : NSNotification) {
         // Audiobus connection state has changed, we need to stop or start the graph.
-        
         if let audiobus = audioBusController {
-            if (audiobus.audiobusConnected) {
-                isAudiobusConnected = true
-                NSLog("AudioBus connected")
-            } else {
-                isAudiobusConnected = false
-                NSLog("AudioBus not connected")
-            }
+            isAudiobusConnected = audiobus.audiobusConnected
+            isAudiobusSession = audiobus.memberOfActiveAudiobusSession
         }
-        checkIsHostConnected()
         checkStartStopGraph()
     }
     
@@ -253,7 +245,7 @@ public class IAAWrapper: NSObject {
                 startGraph()
             }
         } else {
-            if (!isForeground) {
+            if (!isForeground && !isAudiobusSession) {
                 if (graphStarted) {
                     stopGraph()
                     setAudioSessionInactive()
@@ -264,14 +256,15 @@ public class IAAWrapper: NSObject {
     
     private func startGraph() {
         NSLog("[startGraph]")
-
-        // Connect the input
-        if let effectNode = self.effectNode {
-            if let inputNode = self.avEngine.inputNode {
-                let format = effectNode.inputFormatForBus(0)
-                self.avEngine.connect(inputNode, to: effectNode, format: format)
+        
+        // Connect the effect unit to the engine's input node
+        if let inputNode = self.avEngine.inputNode {
+            if let effectNode = self.effectNode {
+                self.avEngine.disconnectNodeInput(effectNode)
+                self.avEngine.connect(inputNode, to: effectNode, format: effectNode.inputFormatForBus(0))
             }
         }
+        
         do {
             try avEngine.start()
             graphStarted = true
