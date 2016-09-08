@@ -11,7 +11,6 @@
 		6C189A681BCE7C49000BCD81 /* TapeDelayRotaryControl.swift in Headers */ = {isa = PBXBuildFile; fileRef = 6CE70F001B4804A700D4C944 /* TapeDelayRotaryControl.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		6C189A691BCE7C4D000BCD81 /* TapeDelayToggleButton.swift in Headers */ = {isa = PBXBuildFile; fileRef = 6C303A071B42928B001C2925 /* TapeDelayToggleButton.swift */; settings = {ATTRIBUTES = (Public, ); }; };
 		6C303A081B42928B001C2925 /* TapeDelayToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C303A071B42928B001C2925 /* TapeDelayToggleButton.swift */; };
-		6C5907561B43FE0A001D6C46 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C5907531B43FD67001D6C46 /* Assets.xcassets */; };
 		6C6027521B374F49003D6BEB /* TapeDelayAppEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C6027511B374F49003D6BEB /* TapeDelayAppEx.swift */; };
 		6C6027551B374F49003D6BEB /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C6027531B374F49003D6BEB /* MainInterface.storyboard */; };
 		6C6027661B375456003D6BEB /* TapeDelay.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CE5B31F1B2F9A1200471728 /* TapeDelay.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -30,19 +29,18 @@
 		6CC9A90C1B7CA98B003BAA75 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC9A90B1B7CA98B003BAA75 /* AppDelegate.swift */; };
 		6CC9A90E1B7CA98B003BAA75 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC9A90D1B7CA98B003BAA75 /* ViewController.swift */; };
 		6CC9A9111B7CA98B003BAA75 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6CC9A90F1B7CA98B003BAA75 /* Main.storyboard */; };
-		6CC9A9131B7CA98B003BAA75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CC9A9121B7CA98B003BAA75 /* Assets.xcassets */; };
+		6CC9A9131B7CA98B003BAA75 /* AppAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CC9A9121B7CA98B003BAA75 /* AppAssets.xcassets */; };
 		6CC9A9381B7CAB50003BAA75 /* TapeDelayFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CC1CE5E1B2F93D100D95621 /* TapeDelayFramework.framework */; };
 		6CC9A9391B7CAB50003BAA75 /* TapeDelayFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6CC1CE5E1B2F93D100D95621 /* TapeDelayFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6CC9A93D1B7CAB53003BAA75 /* DuplicatAppex.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 6C60274F1B374F49003D6BEB /* DuplicatAppex.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		6CC9A9421B7CACF4003BAA75 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CC9A9411B7CACF4003BAA75 /* UIKit.framework */; };
-		6CC9A9441B7CB6AA003BAA75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C5907531B43FD67001D6C46 /* Assets.xcassets */; };
-		6CC9A9451B7CB6BA003BAA75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C5907531B43FD67001D6C46 /* Assets.xcassets */; };
-		6CD08EF21B3D6E7400C0255E /* TapeDelayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD08EF11B3D6E7400C0255E /* TapeDelayView.swift */; };
 		6CE5B3221B2F9A1200471728 /* TapeDelay.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6CE5B3201B2F9A1200471728 /* TapeDelay.mm */; };
 		6CE5B3241B2F9A2C00471728 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CE5B3231B2F9A2C00471728 /* AudioToolbox.framework */; };
 		6CE5B3261B2F9A3A00471728 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CE5B3251B2F9A3A00471728 /* AVFoundation.framework */; };
 		6CE70F011B4804A700D4C944 /* TapeDelayRotaryControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE70F001B4804A700D4C944 /* TapeDelayRotaryControl.swift */; };
 		6CE70F031B4804D300D4C944 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CE70F021B4804D300D4C944 /* QuartzCore.framework */; };
+		8301F4C11D81ECEA00DE7B2F /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8301F4C01D81ECEA00DE7B2F /* SharedAssets.xcassets */; };
+		838AC86B1D8201F700EF9CF4 /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8301F4C01D81ECEA00DE7B2F /* SharedAssets.xcassets */; };
 		83A9CEA71D1C8AB100F8CEBE /* IAATransportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9CEA61D1C8AB100F8CEBE /* IAATransportView.swift */; };
 		83D5415F1D109487002D2B00 /* IAAWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D5415E1D109487002D2B00 /* IAAWrapper.swift */; };
 		83D92DAA1D0F5D0500F8C131 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CE5B3231B2F9A2C00471728 /* AudioToolbox.framework */; };
@@ -99,7 +97,6 @@
 
 /* Begin PBXFileReference section */
 		6C303A071B42928B001C2925 /* TapeDelayToggleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapeDelayToggleButton.swift; sourceTree = "<group>"; };
-		6C5907531B43FD67001D6C46 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6C60274F1B374F49003D6BEB /* DuplicatAppex.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = DuplicatAppex.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C6027511B374F49003D6BEB /* TapeDelayAppEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TapeDelayAppEx.swift; sourceTree = "<group>"; };
 		6C6027541B374F49003D6BEB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -137,10 +134,9 @@
 		6CC9A90B1B7CA98B003BAA75 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6CC9A90D1B7CA98B003BAA75 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		6CC9A9101B7CA98B003BAA75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		6CC9A9121B7CA98B003BAA75 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6CC9A9121B7CA98B003BAA75 /* AppAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppAssets.xcassets; sourceTree = "<group>"; };
 		6CC9A9171B7CA98B003BAA75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6CC9A9411B7CACF4003BAA75 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		6CD08EF11B3D6E7400C0255E /* TapeDelayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapeDelayView.swift; sourceTree = "<group>"; };
 		6CE5B31F1B2F9A1200471728 /* TapeDelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapeDelay.h; sourceTree = "<group>"; };
 		6CE5B3201B2F9A1200471728 /* TapeDelay.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TapeDelay.mm; sourceTree = "<group>"; };
 		6CE5B3231B2F9A2C00471728 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -148,6 +144,7 @@
 		6CE70F001B4804A700D4C944 /* TapeDelayRotaryControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapeDelayRotaryControl.swift; sourceTree = "<group>"; };
 		6CE70F021B4804D300D4C944 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6CEAA41A1B4421A2004C23A1 /* BufferedAudioBus.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BufferedAudioBus.hpp; sourceTree = "<group>"; };
+		8301F4C01D81ECEA00DE7B2F /* SharedAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = SharedAssets.xcassets; path = ../TapeDelayAppExtension/SharedAssets.xcassets; sourceTree = "<group>"; };
 		83A9CEA61D1C8AB100F8CEBE /* IAATransportView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAATransportView.swift; sourceTree = "<group>"; };
 		83D5415E1D109487002D2B00 /* IAAWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAAWrapper.swift; sourceTree = "<group>"; };
 		83D92DAB1D0F5D0500F8C131 /* TapeDelayApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TapeDelayApp.entitlements; sourceTree = SOURCE_ROOT; };
@@ -218,7 +215,6 @@
 				6CC9A90A1B7CA98B003BAA75 /* TapeDelayApp */,
 				6CC1CE5F1B2F93D100D95621 /* TapeDelayFramework */,
 				6C6027501B374F49003D6BEB /* TapeDelayAppex */,
-				6CC9A9461B7CB6DE003BAA75 /* Resources */,
 				6CC1CE401B2F922E00D95621 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -245,7 +241,6 @@
 				6C9245501B35C347006D7DE9 /* DSPKernel.hpp */,
 				6C9245511B35C347006D7DE9 /* DSPKernel.mm */,
 				6C9245541B3601DE006D7DE9 /* ParameterRamper.hpp */,
-				6CD08EF11B3D6E7400C0255E /* TapeDelayView.swift */,
 				6C6027761B3763EF003D6BEB /* TapeDelayViewController.swift */,
 				6C303A071B42928B001C2925 /* TapeDelayToggleButton.swift */,
 				6CE70F001B4804A700D4C944 /* TapeDelayRotaryControl.swift */,
@@ -286,6 +281,7 @@
 		6CC9A90A1B7CA98B003BAA75 /* TapeDelayApp */ = {
 			isa = PBXGroup;
 			children = (
+				8301F4C01D81ECEA00DE7B2F /* SharedAssets.xcassets */,
 				6CC2854D1D215CE300FD8292 /* Library */,
 				83D92DAB1D0F5D0500F8C131 /* TapeDelayApp.entitlements */,
 				6CC9A9171B7CA98B003BAA75 /* Info.plist */,
@@ -295,18 +291,10 @@
 				83D5415E1D109487002D2B00 /* IAAWrapper.swift */,
 				6CC285571D217A9C00FD8292 /* IAASettings.swift */,
 				6CC9A90F1B7CA98B003BAA75 /* Main.storyboard */,
-				6CC9A9121B7CA98B003BAA75 /* Assets.xcassets */,
+				6CC9A9121B7CA98B003BAA75 /* AppAssets.xcassets */,
 			);
 			name = TapeDelayApp;
 			path = Duplicat;
-			sourceTree = "<group>";
-		};
-		6CC9A9461B7CB6DE003BAA75 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				6C5907531B43FD67001D6C46 /* Assets.xcassets */,
-			);
-			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -392,20 +380,23 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Lofionic;
 				TargetAttributes = {
 					6C60274E1B374F49003D6BEB = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = NK7M84AH48;
+						LastSwiftMigration = 0800;
 					};
 					6CC1CE5D1B2F93D100D95621 = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = NK7M84AH48;
+						LastSwiftMigration = 0800;
 					};
 					6CC9A9081B7CA98B003BAA75 = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = NK7M84AH48;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -431,8 +422,8 @@
 			projectRoot = "";
 			targets = (
 				6CC9A9081B7CA98B003BAA75 /* Duplicat */,
-				6CC1CE5D1B2F93D100D95621 /* TapeDelayFramework */,
 				6C60274E1B374F49003D6BEB /* DuplicatAppex */,
+				6CC1CE5D1B2F93D100D95621 /* TapeDelayFramework */,
 			);
 		};
 /* End PBXProject section */
@@ -442,7 +433,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6CC9A9441B7CB6AA003BAA75 /* Assets.xcassets in Resources */,
+				8301F4C11D81ECEA00DE7B2F /* SharedAssets.xcassets in Resources */,
 				6C6027551B374F49003D6BEB /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -451,7 +442,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6C5907561B43FE0A001D6C46 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,8 +450,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CC15B861BCBA96C00290680 /* .gitignore in Resources */,
-				6CC9A9131B7CA98B003BAA75 /* Assets.xcassets in Resources */,
-				6CC9A9451B7CB6BA003BAA75 /* Assets.xcassets in Resources */,
+				838AC86B1D8201F700EF9CF4 /* SharedAssets.xcassets in Resources */,
+				6CC9A9131B7CA98B003BAA75 /* AppAssets.xcassets in Resources */,
 				6CC9A9111B7CA98B003BAA75 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -516,7 +506,6 @@
 				6CE5B3221B2F9A1200471728 /* TapeDelay.mm in Sources */,
 				6C303A081B42928B001C2925 /* TapeDelayToggleButton.swift in Sources */,
 				6CE70F011B4804A700D4C944 /* TapeDelayRotaryControl.swift in Sources */,
-				6CD08EF21B3D6E7400C0255E /* TapeDelayView.swift in Sources */,
 				6C6027771B3763EF003D6BEB /* TapeDelayViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -588,6 +577,7 @@
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
@@ -606,6 +596,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
@@ -624,8 +615,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -669,8 +662,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -689,6 +684,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -701,6 +697,7 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -719,6 +716,7 @@
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -732,6 +730,7 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -749,6 +748,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -758,12 +758,13 @@
 		6CC9A92E1B7CA98B003BAA75 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapeDelayApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				DEVELOPMENT_TEAM = NK7M84AH48;
 				INFOPLIST_FILE = Duplicat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -776,6 +777,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Duplicat/Audiobus-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
@@ -783,12 +785,13 @@
 		6CC9A92F1B7CA98B003BAA75 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapeDelayApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				DEVELOPMENT_TEAM = NK7M84AH48;
 				INFOPLIST_FILE = Duplicat/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -800,6 +803,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Duplicat/Audiobus-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;

@@ -142,7 +142,6 @@ public class IAAWrapper: NSObject {
                     UInt32(sizeof(UInt32))),
                                 desc: "Setting AU max frames");
                 
-                let format: AVAudioFormat? = self.avEngine.outputNode.outputFormatForBus(0)
                 self.avEngine.connect(avAudioUnit, to: self.avEngine.mainMixerNode, format: nil)
                 self.avEngine.connect(self.avEngine.mainMixerNode, to: self.avEngine.outputNode, format: nil)
                 self.audioUnitDidConnect()
@@ -178,7 +177,7 @@ public class IAAWrapper: NSObject {
         NSLog("Listeners Added")
     }
     
-    let AudioUnitPropertyChangeDispatcher : @convention(c) (inRefCon: UnsafeMutablePointer<Void>, inUnit: COpaquePointer, inID: UInt32, inScope: UInt32, inElement: UInt32) -> Void = {
+    let AudioUnitPropertyChangeDispatcher : @convention(c) (UnsafeMutablePointer<Void>, COpaquePointer, UInt32, UInt32, UInt32) -> Void = {
         (inRefCon, inUnit, inID, inScope, inElement) in
         
         NSLog("[AudioUnitPropertyChangeDispatcher]");
@@ -203,7 +202,7 @@ public class IAAWrapper: NSObject {
         
         var desc = AudioComponentDescription(componentType: OSType(kIAAComponentType), componentSubType: fourCharCodeFrom(kIAAComponentSubtype), componentManufacturer: fourCharCodeFrom(kIAAComponentManufacturer), componentFlags: 0, componentFlagsMask: 0);
         CheckError(
-            AudioOutputUnitPublish(&desc, "Lofionic Duplicat", 1, inputNode.audioUnit),
+            AudioOutputUnitPublish(&desc, "Lofionic Duplicat", 2, inputNode.audioUnit),
             desc: "Publishing IAA Component");
         }
     

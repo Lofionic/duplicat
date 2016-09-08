@@ -22,8 +22,6 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
     @IBOutlet public weak var shortDelayButton     : TapeDelayToggleButton!
     @IBOutlet public weak var mediumDelayButton    : TapeDelayToggleButton!
     @IBOutlet public weak var longDelayButton      : TapeDelayToggleButton!
-  
-    @IBOutlet weak var tapeDelayView : TapeDelayView!
     
     public override func viewDidLoad() {
         super.viewDidLoad()

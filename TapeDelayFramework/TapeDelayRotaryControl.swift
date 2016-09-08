@@ -88,25 +88,23 @@ class TapeDelayRotaryControl : UIControl {
         resignFirstResponder()
     }
     
-    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        if let touchesUnwrapped = touches {
-            touchesEnded(touchesUnwrapped, withEvent: event)
-        }
+    override func touchesCancelled(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        touchesEnded(touches, withEvent: event)
     }
     
     override func drawRect(rect: CGRect) {
         if let spriteSheetUnwrapped = spriteSheet {
             let ctx = UIGraphicsGetCurrentContext()
-            CGContextSaveGState(ctx)
-            CGContextScaleCTM(ctx, 1.0, -1.0)
+            CGContextSaveGState(ctx!)
+            CGContextScaleCTM(ctx!, 1.0, -1.0)
             
             let spriteCount : Int = Int((spriteSheetUnwrapped.size.height / spriteSize.height) * UIScreen.mainScreen().scale) - 1
             let frame : Int = Int(value * Float(spriteCount))
             let sourceRect = CGRectMake(0, CGFloat(frame * Int(self.spriteSize.height)), self.spriteSize.width, self.spriteSize.height)
-            let drawImage = CGImageCreateWithImageInRect(spriteSheetUnwrapped.CGImage, sourceRect)
+            let drawImage = CGImageCreateWithImageInRect(spriteSheetUnwrapped.CGImage!, sourceRect)
             
-            CGContextDrawImage(ctx, CGRectMake(0, 0, self.bounds.size.width, -self.bounds.size.height), drawImage)
-            CGContextRestoreGState(ctx)
+            CGContextDrawImage(ctx!, CGRectMake(0, 0, self.bounds.size.width, -self.bounds.size.height), drawImage!)
+            CGContextRestoreGState(ctx!)
         }
     }
 }
