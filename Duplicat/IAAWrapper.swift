@@ -202,7 +202,7 @@ open class IAAWrapper: NSObject {
         
         var desc = AudioComponentDescription(componentType: OSType(kIAAComponentType), componentSubType: fourCharCodeFrom(string: kIAAComponentSubtype), componentManufacturer: fourCharCodeFrom(string: kIAAComponentManufacturer), componentFlags: 0, componentFlagsMask: 0);
         CheckError(
-            error: AudioOutputUnitPublish(&desc, "Lofionic Duplicat" as CFString, 3, inputNode.audioUnit!),
+            error: AudioOutputUnitPublish(&desc, "Lofionic Duplicat" as CFString, 4, inputNode.audioUnit!),
             desc: "Publishing IAA Component");
         }
     

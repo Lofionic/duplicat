@@ -14,7 +14,7 @@
 			<key>type</key>
 			<string>aurx</string>
 			<key>version</key>
-			<integer>3</integer>
+			<integer>4</integer>
 		</dict>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
@@ -48,7 +48,7 @@
 			<string>com.lofionic.duplicat</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>Duplicat-1.2.audiobus</string>
+				<string>Duplicat-1.3.audiobus</string>
 			</array>
 		</dict>
 	</array>
