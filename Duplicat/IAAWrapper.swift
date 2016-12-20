@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-import TapeDelayFramework
+import DuplicatFramework
 
 let kIAATransportStateChangedNotification:String = "IAATransportStateChangedNotification"
 

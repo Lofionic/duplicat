@@ -21,14 +21,14 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
      */
     @IBOutlet weak var backgroundImageView              : UIImageView!
   
-    @IBOutlet weak var tapeSpeedControl     : TapeDelayRotaryControl!
-    @IBOutlet weak var mixControl           : TapeDelayRotaryControl!
-    @IBOutlet weak var feedbackControl      : TapeDelayRotaryControl!
-    @IBOutlet weak var tapeEffectControl    : TapeDelayRotaryControl!
+    @IBOutlet weak var tapeSpeedControl     : TapeDelayRotaryControl?
+    @IBOutlet weak var mixControl           : TapeDelayRotaryControl?
+    @IBOutlet weak var feedbackControl      : TapeDelayRotaryControl?
+    @IBOutlet weak var tapeEffectControl    : TapeDelayRotaryControl?
 
-    @IBOutlet public weak var shortDelayButton     : TapeDelayToggleButton!
-    @IBOutlet public weak var mediumDelayButton    : TapeDelayToggleButton!
-    @IBOutlet public weak var longDelayButton      : TapeDelayToggleButton!
+    @IBOutlet public weak var shortDelayButton     : TapeDelayToggleButton?
+    @IBOutlet public weak var mediumDelayButton    : TapeDelayToggleButton?
+    @IBOutlet public weak var longDelayButton      : TapeDelayToggleButton?
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,9 +77,9 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
         }
     }
     
-    var tapeSpeedParameter:         AUParameter?
     var mixParameter:               AUParameter?
     var feedbackParameter:          AUParameter?
+    var tapeSpeedParameter:         AUParameter?
     var tapeEffectParameter:        AUParameter?
     
     var shortDelayParameter:        AUParameter?
@@ -133,58 +133,58 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
             }
         })
  
-        updateTapeSpeedControl(value: tapeSpeedParameter!.value);
         updateMixControl(value: mixParameter!.value);
         updateFeedbackControl(value: feedbackParameter!.value);
+        updateTapeSpeedControl(value: tapeSpeedParameter!.value);
         updateTapeEffectControl(value: tapeEffectParameter!.value);
         updateDelayButtons();
     }
         
     private func updateMixControl(value: AUValue) {
-        guard let mixParameter = mixParameter else { return }
-        mixControl.value = mixParameter.value;
+        mixControl?.value = value
     }
     
     private func updateFeedbackControl(value: AUValue) {
-        if (tapeDelayAudioUnit != nil) {
-            feedbackControl.value = value
-        }
+        feedbackControl?.value = value
     }
     
     private func updateTapeSpeedControl(value: AUValue) {
-        if (tapeDelayAudioUnit != nil) {
-            tapeSpeedControl.value = value
-        }
+        tapeSpeedControl?.value = value
     }
 
     private func updateTapeEffectControl(value: AUValue) {
-        if (tapeDelayAudioUnit != nil) {
-            tapeEffectControl.value = value
-        }
+        tapeEffectControl?.value = value
     }
     
     private func updateDelayButtons() {
-        if (tapeDelayAudioUnit != nil) {
-            shortDelayButton.isSelected   = shortDelayParameter!.value == 1.0
-            mediumDelayButton.isSelected  = mediumDelayParameter!.value == 1.0
-            longDelayButton.isSelected    = longDelayParameter!.value == 1.0
+        guard let shortDelayParameter = shortDelayParameter,
+            let mediumDelayParameter = mediumDelayParameter,
+            let longDelayParameter = longDelayParameter
+            else {
+                return
         }
+        
+        shortDelayButton?.isSelected   = shortDelayParameter.value == 1.0
+        mediumDelayButton?.isSelected  = mediumDelayParameter.value == 1.0
+        longDelayButton?.isSelected    = longDelayParameter.value == 1.0
     }
     
-    @IBAction func tapeSpeedControlValueChanged(sender: AnyObject) {
-        tapeSpeedParameter?.value = self.tapeSpeedControl.value;
-    }
     
     @IBAction func mixControlValueChanged(sender: AnyObject) {
-        mixParameter?.setValue(self.mixControl.value, originator: parameterObserverToken)
+        // mixParameter?.setValue(self.mixControl?.value ?? 0, originator: parameterObserverToken)
+        mixParameter?.value = self.mixControl!.value;
     }
     
     @IBAction func feedbackControlValueChanged(sender: AnyObject) {
-        feedbackParameter?.setValue(self.feedbackControl.value, originator: parameterObserverToken)
+        feedbackParameter?.setValue(self.feedbackControl?.value ?? 0, originator: parameterObserverToken)
     }
     
+    @IBAction func tapeSpeedControlValueChanged(sender: AnyObject) {
+        tapeSpeedParameter?.setValue(self.tapeSpeedControl?.value ?? 0, originator: parameterObserverToken);
+    }
+
     @IBAction func tapeEffectControlValueChanged(sender: AnyObject) {
-        tapeEffectParameter?.setValue(self.tapeEffectControl.value, originator: parameterObserverToken)
+        tapeEffectParameter?.setValue(self.tapeEffectControl?.value ?? 0, originator: parameterObserverToken)
     }
     
     @IBAction func delayToggleButtonValueChanged(sender: AnyObject) {

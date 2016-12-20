@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import TapeDelayFramework
+import DuplicatFramework
 import AudioToolbox
 import AVFoundation
 

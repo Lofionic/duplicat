@@ -13,19 +13,20 @@ class TapeDelayRotaryControl : UIControl {
 
     let screenScale = UIScreen.main.scale
     
-    var value : Float           = 0.0 {
+    var value : Float = 0.0 {
         didSet {
-            self.setNeedsDisplay()
+            setNeedsDisplay()
         }
     }
+    private(set) var defaultValue : Float = 0.0
     
-    var defaultValue : Float    = 0.0
-    var doubleTapForDefault : Bool   = false
-    var previousTrackingLocation : CGFloat?
-    var trackingTouches : Bool = false
+    var doubleTapForDefault : Bool = false
     
-    let spriteSheet = UIImage(named:"knob")
-    let spriteSize = CGSize(width: 80 * UIScreen.main.scale, height: 80 * UIScreen.main.scale)
+    private var previousTrackingLocation : CGFloat?
+    private var trackingTouches : Bool = false
+    
+    private let spriteSheet = UIImage(named:"knob")
+    private let spriteSize = CGSize(width: 80 * UIScreen.main.scale, height: 80 * UIScreen.main.scale)
 
     override func awakeFromNib() {
         self.initialize()
@@ -41,7 +42,7 @@ class TapeDelayRotaryControl : UIControl {
         doubleTapGesture.numberOfTapsRequired = 2
         self.addGestureRecognizer(doubleTapGesture)
     }
-    
+
     func doubleTap(gesture: UIGestureRecognizer) {
         if (gesture.state == UIGestureRecognizerState.ended && self.doubleTapForDefault) {
             value = defaultValue

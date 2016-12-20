@@ -12,7 +12,7 @@
         <!--Tape Delay View Controller-->
         <scene sceneID="z2H-eW-25R">
             <objects>
-                <viewController id="ppr-xu-QKQ" userLabel="Tape Delay View Controller" customClass="TapeDelayViewController" customModule="TapeDelayFramework" sceneMemberID="viewController">
+                <viewController id="ppr-xu-QKQ" userLabel="Tape Delay View Controller" customClass="TapeDelayViewController" customModule="DuplicatFramework" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="XbO-MH-Tsb"/>
                         <viewControllerLayoutGuide type="bottom" id="uc8-wr-yH9"/>
@@ -30,7 +30,7 @@
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="border_center" translatesAutoresizingMaskIntoConstraints="NO" id="5Az-Pz-uLk">
                                         <rect key="frame" x="0.0" y="0.0" width="800" height="230"/>
                                     </imageView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NEV-6a-ws7" userLabel="Knob1" customClass="TapeDelayRotaryControl" customModule="TapeDelayFramework">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NEV-6a-ws7" userLabel="Knob1" customClass="TapeDelayRotaryControl" customModule="DuplicatFramework">
                                         <rect key="frame" x="188" y="8" width="80" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="ChC-sw-Wqf"/>
@@ -40,7 +40,7 @@
                                             <action selector="mixControlValueChangedWithSender:" destination="ppr-xu-QKQ" eventType="valueChanged" id="tDg-Bl-fN7"/>
                                         </connections>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jOu-oN-5v3" userLabel="Knob2" customClass="TapeDelayRotaryControl" customModule="TapeDelayFramework">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jOu-oN-5v3" userLabel="Knob2" customClass="TapeDelayRotaryControl" customModule="DuplicatFramework">
                                         <rect key="frame" x="304" y="8" width="80" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="80" id="36L-kX-9kw"/>
@@ -50,7 +50,7 @@
                                             <action selector="feedbackControlValueChangedWithSender:" destination="ppr-xu-QKQ" eventType="valueChanged" id="4mF-GT-58L"/>
                                         </connections>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XKq-vh-Ewi" userLabel="Knob3" customClass="TapeDelayRotaryControl" customModule="TapeDelayFramework">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XKq-vh-Ewi" userLabel="Knob3" customClass="TapeDelayRotaryControl" customModule="DuplicatFramework">
                                         <rect key="frame" x="416" y="8" width="80" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="80" id="hzj-LF-nv6"/>
@@ -60,7 +60,7 @@
                                             <action selector="tapeSpeedControlValueChangedWithSender:" destination="ppr-xu-QKQ" eventType="valueChanged" id="d1U-FH-4bt"/>
                                         </connections>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JIn-4C-GiP" userLabel="Knob4" customClass="TapeDelayRotaryControl" customModule="TapeDelayFramework">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JIn-4C-GiP" userLabel="Knob4" customClass="TapeDelayRotaryControl" customModule="DuplicatFramework">
                                         <rect key="frame" x="532" y="8" width="80" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="80" id="P6T-TP-JjF"/>
@@ -70,7 +70,7 @@
                                             <action selector="tapeEffectControlValueChangedWithSender:" destination="ppr-xu-QKQ" eventType="valueChanged" id="jmP-Tv-Zxj"/>
                                         </connections>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="msI-ae-RvI" userLabel="Button1" customClass="TapeDelayToggleButton" customModule="TapeDelayFramework">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="msI-ae-RvI" userLabel="Button1" customClass="TapeDelayToggleButton" customModule="DuplicatFramework">
                                         <rect key="frame" x="324" y="121" width="50" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="2gG-Fw-Csr"/>
@@ -82,7 +82,7 @@
                                             <action selector="delayToggleButtonValueChangedWithSender:" destination="ppr-xu-QKQ" eventType="valueChanged" id="H2O-ph-4Et"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oqu-Hn-qSh" userLabel="Button2" customClass="TapeDelayToggleButton" customModule="TapeDelayFramework">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oqu-Hn-qSh" userLabel="Button2" customClass="TapeDelayToggleButton" customModule="DuplicatFramework">
                                         <rect key="frame" x="375" y="121" width="50" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="gRL-tv-XJF"/>
@@ -94,7 +94,7 @@
                                             <action selector="delayToggleButtonValueChangedWithSender:" destination="ppr-xu-QKQ" eventType="valueChanged" id="t6a-LS-fsf"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cr8-vZ-cLL" userLabel="Button3" customClass="TapeDelayToggleButton" customModule="TapeDelayFramework">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cr8-vZ-cLL" userLabel="Button3" customClass="TapeDelayToggleButton" customModule="DuplicatFramework">
                                         <rect key="frame" x="426" y="121" width="50" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="kag-tE-pJu"/>

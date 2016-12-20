@@ -6,6 +6,6 @@
 //  Copyright © 2015 Lofionic. All rights reserved.
 //
 
-import TapeDelayFramework
+import DuplicatFramework
 
 let dummy = TapeDelayViewController.self
