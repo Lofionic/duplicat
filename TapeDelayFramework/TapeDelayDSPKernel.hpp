@@ -75,7 +75,7 @@ public:
 
         mixRamper.dezipperCheck(dezipperRampDuration);
         feedbackRamper.dezipperCheck(dezipperRampDuration);
-        tapeSpeedRamper.dezipperCheck(dezipperRampDuration);
+        tapeSpeedRamper.dezipperCheck(dezipperRampDuration * 20);
         tapeEffectRamper.dezipperCheck(dezipperRampDuration);
         
         int channelCount = int(delayStates.size());
