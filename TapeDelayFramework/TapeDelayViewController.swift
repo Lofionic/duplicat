@@ -25,9 +25,7 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
     @IBOutlet weak var mixControl           : TapeDelayRotaryControl!
     @IBOutlet weak var feedbackControl      : TapeDelayRotaryControl!
     @IBOutlet weak var tapeEffectControl    : TapeDelayRotaryControl!
-    
-    @IBOutlet weak var mixSlider    : UISlider!
-    
+
     @IBOutlet public weak var shortDelayButton     : TapeDelayToggleButton!
     @IBOutlet public weak var mediumDelayButton    : TapeDelayToggleButton!
     @IBOutlet public weak var longDelayButton      : TapeDelayToggleButton!
@@ -41,6 +39,22 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
         if (tapeDelayAudioUnit != nil) {
             connectViewWithAU(audioUnit: tapeDelayAudioUnit)
         }
+    }
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        guard
+            let mixParameter = mixParameter,
+            let feedbackParameter = feedbackParameter,
+            let tapeSpeedParameter = tapeSpeedParameter,
+            let tapeEffectParameter = tapeEffectParameter else {
+                return
+        }
+        
+        updateMixControl(value: mixParameter.value)
+        updateFeedbackControl(value: feedbackParameter.value)
+        updateTapeSpeedControl(value: tapeSpeedParameter.value)
+        updateTapeEffectControl(value: tapeEffectParameter.value)
+        updateDelayButtons()
     }
     
     public var tapeDelayAudioUnit: TapeDelay? {
@@ -134,19 +148,19 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
     
     private func updateFeedbackControl(value: AUValue) {
         if (tapeDelayAudioUnit != nil) {
-            feedbackControl.value    = value
+            feedbackControl.value = value
         }
     }
     
     private func updateTapeSpeedControl(value: AUValue) {
         if (tapeDelayAudioUnit != nil) {
-            tapeSpeedControl.value   = value
+            tapeSpeedControl.value = value
         }
     }
 
     private func updateTapeEffectControl(value: AUValue) {
         if (tapeDelayAudioUnit != nil) {
-            tapeEffectControl.value  = value
+            tapeEffectControl.value = value
         }
     }
     
