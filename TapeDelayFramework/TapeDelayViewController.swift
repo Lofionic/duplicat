@@ -9,7 +9,16 @@ import UIKit
 import CoreAudioKit
 
 public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
-
+    /*!	@brief	Create an instance of an extension's AUAudioUnit.
+    	@discussion
+     This method should create and return an instance of its audio unit.
+     
+     This method will be called only once per instance of the factory.
+     
+     Note that in non-ARC code, "create" methods return unretained objects (unlike "create" 
+     C functions); the implementor should return an object with reference count 1 but
+     autoreleased.
+     */
     @IBOutlet weak var backgroundImageView              : UIImageView!
   
     @IBOutlet weak var tapeSpeedControl     : TapeDelayRotaryControl!
@@ -26,11 +35,11 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        let backgroundImage = UIImage(named:"background")?.resizableImageWithCapInsets(UIEdgeInsetsZero, resizingMode: UIImageResizingMode.Tile)
+        let backgroundImage = UIImage(named:"background")?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: UIImageResizingMode.tile)
         backgroundImageView.image = backgroundImage
         
         if (tapeDelayAudioUnit != nil) {
-            connectViewWithAU(tapeDelayAudioUnit)
+            connectViewWithAU(audioUnit: tapeDelayAudioUnit)
         }
     }
     
@@ -44,10 +53,10 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
             It's also possible that we are already on the main queue, so to
             protect against deadlock in that case, dispatch asynchronously.
             */
-            dispatch_async(dispatch_get_main_queue()) {
-                if self.isViewLoaded() {
+            DispatchQueue.main.async {
+                if self.isViewLoaded {
                     if let audioUnitUnwrapped = self.tapeDelayAudioUnit {
-                        self.connectViewWithAU(audioUnitUnwrapped)
+                        self.connectViewWithAU(audioUnit: audioUnitUnwrapped)
                     }
                 }
             }
@@ -65,7 +74,7 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
     
     var parameterObserverToken:     AUParameterObserverToken?
     
-    public func createAudioUnitWithComponentDescription(desc: AudioComponentDescription) throws -> AUAudioUnit {
+    public func createAudioUnit(with desc: AudioComponentDescription) throws -> AUAudioUnit {
         tapeDelayAudioUnit = try TapeDelay(componentDescription: desc, options: [])
         return tapeDelayAudioUnit!
     }
@@ -79,72 +88,73 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
         
         guard let paramTree = audioUnit?.parameterTree else { return }
         
-        tapeSpeedParameter = paramTree.valueForKey("tapeSpeed") as? AUParameter
-        mixParameter = paramTree.valueForKey(kDuplicatParam_Mix) as? AUParameter
-        feedbackParameter = paramTree.valueForKey("feedback") as? AUParameter
-        tapeEffectParameter = paramTree.valueForKey("tapeEffect") as? AUParameter
+        mixParameter = paramTree.value(forKey: "mix") as? AUParameter
+        feedbackParameter = paramTree.value(forKey: "feedback") as? AUParameter
+        tapeSpeedParameter = paramTree.value(forKey: "tapeSpeed") as? AUParameter
+        tapeEffectParameter = paramTree.value(forKey: "tapeEffect") as? AUParameter
         
-        shortDelayParameter = paramTree.valueForKey("shortDelay") as? AUParameter
-        mediumDelayParameter = paramTree.valueForKey("mediumDelay") as? AUParameter
-        longDelayParameter = paramTree.valueForKey("longDelay") as? AUParameter
+        shortDelayParameter = paramTree.value(forKey: "shortDelay") as? AUParameter
+        mediumDelayParameter = paramTree.value(forKey: "mediumDelay") as? AUParameter
+        longDelayParameter = paramTree.value(forKey: "longDelay") as? AUParameter
         
-        weak var weakSelf = self;
-        parameterObserverToken = paramTree.tokenByAddingParameterObserver { address, value in
-            dispatch_async(dispatch_get_main_queue()) {
-                if address == self.tapeSpeedParameter!.address {
-                    weakSelf!.updateTapeSpeedControl();
-                } else if address == self.mixParameter!.address {
-                    weakSelf!.updateMixControl()
-                } else if address == self.feedbackParameter!.address {
-                    weakSelf!.updateFeedbackControl()
-                } else if address == self.tapeEffectParameter!.address {
-                    weakSelf!.updateTapeSpeedControl();
-                } else if address == self.shortDelayParameter!.address ||
-                    address == self.mediumDelayParameter!.address ||
-                    address == self.longDelayParameter!.address {
-                        weakSelf!.updateDelayButtons();
+        parameterObserverToken = paramTree.token(byAddingParameterObserver: {
+            [weak self] address, value in
+            
+            guard let strongSelf = self else { return }
+            
+            DispatchQueue.main.async {
+                if address == strongSelf.tapeSpeedParameter!.address {
+                    strongSelf.updateTapeSpeedControl(value: value);
+                } else if address == strongSelf.mixParameter!.address {
+                    strongSelf.updateMixControl(value: value)
+                } else if address == strongSelf.feedbackParameter!.address {
+                    strongSelf.updateFeedbackControl(value: value)
+                } else if address == strongSelf.tapeEffectParameter!.address {
+                    strongSelf.updateTapeEffectControl(value: value);
+                } else if address == strongSelf.shortDelayParameter!.address ||
+                    address == strongSelf.mediumDelayParameter!.address ||
+                    address == strongSelf.longDelayParameter!.address {
+                        strongSelf.updateDelayButtons();
                 }
             }
-        }
+        })
         
-        updateTapeSpeedControl();
-        updateMixControl();
-        updateFeedbackControl();
-        updateTapeEffectControl();
-        
+        updateTapeSpeedControl(value: tapeSpeedParameter!.value);
+        updateMixControl(value: mixParameter!.value);
+        updateFeedbackControl(value: feedbackParameter!.value);
+        updateTapeEffectControl(value: tapeEffectParameter!.value);
         updateDelayButtons();
     }
         
-    private func updateMixControl() {
+    private func updateMixControl(value: AUValue) {
         if (tapeDelayAudioUnit != nil) {
-            mixControl.value = mixParameter!.value
+            mixControl.value = value
         }
     }
     
-    private func updateFeedbackControl() {
+    private func updateFeedbackControl(value: AUValue) {
         if (tapeDelayAudioUnit != nil) {
-            feedbackControl.value    = feedbackParameter!.value
+            feedbackControl.value    = value
         }
     }
     
-    private func updateTapeSpeedControl() {
+    private func updateTapeSpeedControl(value: AUValue) {
         if (tapeDelayAudioUnit != nil) {
-            tapeSpeedControl.value   = tapeSpeedParameter!.value
+            tapeSpeedControl.value   = value
         }
     }
 
-    private func updateTapeEffectControl() {
+    private func updateTapeEffectControl(value: AUValue) {
         if (tapeDelayAudioUnit != nil) {
-            tapeEffectControl.value  = tapeEffectParameter!.value
+            tapeEffectControl.value  = value
         }
     }
     
     private func updateDelayButtons() {
-        
         if (tapeDelayAudioUnit != nil) {
-            shortDelayButton.selected   = shortDelayParameter!.value == 1.0
-            mediumDelayButton.selected  = mediumDelayParameter!.value == 1.0
-            longDelayButton.selected    = longDelayParameter!.value == 1.0
+            shortDelayButton.isSelected   = shortDelayParameter!.value == 1.0
+            mediumDelayButton.isSelected  = mediumDelayParameter!.value == 1.0
+            longDelayButton.isSelected    = longDelayParameter!.value == 1.0
         }
     }
     
@@ -176,7 +186,7 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
         let tapeDelayToggleButton = sender as! TapeDelayToggleButton
         
         if (tapeDelayAudioUnit != nil) {
-            let auValue = (tapeDelayToggleButton.selected ? 1.0 : 0.0) as AUValue
+            let auValue = (tapeDelayToggleButton.isSelected ? 1.0 : 0.0) as AUValue
             if tapeDelayToggleButton == shortDelayButton {
                 shortDelayParameter?.setValue(auValue, originator: parameterObserverToken!)
             } else if tapeDelayToggleButton == mediumDelayButton {

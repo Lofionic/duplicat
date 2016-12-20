@@ -189,6 +189,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6C0748071E09337200F73660 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6CC285541D215D1600FD8292 /* Security.framework */,
+				6CC285511D215D0900FD8292 /* Accelerate.framework */,
+				6CC2854F1D215D0300FD8292 /* CoreGraphics.framework */,
+				6CC9A9411B7CACF4003BAA75 /* UIKit.framework */,
+				6CE70F021B4804D300D4C944 /* QuartzCore.framework */,
+				6C60276F1B375618003D6BEB /* CoreAudioKit.framework */,
+				6CE5B3251B2F9A3A00471728 /* AVFoundation.framework */,
+				6CE5B3231B2F9A2C00471728 /* AudioToolbox.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		6C6027501B374F49003D6BEB /* TapeDelayAppex */ = {
 			isa = PBXGroup;
 			children = (
@@ -203,19 +218,12 @@
 		6CC1CE361B2F922E00D95621 = {
 			isa = PBXGroup;
 			children = (
-				6CC285541D215D1600FD8292 /* Security.framework */,
-				6CC285511D215D0900FD8292 /* Accelerate.framework */,
-				6CC2854F1D215D0300FD8292 /* CoreGraphics.framework */,
 				6CC15B851BCBA96C00290680 /* .gitignore */,
-				6CC9A9411B7CACF4003BAA75 /* UIKit.framework */,
-				6CE70F021B4804D300D4C944 /* QuartzCore.framework */,
-				6C60276F1B375618003D6BEB /* CoreAudioKit.framework */,
-				6CE5B3251B2F9A3A00471728 /* AVFoundation.framework */,
-				6CE5B3231B2F9A2C00471728 /* AudioToolbox.framework */,
 				6CC9A90A1B7CA98B003BAA75 /* TapeDelayApp */,
 				6CC1CE5F1B2F93D100D95621 /* TapeDelayFramework */,
 				6C6027501B374F49003D6BEB /* TapeDelayAppex */,
 				6CC1CE401B2F922E00D95621 /* Products */,
+				6C0748071E09337200F73660 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -396,7 +404,7 @@
 					6CC9A9081B7CA98B003BAA75 = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = NK7M84AH48;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0810;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -577,7 +585,7 @@
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0.1;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
@@ -596,7 +604,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0.1;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
@@ -716,7 +724,7 @@
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -748,7 +756,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -777,7 +785,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Duplicat/Audiobus-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
@@ -803,7 +811,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Duplicat/Audiobus-Bridging-Header.h";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;

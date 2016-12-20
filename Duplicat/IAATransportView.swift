@@ -26,11 +26,11 @@ public protocol IAATransportViewDelegate {
     func hostRecord()
 }
 
-public class IAATransportView: UIView {
+open class IAATransportView: UIView {
     
     var delegate : IAATransportViewDelegate? {
         didSet {
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(iaaTransportStateDidChangeNotification), name: kIAATransportStateChangedNotification, object: delegate as! AnyObject?)
+            NotificationCenter.default.addObserver(self, selector: #selector(iaaTransportStateDidChangeNotification), name: NSNotification.Name(rawValue: kIAATransportStateChangedNotification), object: delegate as AnyObject?)
         }
     }
     
@@ -41,53 +41,53 @@ public class IAATransportView: UIView {
     
     var appIsForeground : Bool?
     
-    public override func awakeFromNib() {
+    open override func awakeFromNib() {
 
-        hidden = true // Assume hidden by default
+        isHidden = true // Assume hidden by default
         
-        let appstate = UIApplication.sharedApplication().applicationState
-        appIsForeground = appstate != .Background
+        let appstate = UIApplication.shared.applicationState
+        appIsForeground = appstate != .background
         
-        NSNotificationCenter.defaultCenter().addObserver(self,
+        NotificationCenter.default.addObserver(self,
                                                          selector: #selector(appHasGoneInBackground),
-                                                         name: UIApplicationDidEnterBackgroundNotification,
+                                                         name: NSNotification.Name.UIApplicationDidEnterBackground,
                                                          object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self,
+        NotificationCenter.default.addObserver(self,
                                                          selector: #selector(appHasGoneForeground),
-                                                         name: UIApplicationWillEnterForegroundNotification,
+                                                         name: NSNotification.Name.UIApplicationWillEnterForeground,
                                                          object: nil)
         
-        hostIcon.userInteractionEnabled = true
+        hostIcon.isUserInteractionEnabled = true
         hostIcon.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onHostImageTapped)))
     
     }
  
     @objc
-    func appHasGoneInBackground(note : NSNotification) {
+    func appHasGoneInBackground(_ note : Notification) {
         appIsForeground = false
     }
     
     @objc
-    func appHasGoneForeground(note : NSNotification) {
+    func appHasGoneForeground(_ note : Notification) {
         appIsForeground = true
         updateTransportControls()
     }
     
-    func iaaTransportStateDidChangeNotification(note : NSNotification) {
+    func iaaTransportStateDidChangeNotification(_ note : Notification) {
         updateTransportControls()
     }
     
     func updateTransportControls() {
         if let delegate = delegate {
             if (delegate.isHostConnected()) {
-                self.hidden = false;
+                self.isHidden = false;
             } else {
-                self.hidden = true;
+                self.isHidden = true;
             }
             
-            self.playButton.selected = delegate.isHostPlaying()
-            self.recordButton.selected = delegate.isHostRecording()
+            self.playButton.isSelected = delegate.isHostPlaying()
+            self.recordButton.isSelected = delegate.isHostRecording()
             
 //            self.rewindButton.enabled = delegate.canRewind()
 //            self.playButton.enabled = delegate.canPlay()
@@ -97,32 +97,32 @@ public class IAATransportView: UIView {
         }
     }
     
-    @IBAction func onRewindTapped(sender: AnyObject) {
+    @IBAction func onRewindTapped(_ sender: AnyObject) {
         if let delegateUnwrapped = delegate {
             delegateUnwrapped.hostRewind()
         }
     }
     
-    @IBAction func onPlayTapped(sender: AnyObject) {
+    @IBAction func onPlayTapped(_ sender: AnyObject) {
         if let delegateUnwrapped = delegate {
             delegateUnwrapped.hostPlay()
         }
     }
     
-    @IBAction func onRecordTapped(sender: AnyObject) {
+    @IBAction func onRecordTapped(_ sender: AnyObject) {
         if let delegateUnwrapped = delegate {
             delegateUnwrapped.hostRecord()
         }
     }
     
-    func onHostImageTapped(uigr : UIGestureRecognizer) {
+    func onHostImageTapped(_ uigr : UIGestureRecognizer) {
         if let delegateUnwrapped = delegate {
             delegateUnwrapped.goToHost()
         }
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
 }

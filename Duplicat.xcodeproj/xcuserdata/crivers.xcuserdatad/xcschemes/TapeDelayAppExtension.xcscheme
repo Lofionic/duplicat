@@ -29,9 +29,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6CC1CE3E1B2F922E00D95621"
-               BuildableName = "TapeDelay.app"
-               BlueprintName = "TapeDelay"
+               BlueprintIdentifier = "6CC9A9081B7CA98B003BAA75"
+               BuildableName = "Duplicat.app"
+               BlueprintName = "Duplicat"
                ReferencedContainer = "container:Duplicat.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -44,15 +44,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6C60274E1B374F49003D6BEB"
-            BuildableName = "DuplicatAppex.appex"
-            BlueprintName = "DuplicatAppex"
-            ReferencedContainer = "container:Duplicat.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -67,16 +58,20 @@
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "1"
+         BundleIdentifier = "com.example.apple-samplecode.AUv3Host"
+         RemotePath = "/var/containers/Bundle/Application/01C02330-AD18-46BF-929A-1D16D9E2BADD/AUv3Host.app">
+      </RemoteRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6CC1CE3E1B2F922E00D95621"
-            BuildableName = "TapeDelay.app"
-            BlueprintName = "TapeDelay"
+            BlueprintIdentifier = "6CC9A9081B7CA98B003BAA75"
+            BuildableName = "Duplicat.app"
+            BlueprintName = "Duplicat"
             ReferencedContainer = "container:Duplicat.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -87,16 +82,15 @@
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES"
       launchAutomaticallySubstyle = "2">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6CC1CE3E1B2F922E00D95621"
-            BuildableName = "TapeDelay.app"
-            BlueprintName = "TapeDelay"
+            BlueprintIdentifier = "6C60274E1B374F49003D6BEB"
+            BuildableName = "DuplicatAppex.appex"
+            BlueprintName = "DuplicatAppex"
             ReferencedContainer = "container:Duplicat.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

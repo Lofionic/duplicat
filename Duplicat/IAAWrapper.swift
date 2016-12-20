@@ -13,36 +13,36 @@ import TapeDelayFramework
 let kIAATransportStateChangedNotification:String = "IAATransportStateChangedNotification"
 
 protocol IAAWrapperDelegate {
-    func audioUnitDidConnect(iaaWrapper : IAAWrapper, audioUnit : AUAudioUnit?)
+    func audioUnitDidConnect(_ iaaWrapper : IAAWrapper, audioUnit : AUAudioUnit?)
 }
 
-public class IAAWrapper: NSObject {
+open class IAAWrapper: NSObject {
 
     var delegate : IAAWrapperDelegate?
     
-    private let kSampleRate = 44100.0
+    fileprivate let kSampleRate = 44100.0
     
-    private var avEngine : AVAudioEngine
-    private var effectNode : AVAudioUnit?
+    fileprivate var avEngine : AVAudioEngine
+    fileprivate var effectNode : AVAudioUnit?
     
-    private var graphStarted : Bool
-    private var isConnected  : Bool
-    private var isForeground : Bool
+    fileprivate var graphStarted : Bool
+    fileprivate var isConnected  : Bool
+    fileprivate var isForeground : Bool
     
-    private var isAudiobusSession : Bool
-    private var isAudiobusConnected : Bool
+    fileprivate var isAudiobusSession : Bool
+    fileprivate var isAudiobusConnected : Bool
     
-    private var streamFormat : AudioStreamBasicDescription
+    fileprivate var streamFormat : AudioStreamBasicDescription
     
-    private(set) public var isPlaying : Bool
-    private(set) public var isRecording : Bool
+    fileprivate(set) open var isPlaying : Bool
+    fileprivate(set) open var isRecording : Bool
     
-    private var callbackInfo : UnsafeMutablePointer<HostCallbackInfo>
+    fileprivate var callbackInfo : UnsafeMutablePointer<HostCallbackInfo>?
     
-    private var hostIcon : UIImage?
+    fileprivate var hostIcon : UIImage?
     
-    private var audioBusController : ABAudiobusController?
-    private var audioBusfilterPort : ABFilterPort?
+    fileprivate var audioBusController : ABAudiobusController?
+    fileprivate var audioBusfilterPort : ABFilterPort?
     
     internal func getAudioUnit() -> AudioUnit {
         return self.effectNode!.audioUnit
@@ -68,25 +68,25 @@ public class IAAWrapper: NSObject {
         
         super.init()
         
-        let appState = UIApplication.sharedApplication().applicationState
-        isForeground = (appState != UIApplicationState.Background)
+        let appState = UIApplication.shared.applicationState
+        isForeground = (appState != UIApplicationState.background)
         
-        NSNotificationCenter.defaultCenter().addObserver(self,
+        NotificationCenter.default.addObserver(self,
                                                          selector: #selector(appHasGoneInBackground),
-                                                         name: UIApplicationDidEnterBackgroundNotification,
+                                                         name: NSNotification.Name.UIApplicationDidEnterBackground,
                                                          object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self,
+        NotificationCenter.default.addObserver(self,
                                                          selector: #selector(appHasGoneForeground),
-                                                         name: UIApplicationWillEnterForegroundNotification,
+                                                         name: NSNotification.Name.UIApplicationWillEnterForeground,
                                                          object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self,
+        NotificationCenter.default.addObserver(self,
                                                          selector: #selector(cleanup),
-                                                         name: UIApplicationWillTerminateNotification,
+                                                         name: NSNotification.Name.UIApplicationWillTerminate,
                                                          object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserverForName(AVAudioSessionMediaServicesWereResetNotification, object: nil, queue: nil) { note in
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVAudioSessionMediaServicesWereReset, object: nil, queue: nil) { note in
             self.cleanup()
             self.createAndPublish()
         }
@@ -113,17 +113,17 @@ public class IAAWrapper: NSObject {
         // Register the Duplicat AU process
         var localComponentDescription = AudioComponentDescription()
         localComponentDescription.componentType = kIAAComponentType
-        localComponentDescription.componentSubType = fourCharCodeFrom(kIAAComponentSubtype)
-        localComponentDescription.componentManufacturer = fourCharCodeFrom(kIAAComponentManufacturer)
+        localComponentDescription.componentSubType = fourCharCodeFrom(string: kIAAComponentSubtype)
+        localComponentDescription.componentManufacturer = fourCharCodeFrom(string: kIAAComponentManufacturer)
         localComponentDescription.componentFlags = 0
         localComponentDescription.componentFlagsMask = 0
-        AUAudioUnit.registerSubclass(TapeDelay.self, asComponentDescription: localComponentDescription, name: "Local Tape Delay", version: UInt32.max);
+        AUAudioUnit.registerSubclass(TapeDelay.self, as: localComponentDescription, name: "Local Tape Delay", version: UInt32.max);
         
         var effectComponentDescription = AudioComponentDescription()
         effectComponentDescription.componentType = kIAAComponentType
-        effectComponentDescription.componentSubType = fourCharCodeFrom(kIAAComponentSubtype)
-        effectComponentDescription.componentManufacturer = fourCharCodeFrom(kIAAComponentManufacturer)
-        AVAudioUnit.instantiateWithComponentDescription(effectComponentDescription, options: []) { avAudioUnit, error in
+        effectComponentDescription.componentSubType = fourCharCodeFrom(string: kIAAComponentSubtype)
+        effectComponentDescription.componentManufacturer = fourCharCodeFrom(string: kIAAComponentManufacturer)
+        AVAudioUnit.instantiate(with: effectComponentDescription, options: []) { avAudioUnit, error in
         
             // Assert that the avAudioUnit has been created succesfully
             if let avAudioUnit = avAudioUnit {
@@ -131,15 +131,15 @@ public class IAAWrapper: NSObject {
                 self.effectNode = avAudioUnit
                 
                 // Connect the nodes
-                self.avEngine.attachNode(avAudioUnit)
+                self.avEngine.attach(avAudioUnit)
                 
                 var maxFrames : UInt32 = 4096;
-                self.CheckError(AudioUnitSetProperty(avAudioUnit.audioUnit,
+                self.CheckError(error: AudioUnitSetProperty(avAudioUnit.audioUnit,
                     kAudioUnitProperty_MaximumFramesPerSlice,
                     kAudioUnitScope_Global,
                     0,
                     &maxFrames,
-                    UInt32(sizeof(UInt32))),
+                    UInt32(MemoryLayout<UInt32>.size)),
                                 desc: "Setting AU max frames");
                 
                 self.avEngine.connect(avAudioUnit, to: self.avEngine.mainMixerNode, format: nil)
@@ -151,7 +151,7 @@ public class IAAWrapper: NSObject {
     
     private func audioUnitDidConnect() {
         if let delegate = self.delegate {
-            delegate.audioUnitDidConnect(self, audioUnit: self.effectNode?.AUAudioUnit)
+            delegate.audioUnitDidConnect(self, audioUnit: self.effectNode?.auAudioUnit)
         }
         
         checkStartStopGraph()
@@ -159,16 +159,16 @@ public class IAAWrapper: NSObject {
     
     private func addAudioUnitPropertyListeners() {
         
-        var s : UnsafeMutablePointer<Void>;
-        s = UnsafeMutablePointer(Unmanaged.passRetained(self).toOpaque())
+        var s : UnsafeMutableRawPointer;
+        s = Unmanaged.passRetained(self).toOpaque()
         
         if let inputNode = self.avEngine.inputNode {
     
-        CheckError(AudioUnitAddPropertyListener(inputNode.audioUnit,
+        CheckError(error: AudioUnitAddPropertyListener(inputNode.audioUnit!,
             kAudioUnitProperty_IsInterAppConnected,
             AudioUnitPropertyChangeDispatcher,
             s), desc: "Adding IsInterAppConnected property listener");
-        CheckError(AudioUnitAddPropertyListener(inputNode.audioUnit,
+        CheckError(error: AudioUnitAddPropertyListener(inputNode.audioUnit!,
             kAudioOutputUnitProperty_HostTransportState,
             AudioUnitPropertyChangeDispatcher,
             s), desc: "Adding HostTransportState property listener");
@@ -177,17 +177,17 @@ public class IAAWrapper: NSObject {
         NSLog("Listeners Added")
     }
     
-    let AudioUnitPropertyChangeDispatcher : @convention(c) (UnsafeMutablePointer<Void>, COpaquePointer, UInt32, UInt32, UInt32) -> Void = {
+    let AudioUnitPropertyChangeDispatcher : @convention(c) (UnsafeMutableRawPointer, OpaquePointer, UInt32, UInt32, UInt32) -> Void = {
         (inRefCon, inUnit, inID, inScope, inElement) in
         
         NSLog("[AudioUnitPropertyChangeDispatcher]");
- 
-        let SELF = Unmanaged<IAAWrapper>.fromOpaque(COpaquePointer(inRefCon)).takeUnretainedValue()
+
+        let SELF = Unmanaged<IAAWrapper>.fromOpaque(inRefCon).takeUnretainedValue()
 
         SELF.audioUnitPropertyChangedListener(inRefCon, inUnit: inUnit, inPropID: inID, inScope: inScope, inElement: inElement)
     }
 
-    func audioUnitPropertyChangedListener(inObject: UnsafeMutablePointer<Void>, inUnit:AudioUnit, inPropID: AudioUnitPropertyID, inScope: AudioUnitScope, inElement: AudioUnitElement) {
+    func audioUnitPropertyChangedListener(_ inObject: UnsafeMutableRawPointer, inUnit:AudioUnit, inPropID: AudioUnitPropertyID, inScope: AudioUnitScope, inElement: AudioUnitElement) {
         if (inPropID == kAudioUnitProperty_IsInterAppConnected) {
             checkIsHostConnected()
             postUpdateStateNotification()
@@ -197,30 +197,30 @@ public class IAAWrapper: NSObject {
         }
     }
     
-    private func publishOutputAudioUnit() {
+    fileprivate func publishOutputAudioUnit() {
         if let inputNode = avEngine.inputNode {
         
-        var desc = AudioComponentDescription(componentType: OSType(kIAAComponentType), componentSubType: fourCharCodeFrom(kIAAComponentSubtype), componentManufacturer: fourCharCodeFrom(kIAAComponentManufacturer), componentFlags: 0, componentFlagsMask: 0);
+        var desc = AudioComponentDescription(componentType: OSType(kIAAComponentType), componentSubType: fourCharCodeFrom(string: kIAAComponentSubtype), componentManufacturer: fourCharCodeFrom(string: kIAAComponentManufacturer), componentFlags: 0, componentFlagsMask: 0);
         CheckError(
-            AudioOutputUnitPublish(&desc, "Lofionic Duplicat", 3, inputNode.audioUnit),
+            error: AudioOutputUnitPublish(&desc, "Lofionic Duplicat" as CFString, 3, inputNode.audioUnit!),
             desc: "Publishing IAA Component");
         }
     
         NSLog("IAA Published")
     }
     
-    private func publishAudiobus() {
+    fileprivate func publishAudiobus() {
         // Create the audiodus controller
         self.audioBusController = ABAudiobusController(apiKey: kAudiobusKey)
         self.audioBusController?.stateIODelegate = self
         self.audioBusController?.connectionPanelPosition = ABConnectionPanelPositionLeft
         
         // Create the audiobus filter port
-        let desc = AudioComponentDescription(componentType: OSType(kIAAComponentType), componentSubType: fourCharCodeFrom(kIAAComponentSubtype), componentManufacturer: fourCharCodeFrom(kIAAComponentManufacturer), componentFlags: 0, componentFlagsMask: 0);
+        let desc = AudioComponentDescription(componentType: OSType(kIAAComponentType), componentSubType: fourCharCodeFrom(string: kIAAComponentSubtype), componentManufacturer: fourCharCodeFrom(string: kIAAComponentManufacturer), componentFlags: 0, componentFlagsMask: 0);
         self.audioBusfilterPort = ABFilterPort.init(name: "Main Port", title: "Main Port", audioComponentDescription: desc, audioUnit: avEngine.outputNode.audioUnit)
         audioBusController?.addFilterPort(self.audioBusfilterPort)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(audiobusConnectionsChangedNotifactionReceived), name: ABConnectionsChangedNotification, object: audioBusController)
+        NotificationCenter.default.addObserver(self, selector: #selector(audiobusConnectionsChangedNotifactionReceived), name: NSNotification.Name.ABConnectionsChanged, object: audioBusController)
     }
     
     @objc
@@ -260,7 +260,7 @@ public class IAAWrapper: NSObject {
         if let inputNode = self.avEngine.inputNode {
             if let effectNode = self.effectNode {
                 self.avEngine.disconnectNodeInput(effectNode)
-                self.avEngine.connect(inputNode, to: effectNode, format: effectNode.inputFormatForBus(0))
+                self.avEngine.connect(inputNode, to: effectNode, format: effectNode.inputFormat(forBus: 0))
             }
         }
         
@@ -291,7 +291,7 @@ public class IAAWrapper: NSObject {
         
         do {
             try session.setPreferredSampleRate(kSampleRate);
-            try session.setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: AVAudioSessionCategoryOptions.MixWithOthers)
+            try session.setCategory(AVAudioSessionCategoryPlayAndRecord, with: AVAudioSessionCategoryOptions.mixWithOthers)
             try session.setActive(true)
         } catch {
             NSLog("ERROR: setting audio session active")
@@ -335,8 +335,8 @@ public class IAAWrapper: NSObject {
         NSLog("[checkIsHostConnected]")
         if let inputNode = self.avEngine.inputNode {
             var data = UInt32(0)
-            var dataSize = UInt32(sizeof(UInt32))
-            CheckError(AudioUnitGetProperty(inputNode.audioUnit, kAudioUnitProperty_IsInterAppConnected, kAudioUnitScope_Global, 0, &data, &dataSize), desc: "AudioUnitGetProperty_IsInterAppConnected")
+            var dataSize = UInt32(MemoryLayout<UInt32>.size)
+            CheckError(error: AudioUnitGetProperty(inputNode.audioUnit!, kAudioUnitProperty_IsInterAppConnected, kAudioUnitScope_Global, 0, &data, &dataSize), desc: "AudioUnitGetProperty_IsInterAppConnected")
             let connect = (data > 0 ? true : false)
             if (connect != isConnected) {
                 isConnected = connect
@@ -355,8 +355,8 @@ public class IAAWrapper: NSObject {
     
     private func postUpdateStateNotification() {
         NSLog("[postUpdateStateNotification]")
-        dispatch_async(dispatch_get_main_queue(), {
-            NSNotificationCenter.defaultCenter().postNotificationName(kIAATransportStateChangedNotification, object: self)
+        DispatchQueue.main.async(execute: {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: kIAATransportStateChangedNotification), object: self)
             if (self.isPlaying) {
                 NSLog("IsPlaying")
             }
@@ -375,9 +375,15 @@ public class IAAWrapper: NSObject {
             }
         
             if let inputNode = self.avEngine.inputNode {
-                var datasize = UInt32(sizeof(HostCallbackInfo))
-                callbackInfo = UnsafeMutablePointer<HostCallbackInfo>(malloc(sizeof(HostCallbackInfo)))
-                let result = AudioUnitGetProperty(inputNode.audioUnit, kAudioUnitProperty_HostCallbacks, kAudioUnitScope_Global, 0, callbackInfo, &datasize)
+                var datasize = UInt32(MemoryLayout<HostCallbackInfo>.size)
+                //callbackInfo = UnsafeMutableRawPointer<HostCallbackInfo>(malloc(sizeof(HostCallbackInfo)))
+                
+                //callbackInfo = UnsafeMutableRawPointer(malloc(sizeof(HostCallbackInfo))
+                
+                // callbackInfo = UnsafeMutablePointer<HostCallbackInfo>(malloc(sizeof(HostCallbackInfo)))
+                callbackInfo = UnsafeMutablePointer<HostCallbackInfo>.allocate(capacity: MemoryLayout<HostCallbackInfo>.size)
+                
+                let result = AudioUnitGetProperty(inputNode.audioUnit!, kAudioUnitProperty_HostCallbacks, kAudioUnitScope_Global, 0, callbackInfo!, &datasize)
                 if (result != noErr) {
                     free(callbackInfo)
                     callbackInfo = nil
@@ -395,16 +401,16 @@ public class IAAWrapper: NSObject {
             }
             
             if (callbackInfo != nil) {
-                let hostPlaying = UnsafeMutablePointer<DarwinBoolean>.alloc(1)
+                let hostPlaying = UnsafeMutablePointer<DarwinBoolean>.allocate(capacity: 1)
                 hostPlaying[0] = isPlaying ? true : false
                 
-                let hostRecording = UnsafeMutablePointer<DarwinBoolean>.alloc(1)
+                let hostRecording = UnsafeMutablePointer<DarwinBoolean>.allocate(capacity: 1)
                 hostRecording[0] = isRecording ? true : false
                 
                 var outCurrentSampleInTimeLine = Float64(0)
                 
-                let hostUserData = callbackInfo.memory.hostUserData
-                let transportStateProc = callbackInfo.memory.transportStateProc2
+                let hostUserData = callbackInfo?.pointee.hostUserData
+                let transportStateProc = callbackInfo?.pointee.transportStateProc2
                 if let transportStateProcUnwrapped = transportStateProc {
                     let result = transportStateProcUnwrapped(hostUserData,
                                                              hostPlaying,
@@ -416,26 +422,26 @@ public class IAAWrapper: NSObject {
                                                              nil)
                     
                     if (result == noErr) {
-                        isPlaying = hostPlaying.memory.boolValue
-                        isRecording = hostRecording.memory.boolValue
+                        isPlaying = hostPlaying.pointee.boolValue
+                        isRecording = hostRecording.pointee.boolValue
                     }
                 }
             }
         }
     }
     
-    private func sendStateToRemoteHost(event: AudioUnitRemoteControlEvent) {
+    public func sendStateToRemoteHost(event: AudioUnitRemoteControlEvent) {
         if let inputNode = self.avEngine.inputNode {
             var controlEvent = event.rawValue
-            let dataSize = UInt32(sizeof(AudioUnitRemoteControlEvent))
-            CheckError(AudioUnitSetProperty(inputNode.audioUnit, kAudioOutputUnitProperty_RemoteControlToHost, kAudioUnitScope_Global, 0, &controlEvent, dataSize), desc: "Sending remote control event")
+            let dataSize = UInt32(MemoryLayout<AudioUnitRemoteControlEvent>.size)
+            CheckError(error: AudioUnitSetProperty(inputNode.audioUnit!, kAudioOutputUnitProperty_RemoteControlToHost, kAudioUnitScope_Global, 0, &controlEvent, dataSize), desc: "Sending remote control event")
         }
     }
     
     private func getAudioUnitIcon() {
         NSLog("[getAudioUnitIcon]")
         if let inputNode = self.avEngine.inputNode {
-            hostIcon = AudioOutputUnitGetHostIcon(inputNode.audioUnit, 100);
+            hostIcon = AudioOutputUnitGetHostIcon(inputNode.audioUnit!, 100);
         }
     }
     
@@ -449,7 +455,7 @@ public class IAAWrapper: NSObject {
         return result
     }
     
-    private func CheckError(error:OSStatus, desc:String) {
+    public func CheckError(error:OSStatus, desc:String) {
         if error == 0 {return}
         
         print (desc);
@@ -629,9 +635,9 @@ extension IAAWrapper : IAATransportViewDelegate {
     public func goToHost() {
         if let inputNode = self.avEngine.inputNode {
             var instrumentUrl = CFURLCreateWithString(nil, nil, nil)
-            var dataSize = UInt32(sizeof(CFURLRef))
-            CheckError(AudioUnitGetProperty(inputNode.audioUnit, kAudioUnitProperty_PeerURL, kAudioUnitScope_Global, 0, &instrumentUrl, &dataSize), desc: "Getting PeerURL Property")
-            UIApplication.sharedApplication().openURL(instrumentUrl)
+            var dataSize = UInt32(MemoryLayout<CFURL>.size)
+            CheckError(error: AudioUnitGetProperty(inputNode.audioUnit!, kAudioUnitProperty_PeerURL, kAudioUnitScope_Global, 0, &instrumentUrl, &dataSize), desc: "Getting PeerURL Property")
+            UIApplication.shared.openURL(instrumentUrl as! URL)
         }
     }
     
@@ -648,24 +654,24 @@ extension IAAWrapper : IAATransportViewDelegate {
     }
 
     public func hostRewind() {
-        sendStateToRemoteHost(.Rewind)
-        NSNotificationCenter.defaultCenter().postNotificationName(kIAATransportStateChangedNotification, object: self)
+        sendStateToRemoteHost(event: .rewind)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: kIAATransportStateChangedNotification), object: self)
     }
     
     public func hostPlay() {
-        sendStateToRemoteHost(.TogglePlayPause)
-        NSNotificationCenter.defaultCenter().postNotificationName(kIAATransportStateChangedNotification, object: self)
+        sendStateToRemoteHost(event: .togglePlayPause)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: kIAATransportStateChangedNotification), object: self)
     }
     
     public func hostRecord() {
-        sendStateToRemoteHost(.ToggleRecord)
-        NSNotificationCenter.defaultCenter().postNotificationName(kIAATransportStateChangedNotification, object: self)
+        sendStateToRemoteHost(event: .toggleRecord)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: kIAATransportStateChangedNotification), object: self)
     }
 }
 
 extension IAAWrapper : ABAudiobusControllerStateIODelegate {
     
-    public func audiobusStateDictionaryForCurrentState() -> [NSObject : AnyObject]! {
+    public func audiobusStateDictionaryForCurrentState() -> [AnyHashable: Any]! {
 
         if let effectNode = self.effectNode {
             // Fetch the parameter IDs from the AudioUnit
@@ -679,8 +685,8 @@ extension IAAWrapper : ABAudiobusControllerStateIODelegate {
                 0,
                 &size,
                 &propertyBool)
-            let numParams = Int(size)/sizeof(AudioUnitParameterID)
-            var paramIDs = [AudioUnitParameterID](count: Int(numParams), repeatedValue: 0)
+            let numParams = Int(size)/MemoryLayout<AudioUnitParameterID>.size
+            var paramIDs = [AudioUnitParameterID](repeating: 0, count: Int(numParams))
             AudioUnitGetProperty(
                 effectNode.audioUnit,
                 kAudioUnitProperty_ParameterList,
@@ -698,13 +704,13 @@ extension IAAWrapper : ABAudiobusControllerStateIODelegate {
                 stateDictionary.setValue(value, forKey: String(paramID))
             }
         
-        return stateDictionary as [NSObject : AnyObject]
+            return NSDictionary.init(dictionary: stateDictionary) as! [AnyHashable : Any]
         } else {
-            return NSDictionary() as [NSObject : AnyObject]
+            return NSDictionary() as! [AnyHashable: Any]
         }
     }
     
-    public func loadStateFromAudiobusStateDictionary(dictionary: [NSObject : AnyObject]!, responseMessage outResponseMessage: AutoreleasingUnsafeMutablePointer<NSString?>) {
+    public func loadState(fromAudiobusStateDictionary dictionary: [AnyHashable: Any]!, responseMessage outResponseMessage: AutoreleasingUnsafeMutablePointer<NSString?>) {
         
         if let effectNode = self.effectNode {
             let stateDictionary = dictionary as NSDictionary
@@ -712,7 +718,7 @@ extension IAAWrapper : ABAudiobusControllerStateIODelegate {
                 let paramId = UInt32(thisKey as! String)
                 
                 if let paramId = paramId {
-                    let value = stateDictionary.objectForKey(thisKey) as! AudioUnitParameterValue
+                    let value = stateDictionary.object(forKey: thisKey) as! AudioUnitParameterValue
                     AudioUnitSetParameter(effectNode.audioUnit, paramId, kAudioUnitScope_Global, 0, value, 0)
                 }
             }

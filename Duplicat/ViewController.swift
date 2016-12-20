@@ -27,10 +27,10 @@ class ViewController: UIViewController {
     var userGuideZoomed: Bool = false {
         didSet {
             if userGuideZoomed != oldValue {
-                userGuideZoomConstraint?.active = userGuideZoomed
+                userGuideZoomConstraint?.isActive = userGuideZoomed
                 view.setNeedsUpdateConstraints()
                 
-                UIView.animateWithDuration(0.2, animations: { 
+                UIView.animate(withDuration: 0.2, animations: { 
                     self.view.layoutIfNeeded()
                 })
 
@@ -42,18 +42,18 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         // Configure resizable images in UI
-        if let backgroundImageView = backgroundImageView, backgroundImage = backgroundImageView.image {
-            backgroundImageView.image = backgroundImage.resizableImageWithCapInsets(UIEdgeInsetsZero, resizingMode: UIImageResizingMode.Tile);
+        if let backgroundImageView = backgroundImageView, let backgroundImage = backgroundImageView.image {
+            backgroundImageView.image = backgroundImage.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: UIImageResizingMode.tile);
         }
         
-        if let auContainerBevelView = auContainerBevelView, auContainerBevelBackgroundImage = auContainerBevelView.image {
-            auContainerBevelView.image = auContainerBevelBackgroundImage.resizableImageWithCapInsets(UIEdgeInsetsMake(8, 8, 8, 8), resizingMode: UIImageResizingMode.Stretch);
+        if let auContainerBevelView = auContainerBevelView, let auContainerBevelBackgroundImage = auContainerBevelView.image {
+            auContainerBevelView.image = auContainerBevelBackgroundImage.resizableImage(withCapInsets: UIEdgeInsetsMake(8, 8, 8, 8), resizingMode: UIImageResizingMode.stretch);
         }
 
         // Embed the effect's plugin view
         embedPlugInView()
 
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         if let iaaWrapper = appDelegate.iaaWrapper {
      
             // Create the iaaWrapper and publish it for IAA
@@ -70,7 +70,7 @@ class ViewController: UIViewController {
         
         // Add gesture for taps on user guide
         userGuideView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onUserGuideTapped)))
-        userGuideView?.userInteractionEnabled = true
+        userGuideView?.isUserInteractionEnabled = true
     }
     
     override func didReceiveMemoryWarning() {
@@ -78,7 +78,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func onUserGuideTapped(uigr: UIGestureRecognizer) {
+    func onUserGuideTapped(_ uigr: UIGestureRecognizer) {
         // Toggle userguide zoom
         userGuideZoomed = !userGuideZoomed
     }
@@ -91,42 +91,43 @@ class ViewController: UIViewController {
         subdirectory. Load its MainInterface storyboard, and obtain the
         `TapeDelayViewController` from that.
         */
-        guard let builtInPlugInsURL = NSBundle.mainBundle().builtInPlugInsURL,
-            pluginURL = builtInPlugInsURL.URLByAppendingPathComponent("DuplicatAppex.appex"),
-            appExtensionBundle = NSBundle(URL: pluginURL)   else {
-                // Cannot load storyboard
-                return
+        guard let builtInPlugInsURL = Bundle.main.builtInPlugInsURL else {
+            return
+        }
+        let pluginURL = builtInPlugInsURL.appendingPathComponent("DuplicatAppex.appex")
+        guard let appExtensionBundle = Bundle(url: pluginURL) else {
+            return
         }
         
         let storyboard = UIStoryboard(name: "MainInterface", bundle: appExtensionBundle)
 
         // Present the view controller's view.
         guard let duplicatViewController = storyboard.instantiateInitialViewController() as? TapeDelayViewController,
-            view = duplicatViewController.view,
-            auContainerView = auContainerView else {
+            let view = duplicatViewController.view,
+            let auContainerView = auContainerView else {
 
                 return
         }
         
         addChildViewController(duplicatViewController)
         view.frame = auContainerView.bounds
-        view.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         auContainerView.addSubview(view)
-        duplicatViewController.didMoveToParentViewController(self)
+        duplicatViewController.didMove(toParentViewController: self)
         
         self.duplicatViewController = duplicatViewController
     }
 
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent;
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
 
 }
 
 extension ViewController : IAAWrapperDelegate {
-    func audioUnitDidConnect(iaaWrapper: IAAWrapper, audioUnit : AUAudioUnit?) {
-        if let duplicatViewController = duplicatViewController, audioUnit = audioUnit  {
+    func audioUnitDidConnect(_ iaaWrapper: IAAWrapper, audioUnit : AUAudioUnit?) {
+        if let duplicatViewController = duplicatViewController, let audioUnit = audioUnit  {
             duplicatViewController.tapeDelayAudioUnit = (audioUnit as! TapeDelay)
         }
     }
