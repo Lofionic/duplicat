@@ -57,6 +57,13 @@ public:
         for (DelayState& state : delayStates) {
             state.init(bufferSize);
         }
+        
+        dezipperRampDuration = (AUAudioFrameCount)floor(0.02 * sampleRate);
+        
+        mixRamper.init();
+        feedbackRamper.init();
+        tapeSpeedRamper.init();
+        tapeEffectRamper.init();
     }
     
     void setBuffers(AudioBufferList* inBufferList, AudioBufferList* outBufferList) {
@@ -66,16 +73,21 @@ public:
 
     void process(AUAudioFrameCount frameCount, AUAudioFrameCount bufferOffset) override {
 
+        mixRamper.dezipperCheck(dezipperRampDuration);
+        feedbackRamper.dezipperCheck(dezipperRampDuration);
+        tapeSpeedRamper.dezipperCheck(dezipperRampDuration);
+        tapeEffectRamper.dezipperCheck(dezipperRampDuration);
+        
         int channelCount = int(delayStates.size());
         
         // For each sample.
         for (int frameIndex = 0; frameIndex < frameCount; ++frameIndex) {
             int frameOffset = int(frameIndex + bufferOffset);
             
-            double tapeSpeed = double(tapeSpeedRamper.getStep());
-            double feedback = double(feedbackRamper.getStep());
-            double mix = double(mixRamper.getStep());
-            double tapeEffect = double(tapeEffectRamper.getStep());
+            double tapeSpeed = double(tapeSpeedRamper.getAndStep());
+            double feedback = double(feedbackRamper.getAndStep());
+            double mix = double(mixRamper.getAndStep());
+            double tapeEffect = double(tapeEffectRamper.getAndStep());
             
             for (int channel = 0; channel < channelCount; ++channel) {
                 DelayState &state = delayStates[channel];
@@ -187,16 +199,16 @@ public:
     void setParameter(AUParameterAddress address, AUValue value) {
         switch (address) {
             case DelayParamTapeSpeed:
-                tapeSpeedRamper.set(clamp(value, 0.0f, 1.0f));
+                tapeSpeedRamper.setUIValue(clamp(value, 0.0f, 1.0f));
                 break;
             case DelayParamMix:
-                mixRamper.set(clamp(value, 0.0f, 1.0f));
+                mixRamper.setUIValue(clamp(value, 0.0f, 1.0f));
                 break;
             case DelayParamFeedback:
-                feedbackRamper.set(clamp(value, 0.0f, 1.0f));
+                feedbackRamper.setUIValue(clamp(value, 0.0f, 1.0f));
                 break;
             case DelayParamTapeEffect:
-                tapeEffectRamper.set(clamp(value, 0.0f, 1.0f));
+                tapeEffectRamper.setUIValue(clamp(value, 0.0f, 1.0f));
                 break;
             case DelayParamShortDelay:
                 shortDelay = (value > 0);
@@ -214,13 +226,13 @@ public:
     AUValue getParameter(AUParameterAddress address) {
         switch (address) {
             case DelayParamTapeSpeed:
-                return tapeSpeedRamper.goal();
+                return tapeSpeedRamper.getUIValue();
             case DelayParamMix:
-                return mixRamper.goal();
+                return mixRamper.getUIValue();
             case DelayParamFeedback:
-                return feedbackRamper.goal();
+                return feedbackRamper.getUIValue();
             case DelayParamTapeEffect:
-                return tapeEffectRamper.goal();
+                return tapeEffectRamper.getUIValue();
             case DelayParamShortDelay:
                 return shortDelay;
             case DelayParamMediumDelay:
@@ -276,6 +288,7 @@ private:
     AudioBufferList* inBufferListPtr = nullptr;
     AudioBufferList* outBufferListPtr = nullptr;
     
+    AUAudioFrameCount dezipperRampDuration;
 public:
     ParameterRamper tapeSpeedRamper = 0.0;
     ParameterRamper mixRamper = 0.0;
