@@ -74,7 +74,7 @@ open class IAATransportView: UIView {
         updateTransportControls()
     }
     
-    func iaaTransportStateDidChangeNotification(_ note : Notification) {
+    @objc func iaaTransportStateDidChangeNotification(_ note : Notification) {
         updateTransportControls()
     }
     
@@ -115,7 +115,7 @@ open class IAATransportView: UIView {
         }
     }
     
-    func onHostImageTapped(_ uigr : UIGestureRecognizer) {
+    @objc func onHostImageTapped(_ uigr : UIGestureRecognizer) {
         if let delegateUnwrapped = delegate {
             delegateUnwrapped.goToHost()
         }

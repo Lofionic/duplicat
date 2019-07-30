@@ -162,7 +162,7 @@ open class IAAWrapper: NSObject {
         var s : UnsafeMutableRawPointer;
         s = Unmanaged.passRetained(self).toOpaque()
         
-        if let inputNode = self.avEngine.inputNode {
+        let inputNode = self.avEngine.inputNode
     
         CheckError(error: AudioUnitAddPropertyListener(inputNode.audioUnit!,
             kAudioUnitProperty_IsInterAppConnected,
@@ -172,7 +172,6 @@ open class IAAWrapper: NSObject {
             kAudioOutputUnitProperty_HostTransportState,
             AudioUnitPropertyChangeDispatcher,
             s), desc: "Adding HostTransportState property listener");
-        }
         
         NSLog("Listeners Added")
     }
@@ -198,14 +197,13 @@ open class IAAWrapper: NSObject {
     }
     
     fileprivate func publishOutputAudioUnit() {
-        if let inputNode = avEngine.inputNode {
+        let inputNode = avEngine.inputNode
         
         var desc = AudioComponentDescription(componentType: OSType(kIAAComponentType), componentSubType: fourCharCodeFrom(string: kIAAComponentSubtype), componentManufacturer: fourCharCodeFrom(string: kIAAComponentManufacturer), componentFlags: 0, componentFlagsMask: 0);
         CheckError(
             error: AudioOutputUnitPublish(&desc, "Lofionic Duplicat" as CFString, 4, inputNode.audioUnit!),
             desc: "Publishing IAA Component");
-        }
-    
+        
         NSLog("IAA Published")
     }
     
@@ -257,11 +255,10 @@ open class IAAWrapper: NSObject {
         NSLog("[startGraph]")
         
         // Connect the effect unit to the engine's input node
-        if let inputNode = self.avEngine.inputNode {
-            if let effectNode = self.effectNode {
-                self.avEngine.disconnectNodeInput(effectNode)
-                self.avEngine.connect(inputNode, to: effectNode, format: effectNode.inputFormat(forBus: 0))
-            }
+        let inputNode = self.avEngine.inputNode
+        if let effectNode = self.effectNode {
+            self.avEngine.disconnectNodeInput(effectNode)
+            self.avEngine.connect(inputNode, to: effectNode, format: effectNode.inputFormat(forBus: 0))
         }
         
         do {
@@ -277,9 +274,8 @@ open class IAAWrapper: NSObject {
         NSLog("[stopGraph]")
         
         // Disconnect the input
-        if let inputNode = self.avEngine.inputNode {
-            self.avEngine.disconnectNodeOutput(inputNode)
-        }
+        let inputNode = self.avEngine.inputNode
+        self.avEngine.disconnectNodeOutput(inputNode)
         
         avEngine.pause()
         graphStarted = false
@@ -333,22 +329,21 @@ open class IAAWrapper: NSObject {
     private func checkIsHostConnected() {
         
         NSLog("[checkIsHostConnected]")
-        if let inputNode = self.avEngine.inputNode {
-            var data = UInt32(0)
-            var dataSize = UInt32(MemoryLayout<UInt32>.size)
-            CheckError(error: AudioUnitGetProperty(inputNode.audioUnit!, kAudioUnitProperty_IsInterAppConnected, kAudioUnitScope_Global, 0, &data, &dataSize), desc: "AudioUnitGetProperty_IsInterAppConnected")
-            let connect = (data > 0 ? true : false)
-            if (connect != isConnected) {
-                isConnected = connect
-                if (isConnected) {
-                    NSLog("host did connect")
-                    checkStartStopGraph()
-                    getHostCallBackInfo()
-                    getAudioUnitIcon()
-                } else {
-                    NSLog("host did disconnect")
-                    checkStartStopGraph()
-                }
+        let inputNode = self.avEngine.inputNode
+        var data = UInt32(0)
+        var dataSize = UInt32(MemoryLayout<UInt32>.size)
+        CheckError(error: AudioUnitGetProperty(inputNode.audioUnit!, kAudioUnitProperty_IsInterAppConnected, kAudioUnitScope_Global, 0, &data, &dataSize), desc: "AudioUnitGetProperty_IsInterAppConnected")
+        let connect = (data > 0 ? true : false)
+        if (connect != isConnected) {
+            isConnected = connect
+            if (isConnected) {
+                NSLog("host did connect")
+                checkStartStopGraph()
+                getHostCallBackInfo()
+                getAudioUnitIcon()
+            } else {
+                NSLog("host did disconnect")
+                checkStartStopGraph()
             }
         }
     }
@@ -374,20 +369,19 @@ open class IAAWrapper: NSObject {
                 free(callbackInfo)
             }
         
-            if let inputNode = self.avEngine.inputNode {
-                var datasize = UInt32(MemoryLayout<HostCallbackInfo>.size)
-                //callbackInfo = UnsafeMutableRawPointer<HostCallbackInfo>(malloc(sizeof(HostCallbackInfo)))
-                
-                //callbackInfo = UnsafeMutableRawPointer(malloc(sizeof(HostCallbackInfo))
-                
-                // callbackInfo = UnsafeMutablePointer<HostCallbackInfo>(malloc(sizeof(HostCallbackInfo)))
-                callbackInfo = UnsafeMutablePointer<HostCallbackInfo>.allocate(capacity: MemoryLayout<HostCallbackInfo>.size)
-                
-                let result = AudioUnitGetProperty(inputNode.audioUnit!, kAudioUnitProperty_HostCallbacks, kAudioUnitScope_Global, 0, callbackInfo!, &datasize)
-                if (result != noErr) {
-                    free(callbackInfo)
-                    callbackInfo = nil
-                }
+            let inputNode = self.avEngine.inputNode
+            var datasize = UInt32(MemoryLayout<HostCallbackInfo>.size)
+            //callbackInfo = UnsafeMutableRawPointer<HostCallbackInfo>(malloc(sizeof(HostCallbackInfo)))
+            
+            //callbackInfo = UnsafeMutableRawPointer(malloc(sizeof(HostCallbackInfo))
+            
+            // callbackInfo = UnsafeMutablePointer<HostCallbackInfo>(malloc(sizeof(HostCallbackInfo)))
+            callbackInfo = UnsafeMutablePointer<HostCallbackInfo>.allocate(capacity: MemoryLayout<HostCallbackInfo>.size)
+            
+            let result = AudioUnitGetProperty(inputNode.audioUnit!, kAudioUnitProperty_HostCallbacks, kAudioUnitScope_Global, 0, callbackInfo!, &datasize)
+            if (result != noErr) {
+                free(callbackInfo)
+                callbackInfo = nil
             }
         }
     }
@@ -431,18 +425,16 @@ open class IAAWrapper: NSObject {
     }
     
     public func sendStateToRemoteHost(event: AudioUnitRemoteControlEvent) {
-        if let inputNode = self.avEngine.inputNode {
-            var controlEvent = event.rawValue
-            let dataSize = UInt32(MemoryLayout<AudioUnitRemoteControlEvent>.size)
-            CheckError(error: AudioUnitSetProperty(inputNode.audioUnit!, kAudioOutputUnitProperty_RemoteControlToHost, kAudioUnitScope_Global, 0, &controlEvent, dataSize), desc: "Sending remote control event")
-        }
+        let inputNode = self.avEngine.inputNode
+        var controlEvent = event.rawValue
+        let dataSize = UInt32(MemoryLayout<AudioUnitRemoteControlEvent>.size)
+        CheckError(error: AudioUnitSetProperty(inputNode.audioUnit!, kAudioOutputUnitProperty_RemoteControlToHost, kAudioUnitScope_Global, 0, &controlEvent, dataSize), desc: "Sending remote control event")
     }
     
     private func getAudioUnitIcon() {
         NSLog("[getAudioUnitIcon]")
-        if let inputNode = self.avEngine.inputNode {
-            hostIcon = AudioOutputUnitGetHostIcon(inputNode.audioUnit!, 100);
-        }
+        let inputNode = self.avEngine.inputNode
+        hostIcon = AudioOutputUnitGetHostIcon(inputNode.audioUnit!, 100);
     }
     
     private func fourCharCodeFrom(string : String) -> FourCharCode
@@ -633,12 +625,11 @@ extension IAAWrapper : IAATransportViewDelegate {
     }
     
     public func goToHost() {
-        if let inputNode = self.avEngine.inputNode {
-            var instrumentUrl = CFURLCreateWithString(nil, nil, nil)
-            var dataSize = UInt32(MemoryLayout<CFURL>.size)
-            CheckError(error: AudioUnitGetProperty(inputNode.audioUnit!, kAudioUnitProperty_PeerURL, kAudioUnitScope_Global, 0, &instrumentUrl, &dataSize), desc: "Getting PeerURL Property")
-            UIApplication.shared.openURL(instrumentUrl as! URL)
-        }
+        let inputNode = self.avEngine.inputNode
+        var instrumentUrl = CFURLCreateWithString(nil, nil, nil)
+        var dataSize = UInt32(MemoryLayout<CFURL>.size)
+        CheckError(error: AudioUnitGetProperty(inputNode.audioUnit!, kAudioUnitProperty_PeerURL, kAudioUnitScope_Global, 0, &instrumentUrl, &dataSize), desc: "Getting PeerURL Property")
+        UIApplication.shared.openURL(instrumentUrl as! URL)
     }
     
     public func canPlay() -> Bool {

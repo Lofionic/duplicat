@@ -78,7 +78,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func onUserGuideTapped(_ uigr: UIGestureRecognizer) {
+    @objc func onUserGuideTapped(_ uigr: UIGestureRecognizer) {
         // Toggle userguide zoom
         userGuideZoomed = !userGuideZoomed
     }

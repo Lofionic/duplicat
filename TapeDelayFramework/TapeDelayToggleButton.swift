@@ -14,6 +14,7 @@ public class TapeDelayToggleButton : UIButton {
         self.addTarget(self, action: #selector(TapeDelayToggleButton.didTouchUpInside), for: .touchUpInside)
     }
     
+    @objc
     func didTouchUpInside() {
         if (!self.isSelected) {
             self.isSelected = true

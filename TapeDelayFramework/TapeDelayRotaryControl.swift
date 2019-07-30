@@ -43,7 +43,7 @@ class TapeDelayRotaryControl : UIControl {
         self.addGestureRecognizer(doubleTapGesture)
     }
 
-    func doubleTap(gesture: UIGestureRecognizer) {
+    @objc func doubleTap(gesture: UIGestureRecognizer) {
         if (gesture.state == UIGestureRecognizerState.ended && self.doubleTapForDefault) {
             value = defaultValue
         }
