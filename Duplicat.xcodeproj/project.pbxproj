@@ -40,6 +40,7 @@
 		6CE70F011B4804A700D4C944 /* TapeDelayRotaryControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CE70F001B4804A700D4C944 /* TapeDelayRotaryControl.swift */; };
 		6CE70F031B4804D300D4C944 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CE70F021B4804D300D4C944 /* QuartzCore.framework */; };
 		8301F4C11D81ECEA00DE7B2F /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8301F4C01D81ECEA00DE7B2F /* SharedAssets.xcassets */; };
+		834DC5FE24F5A73F009BC068 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 834DC5FD24F5A73F009BC068 /* Launch Screen.storyboard */; };
 		838AC86B1D8201F700EF9CF4 /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8301F4C01D81ECEA00DE7B2F /* SharedAssets.xcassets */; };
 		83A9CEA71D1C8AB100F8CEBE /* IAATransportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9CEA61D1C8AB100F8CEBE /* IAATransportView.swift */; };
 		83D5415F1D109487002D2B00 /* IAAWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D5415E1D109487002D2B00 /* IAAWrapper.swift */; };
@@ -145,6 +146,7 @@
 		6CE70F021B4804D300D4C944 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6CEAA41A1B4421A2004C23A1 /* BufferedAudioBus.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BufferedAudioBus.hpp; sourceTree = "<group>"; };
 		8301F4C01D81ECEA00DE7B2F /* SharedAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = SharedAssets.xcassets; path = ../TapeDelayAppExtension/SharedAssets.xcassets; sourceTree = "<group>"; };
+		834DC5FD24F5A73F009BC068 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		83A9CEA61D1C8AB100F8CEBE /* IAATransportView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAATransportView.swift; sourceTree = "<group>"; };
 		83D5415E1D109487002D2B00 /* IAAWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAAWrapper.swift; sourceTree = "<group>"; };
 		83D92DAB1D0F5D0500F8C131 /* TapeDelayApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TapeDelayApp.entitlements; sourceTree = SOURCE_ROOT; };
@@ -301,6 +303,7 @@
 				6CC285571D217A9C00FD8292 /* IAASettings.swift */,
 				6CC9A90F1B7CA98B003BAA75 /* Main.storyboard */,
 				6CC9A9121B7CA98B003BAA75 /* AppAssets.xcassets */,
+				834DC5FD24F5A73F009BC068 /* Launch Screen.storyboard */,
 			);
 			name = DuplicatApp;
 			path = Duplicat;
@@ -464,6 +467,7 @@
 				6CC15B861BCBA96C00290680 /* .gitignore in Resources */,
 				838AC86B1D8201F700EF9CF4 /* SharedAssets.xcassets in Resources */,
 				6CC9A9131B7CA98B003BAA75 /* AppAssets.xcassets in Resources */,
+				834DC5FE24F5A73F009BC068 /* Launch Screen.storyboard in Resources */,
 				6CC9A9111B7CA98B003BAA75 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -578,7 +582,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -601,7 +604,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -746,6 +748,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 1.31;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -784,6 +787,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 1.31;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -806,7 +810,6 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapeDelayApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -835,7 +838,6 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = TapeDelayApp.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
