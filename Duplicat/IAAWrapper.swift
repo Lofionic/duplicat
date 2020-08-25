@@ -626,10 +626,10 @@ extension IAAWrapper : IAATransportViewDelegate {
     
     public func goToHost() {
         let inputNode = self.avEngine.inputNode
-        var instrumentUrl = CFURLCreateWithString(nil, nil, nil)
+        var instrumentUrl = CFURLCreateWithString(nil, nil, nil)!
         var dataSize = UInt32(MemoryLayout<CFURL>.size)
         CheckError(error: AudioUnitGetProperty(inputNode.audioUnit!, kAudioUnitProperty_PeerURL, kAudioUnitScope_Global, 0, &instrumentUrl, &dataSize), desc: "Getting PeerURL Property")
-        UIApplication.shared.openURL(instrumentUrl as! URL)
+        UIApplication.shared.openURL(instrumentUrl as URL)
     }
     
     public func canPlay() -> Bool {
@@ -641,7 +641,7 @@ extension IAAWrapper : IAATransportViewDelegate {
     }
     
     public func canRecord() -> Bool {
-        return self.avEngine.inputNode != nil && !isPlaying
+        return !isPlaying
     }
 
     public func hostRewind() {
@@ -695,9 +695,9 @@ extension IAAWrapper : ABAudiobusControllerStateIODelegate {
                 stateDictionary.setValue(value, forKey: String(paramID))
             }
         
-            return NSDictionary.init(dictionary: stateDictionary) as! [AnyHashable : Any]
+            return NSDictionary.init(dictionary: stateDictionary) as? [AnyHashable : Any]
         } else {
-            return NSDictionary() as! [AnyHashable: Any]
+            return NSDictionary() as? [AnyHashable: Any]
         }
     }
     
