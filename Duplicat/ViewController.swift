@@ -43,11 +43,11 @@ class ViewController: UIViewController {
 
         // Configure resizable images in UI
         if let backgroundImageView = backgroundImageView, let backgroundImage = backgroundImageView.image {
-            backgroundImageView.image = backgroundImage.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: UIImageResizingMode.tile);
+            backgroundImageView.image = backgroundImage.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: UIImage.ResizingMode.tile);
         }
         
         if let auContainerBevelView = auContainerBevelView, let auContainerBevelBackgroundImage = auContainerBevelView.image {
-            auContainerBevelView.image = auContainerBevelBackgroundImage.resizableImage(withCapInsets: UIEdgeInsetsMake(8, 8, 8, 8), resizingMode: UIImageResizingMode.stretch);
+            auContainerBevelView.image = auContainerBevelBackgroundImage.resizableImage(withCapInsets: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8), resizingMode: UIImage.ResizingMode.stretch);
         }
 
         // Embed the effect's plugin view
@@ -109,12 +109,12 @@ class ViewController: UIViewController {
                 return
         }
         
-        addChildViewController(duplicatViewController)
+        addChild(duplicatViewController)
         view.frame = auContainerView.bounds
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         auContainerView.addSubview(view)
-        duplicatViewController.didMove(toParentViewController: self)
+        duplicatViewController.didMove(toParent: self)
         
         self.duplicatViewController = duplicatViewController
     }

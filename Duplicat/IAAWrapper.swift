@@ -69,24 +69,24 @@ open class IAAWrapper: NSObject {
         super.init()
         
         let appState = UIApplication.shared.applicationState
-        isForeground = (appState != UIApplicationState.background)
+        isForeground = (appState != UIApplication.State.background)
         
         NotificationCenter.default.addObserver(self,
                                                          selector: #selector(appHasGoneInBackground),
-                                                         name: NSNotification.Name.UIApplicationDidEnterBackground,
+                                                         name: UIApplication.didEnterBackgroundNotification,
                                                          object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                          selector: #selector(appHasGoneForeground),
-                                                         name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                                         name: UIApplication.willEnterForegroundNotification,
                                                          object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                          selector: #selector(cleanup),
-                                                         name: NSNotification.Name.UIApplicationWillTerminate,
+                                                         name: UIApplication.willTerminateNotification,
                                                          object: nil)
         
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVAudioSessionMediaServicesWereReset, object: nil, queue: nil) { note in
+        NotificationCenter.default.addObserver(forName: AVAudioSession.mediaServicesWereResetNotification, object: nil, queue: nil) { note in
             self.cleanup()
             self.createAndPublish()
         }
@@ -287,7 +287,7 @@ open class IAAWrapper: NSObject {
         
         do {
             try session.setPreferredSampleRate(kSampleRate);
-            try session.setCategory(AVAudioSessionCategoryPlayAndRecord, with: AVAudioSessionCategoryOptions.mixWithOthers)
+            try session.setCategory(AVAudioSession.Category.playAndRecord, options: AVAudioSession.CategoryOptions.mixWithOthers)
             try session.setActive(true)
         } catch {
             NSLog("ERROR: setting audio session active")
@@ -439,7 +439,7 @@ open class IAAWrapper: NSObject {
     
     private func fourCharCodeFrom(string : String) -> FourCharCode
     {
-        assert(string.characters.count == 4, "String length must be 4")
+        assert(string.count == 4, "String length must be 4")
         var result : FourCharCode = 0
         for char in string.utf16 {
             result = (result << 8) + FourCharCode(char)
@@ -748,3 +748,8 @@ extension IAAWrapper : ABAudiobusControllerStateIODelegate {
 //
 //        updateDelayButtons();
 //    }
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
+	return input.rawValue
+}

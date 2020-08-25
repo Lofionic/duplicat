@@ -50,12 +50,12 @@ open class IAATransportView: UIView {
         
         NotificationCenter.default.addObserver(self,
                                                          selector: #selector(appHasGoneInBackground),
-                                                         name: NSNotification.Name.UIApplicationDidEnterBackground,
+                                                         name: UIApplication.didEnterBackgroundNotification,
                                                          object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                          selector: #selector(appHasGoneForeground),
-                                                         name: NSNotification.Name.UIApplicationWillEnterForeground,
+                                                         name: UIApplication.willEnterForegroundNotification,
                                                          object: nil)
         
         hostIcon.isUserInteractionEnabled = true

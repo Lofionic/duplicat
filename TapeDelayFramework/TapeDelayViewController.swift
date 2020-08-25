@@ -33,7 +33,7 @@ public class TapeDelayViewController: AUViewController, AUAudioUnitFactory {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        let backgroundImage = UIImage(named:"background")?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: UIImageResizingMode.tile)
+        let backgroundImage = UIImage(named:"background")?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: UIImage.ResizingMode.tile)
         backgroundImageView.image = backgroundImage
         
         if (tapeDelayAudioUnit != nil) {
