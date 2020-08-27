@@ -41,6 +41,7 @@
 		6CE70F031B4804D300D4C944 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CE70F021B4804D300D4C944 /* QuartzCore.framework */; };
 		8301F4C11D81ECEA00DE7B2F /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8301F4C01D81ECEA00DE7B2F /* SharedAssets.xcassets */; };
 		834DC5FE24F5A73F009BC068 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 834DC5FD24F5A73F009BC068 /* Launch Screen.storyboard */; };
+		8352260A24F87566004393C8 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8352260924F874DE004393C8 /* libz.tbd */; };
 		838AC86B1D8201F700EF9CF4 /* SharedAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8301F4C01D81ECEA00DE7B2F /* SharedAssets.xcassets */; };
 		83A9CEA71D1C8AB100F8CEBE /* IAATransportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A9CEA61D1C8AB100F8CEBE /* IAATransportView.swift */; };
 		83D5415F1D109487002D2B00 /* IAAWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D5415E1D109487002D2B00 /* IAAWrapper.swift */; };
@@ -147,6 +148,7 @@
 		6CEAA41A1B4421A2004C23A1 /* BufferedAudioBus.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BufferedAudioBus.hpp; sourceTree = "<group>"; };
 		8301F4C01D81ECEA00DE7B2F /* SharedAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = SharedAssets.xcassets; path = ../TapeDelayAppExtension/SharedAssets.xcassets; sourceTree = "<group>"; };
 		834DC5FD24F5A73F009BC068 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		8352260924F874DE004393C8 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		83A9CEA61D1C8AB100F8CEBE /* IAATransportView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAATransportView.swift; sourceTree = "<group>"; };
 		83D5415E1D109487002D2B00 /* IAAWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAAWrapper.swift; sourceTree = "<group>"; };
 		83D92DAB1D0F5D0500F8C131 /* TapeDelayApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = TapeDelayApp.entitlements; sourceTree = SOURCE_ROOT; };
@@ -184,6 +186,7 @@
 				6CC2854E1D215CFD00FD8292 /* AVFoundation.framework in Frameworks */,
 				6CC2854C1D215CC100FD8292 /* libAudiobus.a in Frameworks */,
 				6CC9A9381B7CAB50003BAA75 /* DuplicatFramework.framework in Frameworks */,
+				8352260A24F87566004393C8 /* libz.tbd in Frameworks */,
 				83D92DAA1D0F5D0500F8C131 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -194,6 +197,7 @@
 		6C0748071E09337200F73660 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8352260924F874DE004393C8 /* libz.tbd */,
 				6CC285541D215D1600FD8292 /* Security.framework */,
 				6CC285511D215D0900FD8292 /* Accelerate.framework */,
 				6CC2854F1D215D0300FD8292 /* CoreGraphics.framework */,
@@ -822,7 +826,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Duplicat/Audiobus",
 				);
-				MARKETING_VERSION = 1.3.1;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lofionic.duplicat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -852,7 +856,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Duplicat/Audiobus",
 				);
-				MARKETING_VERSION = 1.3.1;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lofionic.duplicat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

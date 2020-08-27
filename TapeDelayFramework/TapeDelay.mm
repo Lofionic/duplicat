@@ -142,7 +142,7 @@
 
         
     // Create the input and output busses.
-    _inputBus.init(defaultFormat, 8);
+    _inputBus.init(defaultFormat, 2);
     _outputBus = [[AUAudioUnitBus alloc] initWithFormat:defaultFormat error:nil];
     
     // Create the input and output bus arrays

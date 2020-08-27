@@ -18,12 +18,37 @@ extern "C" {
  * Port types
  */
 typedef enum {
-    ABPortTypeReceiver,
-    ABPortTypeFilter,
-    ABPortTypeSender
+    
+    ABPortTypeAudioSender   = 2,
+    ABPortTypeAudioFilter   = 1,
+    ABPortTypeAudioReceiver = 0,
+    
+    ABPortTypeMIDISender    = 3,
+    ABPortTypeMIDIFilter    = 4,
+    ABPortTypeMIDIReceiver  = 5,
+    
+    ABPortTypeUnknown       = 0xFF,
+    
+    ABPortTypeSender __deprecated_enum_msg("Use ABPortTypeAudioSender")     = ABPortTypeAudioSender,
+    ABPortTypeReceiver __deprecated_enum_msg("Use ABPortTypeAudioReceiver") = ABPortTypeAudioReceiver,
+    ABPortTypeFilter __deprecated_enum_msg("Use ABPortTypeAudioFilter")     = ABPortTypeAudioFilter,
+    
 } ABPortType;
-
+    
+/*
+ * This notification is emitted if this port is about to be launched in 
+ * Audiobus or an compatible app.
+ * 
+ * Listen to this notification when your app offers multiple port and you 
+ * want to know when a certain port has been activated in Audiobus. 
+ * The object connectd with the notification provides a dictionary containing 
+ * the name and the uniqueIdentifier of the port to be launched.
+ */
+extern NSString * const ABPortWillLaunchPortNotification;
+    
+    
 @class ABPeer;
+@class ABConnectionGraphPipeline;
 
 /*!
  * Port
@@ -38,6 +63,8 @@ typedef enum {
  */
 @interface ABPort : NSObject
 
+#pragma mark - The port itself
+
 /*!
  * The peer this port is on
  */
@@ -47,6 +74,7 @@ typedef enum {
  * The internal port name
  */
 @property (nonatomic, strong, readonly) NSString *name;
+
 
 /*!
  * The title of the port, for display to the user
@@ -58,6 +86,8 @@ typedef enum {
  */
 @property (nonatomic, strong, readonly) UIImage *icon;
 
+
+
 /*!
  * The type of the port
  */
@@ -67,6 +97,76 @@ typedef enum {
  * The attributes of this port
  */
 @property (nonatomic, readonly) uint8_t attributes;
+
+/*!
+ * Use this property to associate some user defined context with the port
+ */
+@property (nonatomic, weak) id context;
+
+/*!
+ * An port identifier that is unique for the peer itself but also for other
+ * peers.
+ */
+@property (nonatomic, readonly) uint32_t uniqueIdentifier;
+
+/*!
+ * Whether the port is connected
+ */
+@property (nonatomic, readonly) BOOL connected;
+
+
+/*!
+ * Launches the app belonging to the port and triggers ABPortWillLaunchPortNotification
+ * in the appropriate app.
+ */
+- (void)launch;
+
+#pragma mark - Sources
+
+/*!
+ * A title representing the sources connected to the port.
+ */
+@property (nonatomic, readonly) NSString * sourcesTitle;
+
+/*!
+ * An icon representing the sources connected to the port.
+ */
+@property (nonatomic, readonly) UIImage * sourcesIcon;
+
+/*!
+ * Returns direct and indirect sources of the port in the pipeline.
+ *
+ * The sources are ordered in the way senders - filters.
+ */
+@property (nonatomic, readonly) NSArray *sourcesRecursive;
+
+#pragma mark - Destinations
+
+/*!
+ * A title representing the destinations the port is connected to.
+ */
+@property (nonatomic, readonly) NSString * destinationsTitle;
+
+/*!
+ * An icon representing the destinations the port is connected to.
+ */
+@property (nonatomic, readonly) UIImage * destinationsIcon;
+
+
+/*!
+ * Returns direct and indirect destinations of the port in the pipeline.
+ *
+ * The sources are ordered in the way filters - receivers.
+ */
+@property (nonatomic, readonly) NSArray *destinationsRecursive;
+
+/*!
+ * The connection pipelines of which this port is a member
+ */
+@property (nonatomic, strong, readonly) NSSet <ABConnectionGraphPipeline *> * pipelines;
+
+@property (nonatomic, readonly) NSArray *audioPipelineIDs __deprecated_msg("Use pipelines property instead (filter by type = ABConnectionGraphPipelineTypeAudio if necessary)");
+@property (nonatomic, readonly) NSArray *MIDIPipelineIDs __deprecated_msg("Use pipelines property instead (filter by type = ABConnectionGraphPipelineTypeMIDI if necessary)");
 
 @end
 

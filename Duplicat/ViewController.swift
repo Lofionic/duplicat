@@ -55,14 +55,10 @@ class ViewController: UIViewController {
 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         if let iaaWrapper = appDelegate.iaaWrapper {
-     
-            // Create the iaaWrapper and publish it for IAA
             iaaWrapper.delegate = self
             iaaWrapper.createAndPublish()
             
             if let transportView = transportView {
-                
-                // Link transport view to the iaaWrapper
                 transportView.delegate = iaaWrapper
                 
             }
@@ -82,7 +78,6 @@ class ViewController: UIViewController {
         // Toggle userguide zoom
         userGuideZoomed = !userGuideZoomed
     }
-    
     
     /// Called from `viewDidLoad(_:)` to embed the plug-in's view into the app's view.
     func embedPlugInView() {

@@ -14,7 +14,7 @@
 			<key>type</key>
 			<string>aurx</string>
 			<key>version</key>
-			<integer>4</integer>
+			<integer>5</integer>
 		</dict>
 	</array>
 	<key>CFBundleDevelopmentRegion</key>
@@ -48,12 +48,12 @@
 			<string>com.lofionic.duplicat</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>Duplicat-1.3.audiobus</string>
+				<string>Duplicat-1.4.audiobus</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>$(MARKETING_VERSION)</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSMicrophoneUsageDescription</key>
