@@ -49,9 +49,9 @@ open class IAAWrapper: NSObject {
     override init() {
         avEngine = AVAudioEngine()
         
-        graphStarted    = false
-        isIAAConnected     = false
-        isForeground    = false
+        graphStarted = false
+        isIAAConnected = false
+        isForeground = false
         
         isAudiobusConnected = false
         isAudiobusSession = false
